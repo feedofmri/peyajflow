@@ -23,13 +23,13 @@ button:disabled{cursor:default}
 .pf-flow:active{background:var(--color-accent-200)}
 
 /* Viewer chrome */
-.pf-home{height:40px;padding:0 12px 0 8px;flex-shrink:0;border-radius:var(--radius-lg);display:flex;align-items:center;gap:4px;color:var(--color-accent-700);background:var(--color-accent-100);cursor:pointer;margin-left:-4px}
+.pf-home{height:32px;padding:0 8px 0 6px;justify-content:center;flex-shrink:0;border-radius:var(--radius-lg);display:flex;align-items:center;gap:4px;color:var(--color-accent-700);background:var(--color-accent-100);cursor:pointer;margin-left:0}
 .pf-home:hover{background:var(--color-accent-200)}
 .pf-home:active{background:var(--color-accent-300)}
-.pf-prev{height:52px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;gap:6px;font-size:17px;cursor:pointer;color:var(--color-accent-700);background:transparent;box-shadow:inset 0 0 0 1.5px var(--color-accent)}
+.pf-prev{height:40px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;gap:4px;font-size:15px;cursor:pointer;color:var(--color-accent-700);background:transparent;box-shadow:inset 0 0 0 1.5px var(--color-accent)}
 .pf-prev:not(:disabled):hover{background:var(--color-accent-100)}
 .pf-prev:not(:disabled):active{background:var(--color-accent-200)}
 .pf-prev:disabled{opacity:.4}
-.pf-next{height:52px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;gap:6px;font-size:17px;cursor:pointer;background:var(--color-accent);color:#fff}
+.pf-next{height:40px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;gap:4px;font-size:15px;cursor:pointer;background:var(--color-accent);color:#fff}
 .pf-next:hover{background:var(--color-accent-600)}
 .pf-next:active{background:var(--color-accent-700)}

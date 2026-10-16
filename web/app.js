@@ -634,6 +634,7 @@ S.B02 = () => {
 // Channels used are the ones these phones really have: Bangla SMS (~70 chars a
 // part), USSD menus (~90 Bangla chars a screen), and voice calls with keypad
 // replies. During a call nothing shows on screen, so speech is captioned above.
+const BASIC_H = 756; // shorter stage than the smartphone's 800, so the phone itself can render larger
 const USSD = '*7392#'; // *PEYA# on the keypad
 const HOTLINE = '09612XXXXXX';
 const KEYPAD = [['1', '⌴'], ['2', 'abc'], ['3', 'def'], ['4', 'ghi'], ['5', 'jkl'], ['6', 'mno'], ['7', 'pqrs'], ['8', 'tuv'], ['9', 'wxyz'], ['*', '+'], ['0', '␣'], ['#', '⇧']];
@@ -684,8 +685,8 @@ const keyStyle = on => on
 const featurePhone = (o) => {
   const k = o.press, nx = id => (k === id ? ' data-next="fast"' : '');
   const idle = o.screen.kind === 'idle';
-  return `<div data-screen-label="${o.label}" style="width:360px;height:800px;display:flex;flex-direction:column;align-items:center;font-family:'Hind Siliguri','Inter',sans-serif">
-  <div style="width:328px;height:150px;flex-shrink:0;display:flex;align-items:flex-end;padding-bottom:12px;box-sizing:border-box">
+  return `<div data-screen-label="${o.label}" style="width:360px;height:${BASIC_H}px;display:flex;flex-direction:column;align-items:center;font-family:'Hind Siliguri','Inter',sans-serif">
+  <div style="width:328px;height:126px;flex-shrink:0;display:flex;align-items:flex-end;padding-bottom:12px;box-sizing:border-box">
     ${o.audio
       ? `<div style="width:100%;background:#FEF6E0;border-radius:14px;padding:8px 12px;color:#3D2A00;box-shadow:0 0 0 1px #F3DFA6"><div style="display:flex;gap:6px;align-items:center;font-size:12px;font-weight:700;margin-bottom:4px"><i class="ph-fill ph-speaker-high" style="font-size:16px"></i>কলে শোনা যাচ্ছে · Heard on the call</div><div style="font-size:13px;line-height:1.42">“${o.audio}”</div></div>`
       : `<div style="width:100%;font-family:'Inter',sans-serif;font-size:14px;line-height:1.45;color:#4A3D52;display:flex;gap:8px;align-items:flex-start"><i class="ph-fill ph-info" style="font-size:18px;color:#5B2A6E;flex-shrink:0;margin-top:1px"></i><span>${o.note}</span></div>`}
@@ -792,40 +793,45 @@ function homeView() {
 
 function viewerView() {
   const f = curFlow(), cur = curScreen(), n = f.screens.length, last = state.idx === n - 1;
-  const vw = window.innerWidth, vh = window.innerHeight;
-  const availW = Math.min(vw, 640) - 16, availH = vh - 72 - 96 - 8;
-  const scale = Math.max(0.3, Math.min(1, availW / 360, availH / 800));
   const nextLabel = last ? (nextFlowOf(f.id) ? 'পরের ফ্লো' : 'শেষ · সব ফ্লো') : 'পরবর্তী';
   const hint = cur === 'F02b' ? 'Analysing… moves on by itself' : cur === 'BU2' ? 'Connecting… moves on by itself'
-    : state.idx === 0 ? (state.mode === 'basic' ? 'Tap the highlighted key or the phone screen, or swipe' : 'Tap the main button in the app, or swipe') : '';
+    : state.idx === 0 ? (state.mode === 'basic' ? 'Tap the highlighted key or the screen, or swipe' : 'Tap the main button in the app, or swipe') : '';
   const elapsed = (performance.now() - enteredAt) / 1000;
   // Pulse the button to tap for the first few seconds of each screen, without restarting on re-render.
   const pulse = elapsed < 5.2;
+  const stageH = BASIC[cur] ? BASIC_H : 800;
+  // Compact chrome so the phone gets the space; the stage is scaled to fit in fitStage().
   return `<div style="height:100dvh;display:flex;flex-direction:column;overflow:hidden">
-  <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px;padding:calc(var(--space-2) + env(safe-area-inset-top)) var(--space-3) var(--space-2);box-sizing:border-box">
-    <div style="display:flex;gap:3px;height:3px">${f.screens.map((_, i) => `<div style="flex:1;border-radius:2px;background:${i <= state.idx ? 'var(--color-accent)' : 'var(--color-neutral-300)'}"></div>`).join('')}</div>
-    <div style="display:flex;align-items:center;gap:var(--space-2);height:52px">
-      <button type="button" data-action="home" class="pf-home"><i class="ph-duotone ph-house" style="font-size:20px"></i><span class="pf-bn" style="font-size:15px;font-weight:600">হোম</span></button>
-      <div style="flex:1;min-width:0;display:flex;flex-direction:column">
-        <div class="pf-bn" style="font-size:17px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${f.bn}</div>
-        <div style="font-size:14px;font-style:italic;color:var(--color-neutral-700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${CAP[cur]}</div>
-      </div>
-      <div class="pf-bn" style="font-size:16px;font-weight:600;flex-shrink:0">${BN(state.idx + 1)} / ${BN(n)}</div>
+  <div style="flex-shrink:0;padding:calc(4px + env(safe-area-inset-top)) 10px 0;box-sizing:border-box">
+    <div style="display:flex;align-items:center;gap:8px;height:36px">
+      <button type="button" data-action="home" class="pf-home"><i class="ph-duotone ph-house" style="font-size:17px"></i><span class="pf-bn" style="font-size:13px;font-weight:600">হোম</span></button>
+      <div style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:var(--color-neutral-700)"><span class="pf-bn" style="font-size:14px;font-weight:600;color:var(--color-text)">${f.bn}</span> · <i>${CAP[cur]}</i></div>
+      <div class="pf-bn" style="font-size:13px;font-weight:600;flex-shrink:0">${BN(state.idx + 1)}/${BN(n)}</div>
     </div>
+    <div style="display:flex;gap:2px;height:2px">${f.screens.map((_, i) => `<div style="flex:1;border-radius:1px;background:${i <= state.idx ? 'var(--color-accent)' : 'var(--color-neutral-300)'}"></div>`).join('')}</div>
   </div>
-  <div id="pf-swipe" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:pan-y">
-    <div style="width:${Math.round(360 * scale)}px;height:${Math.round(800 * scale)}px;position:relative;flex-shrink:0">
-      <div id="pf-stage"${pulse ? ' class="pf-pulse"' : ''} style="position:absolute;left:0;top:0;width:360px;height:800px;transform:scale(${scale});transform-origin:0 0;font-family:'Inter','Hind Siliguri',sans-serif;color:#22172A${pulse ? `;--pd:${(1 - elapsed).toFixed(2)}s` : ''}">${S[cur]()}</div>
+  <div id="pf-swipe" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:pan-y;position:relative">
+    <div id="pf-box" style="width:360px;height:${stageH}px;position:relative;flex-shrink:0">
+      <div id="pf-stage" data-h="${stageH}"${pulse ? ' class="pf-pulse"' : ''} style="position:absolute;left:0;top:0;width:360px;height:${stageH}px;transform-origin:0 0;font-family:'Inter','Hind Siliguri',sans-serif;color:#22172A${pulse ? `;--pd:${(1 - elapsed).toFixed(2)}s` : ''}">${S[cur]()}</div>
     </div>
+    ${hint ? `<div style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);max-width:92%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;font-style:italic;color:#fff;background:rgba(32,30,29,.62);padding:3px 10px;border-radius:999px;pointer-events:none">${hint}</div>` : ''}
   </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;gap:6px;padding:var(--space-1) var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom));box-sizing:border-box">
-    <div style="text-align:center;font-size:14px;font-style:italic;color:var(--color-neutral-700);min-height:20px">${hint}</div>
-    <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:var(--space-2)">
-      <button type="button" data-action="prev" class="pf-prev"${state.idx === 0 ? ' disabled' : ''}><i class="ph-duotone ph-caret-left" style="font-size:20px"></i><span class="pf-bn" style="font-weight:600">আগে</span></button>
-      <button type="button" data-action="next" class="pf-next"><span class="pf-bn" style="font-weight:600">${nextLabel}</span><i class="ph-duotone ph-caret-right" style="font-size:20px"></i></button>
-    </div>
+  <div style="flex-shrink:0;display:grid;grid-template-columns:1fr 1.6fr;gap:8px;padding:4px 10px calc(6px + env(safe-area-inset-bottom));box-sizing:border-box">
+    <button type="button" data-action="prev" class="pf-prev"${state.idx === 0 ? ' disabled' : ''}><i class="ph-duotone ph-caret-left" style="font-size:16px"></i><span class="pf-bn" style="font-weight:600">আগে</span></button>
+    <button type="button" data-action="next" class="pf-next"><span class="pf-bn" style="font-weight:600">${nextLabel}</span><i class="ph-duotone ph-caret-right" style="font-size:16px"></i></button>
   </div>
 </div>`;
+}
+
+// Scale the 360-wide stage to whatever space the chrome leaves.
+function fitStage() {
+  const sw = document.getElementById('pf-swipe'), box = document.getElementById('pf-box'), st = document.getElementById('pf-stage');
+  if (!sw || !box || !st) return;
+  const h = Number(st.dataset.h) || 800;
+  const scale = Math.max(0.3, Math.min(1.2, (sw.clientWidth - 8) / 360, (sw.clientHeight - 4) / h));
+  box.style.width = Math.round(360 * scale) + 'px';
+  box.style.height = Math.round(h * scale) + 'px';
+  st.style.transform = `scale(${scale})`;
 }
 
 // ─── Render loop ─────────────────────────────────────────────────────────
@@ -846,6 +852,7 @@ function render() {
   }
   try { localStorage.setItem('pf-demo', JSON.stringify({ mode: state.mode, flow: state.flow, idx: state.idx })); } catch (e) {}
   app.innerHTML = `<div class="pf-root">${f ? viewerView() : homeView()}</div>`;
+  if (f) fitStage();
 }
 
 // In-app taps that change demo state without leaving the screen.
@@ -904,7 +911,7 @@ window.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') go(1);
   if (e.key === 'ArrowLeft') go(-1);
 });
-window.addEventListener('resize', () => { if (state.flow) render(); });
+window.addEventListener('resize', () => { if (state.flow) fitStage(); });
 
 render();
 })();
