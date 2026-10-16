@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+body{margin:0;background:#EDE6F0;-webkit-font-smoothing:antialiased}
+a{color:#5B2A6E}a:hover{color:#3E1A4C}
+input{font:inherit}
+</style>
+</helmet>
+
+<div style="font-family:'Inter','Hind Siliguri',sans-serif;color:#22172A;padding:72px 80px 120px;display:flex;flex-direction:column;gap:88px;min-width:max-content">
+
+<header style="display:flex;flex-direction:column;gap:10px;max-width:760px">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="width:44px;height:44px;border-radius:12px;background:#5B2A6E;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px"><i class="ph-fill ph-plant"></i></div>
+    <div style="font-size:28px;font-weight:700;letter-spacing:-0.01em">PeyajFlow</div>
+    <div style="font-size:15px;color:#6B5E73">UI screens · FutureMakers 2026 demo</div>
+  </div>
+  <div style="font-size:16px;color:#6B5E73;line-height:1.5;text-wrap:pretty">Screens in stage order. 360 × 800 mobile frames, Bangla first. Role cards, stock stepper, pickup toggle, lot selection, chips and the Post / Send buttons are clickable.</div>
+</header>
+
+<!-- SCENE 1 -->
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:13px;font-weight:700;letter-spacing:0.12em;color:#5B2A6E">SCENE 1</span><span style="font-size:24px;font-weight:700">Sign in</span></div>
+  <div style="display:flex;gap:48px;align-items:flex-start">
+
+    <div id="S01" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">S01</span><span style="font-size:15px;font-weight:600">Login · phone</span></div>
+      <div data-screen-label="S01 Login" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 1px 0 #fff inset,0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column;position:relative">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="flex:1;display:flex;flex-direction:column;padding:56px 24px 0;gap:40px">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="width:64px;height:64px;border-radius:18px;background:#5B2A6E;display:flex;align-items:center;justify-content:center;color:#fff;font-size:34px"><i class="ph-fill ph-plant"></i></div>
+            <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;color:#5B2A6E">PeyajFlow</div>
+            <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:20px;font-weight:600">ন্যায্য দামে পেঁয়াজ, সরাসরি</div><div style="font-size:14px;color:#6B5E73">Fair price, direct</div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:16px;font-weight:600">মোবাইল নম্বর <span style="font-weight:400;color:#6B5E73;font-size:14px">· Mobile number</span></div>
+            <div style="display:flex;height:56px;border-radius:14px;background:#fff;box-shadow:0 0 0 2px #5B2A6E;overflow:hidden">
+              <div style="padding:0 14px;display:flex;align-items:center;font-size:18px;font-weight:600;color:#6B5E73;background:#F3ECF6">+88</div>
+              <div style="flex:1;display:flex;align-items:center;padding:0 14px;font-size:18px;letter-spacing:0.04em">01711-<span style="color:#A99BB2">XXXXXX</span><span style="width:2px;height:22px;background:#5B2A6E;margin-left:2px"></span></div>
+            </div>
+            <div style="font-size:14px;color:#6B5E73">পাসওয়ার্ড লাগবে না। SMS-এ কোড যাবে।</div>
+          </div>
+        </div>
+        <div style="padding:16px 24px 20px;display:flex;flex-direction:column;gap:16px">
+          <div style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600">OTP পাঠান <span style="font-weight:400;opacity:.8;font-size:14px">· Send OTP</span></div>
+          <div style="display:flex;justify-content:center"><div style="display:flex;background:#F0E8F4;border-radius:999px;padding:3px;font-size:14px;font-weight:600"><span style="padding:6px 16px;border-radius:999px;background:#fff;color:#5B2A6E;box-shadow:0 1px 2px rgba(0,0,0,.08)">বাংলা</span><span style="padding:6px 16px;color:#6B5E73">EN</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="S01b" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">S01</span><span style="font-size:15px;font-weight:600">Login · OTP step</span><span style="font-size:13px;color:#6B5E73">state via Tweaks</span></div>
+      <div data-screen-label="S01 OTP" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="height:52px;display:flex;align-items:center;padding:0 12px;font-size:24px"><i class="ph ph-arrow-left" style="padding:10px"></i></div>
+        <div style="flex:1;display:flex;flex-direction:column;padding:20px 24px 0;gap:32px">
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:26px;font-weight:700">কোড দিন</div><div style="font-size:16px;color:#6B5E73;line-height:1.5">+88 01711-XXXXXX নম্বরে ৪ সংখ্যার কোড পাঠানো হয়েছে</div><div style="font-size:14px;color:#6B5E73">Enter the 4-digit code · auto-read from SMS</div></div>
+          <div style="display:flex;gap:12px">
+            <sc-for list="{{ otpBoxes }}" as="b" hint-placeholder-count="4"><div style="width:64px;height:68px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;box-shadow:{{ b.ring }}">{{ b.d }}</div></sc-for>
+          </div>
+          <sc-if value="{{ otpError }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:8px;align-items:center;color:#C62828;font-size:16px;font-weight:500;margin-top:-16px"><i class="ph-fill ph-warning-circle" style="font-size:20px"></i><span>ভুল কোড, আবার চেষ্টা করুন · Wrong code</span></div></sc-if>
+          <div style="font-size:15px;color:#6B5E73;display:flex;gap:6px;align-items:center"><i class="ph ph-clock"></i>আবার পাঠান ৩০ সেকেন্ডে · Resend in 30s</div>
+        </div>
+        <div style="padding:16px 24px 20px;display:flex;flex-direction:column;gap:16px">
+          <div style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:17px;font-weight:600">
+            <sc-if value="{{ otpLoading }}" hint-placeholder-val="{{ false }}"><span style="display:flex;gap:10px;align-items:center">{{ spinner }}যাচাই হচ্ছে…</span></sc-if>
+            <sc-if value="{{ otpNotLoading }}" hint-placeholder-val="{{ true }}"><span>যাচাই করুন <span style="font-weight:400;opacity:.8;font-size:14px">· Verify</span></span></sc-if>
+          </div>
+          <div style="display:flex;justify-content:center"><div style="display:flex;background:#F0E8F4;border-radius:999px;padding:3px;font-size:14px;font-weight:600"><span style="padding:6px 16px;border-radius:999px;background:#fff;color:#5B2A6E">বাংলা</span><span style="padding:6px 16px;color:#6B5E73">EN</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="S02" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">S02</span><span style="font-size:15px;font-weight:600">Role selection</span></div>
+      <div data-screen-label="S02 Role" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="height:52px;display:flex;align-items:center;justify-content:flex-end;padding:0 20px"><div style="display:flex;background:#F0E8F4;border-radius:999px;padding:3px;font-size:13px;font-weight:600"><span style="padding:4px 12px;border-radius:999px;background:#fff;color:#5B2A6E">বাংলা</span><span style="padding:4px 12px;color:#6B5E73">EN</span></div></div>
+        <div style="flex:1;display:flex;flex-direction:column;padding:16px 20px 0;gap:24px">
+          <div style="display:flex;flex-direction:column;gap:4px;padding:0 4px"><div style="font-size:30px;font-weight:700">আপনি কে?</div><div style="font-size:15px;color:#6B5E73">Who are you?</div></div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ roles }}" as="r" hint-placeholder-count="3">
+              <div onClick="{{ r.pick }}" style="display:flex;gap:16px;align-items:center;padding:18px;border-radius:18px;background:{{ r.bg }};box-shadow:{{ r.ring }};cursor:pointer;position:relative">
+                <div style="width:60px;height:60px;border-radius:16px;background:#F0E8F4;color:#5B2A6E;display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0"><i class="{{ r.icon }}"></i></div>
+                <div style="display:flex;flex-direction:column;gap:3px;flex:1"><div style="font-size:20px;font-weight:700">{{ r.bn }} <span style="font-size:14px;font-weight:500;color:#6B5E73">/ {{ r.en }}</span></div><div style="font-size:15px;color:#4A3D52;line-height:1.4">{{ r.line }}</div></div>
+                <div style="width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;background:{{ r.tickBg }};box-shadow:{{ r.tickRing }}"><i class="ph-bold ph-check"></i></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="padding:16px 20px 24px"><div style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600">শুরু করুন <span style="font-weight:400;opacity:.8;font-size:14px">· Start</span></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCENE 2 -->
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:13px;font-weight:700;letter-spacing:0.12em;color:#5B2A6E">SCENE 2</span><span style="font-size:24px;font-weight:700">Smart Price</span><span style="font-size:15px;color:#6B5E73">Karim checks what his onions are worth</span></div>
+  <div style="display:flex;gap:48px;align-items:flex-start">
+
+    <div id="F01" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">F01</span><span style="font-size:15px;font-weight:600">Farmer home</span><span style="font-size:13px;color:#6B5E73">advice state via Tweaks</span></div>
+      <div data-screen-label="F01 Farmer home" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:6px 18px 10px;display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0">
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:18px;font-weight:700">আসসালামু আলাইকুম, করিম ভাই</div><div style="display:flex;gap:4px;align-items:center;font-size:14px;color:#5B2A6E;background:#F0E8F4;padding:3px 10px;border-radius:999px;align-self:flex-start;font-weight:500"><i class="ph-fill ph-map-pin"></i>সাঁথিয়া, পাবনা</div></div>
+          <div style="display:flex;background:#F0E8F4;border-radius:999px;padding:3px;font-size:12px;font-weight:600"><span style="padding:3px 9px;border-radius:999px;background:#fff;color:#5B2A6E">বাংলা</span><span style="padding:3px 9px;color:#6B5E73">EN</span></div>
+        </div>
+        <div style="flex:1;overflow:auto;padding:4px 16px 12px;display:flex;flex-direction:column;gap:12px">
+          <div style="background:#5B2A6E;color:#fff;border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:15px;opacity:.85">আজকের ন্যায্য দাম · Today's fair price</div>
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:32px;font-weight:700;letter-spacing:-0.01em">৳1,250–1,350</span><span style="font-size:17px;opacity:.85">/ মণ</span></div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px"><span style="display:flex;align-items:center;gap:3px;background:#E6F2E7;color:#1B5E20;padding:2px 8px;border-radius:999px;font-weight:600"><i class="ph-bold ph-trend-up"></i>বাড়ছে</span><span style="opacity:.85">গতকাল ৳1,220 · Yesterday</span></div>
+          </div>
+          <sc-if value="{{ adviceWait }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 0 0 1px #F3DFA6">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center;background:#F9A825;color:#3D2A00;padding:5px 12px;border-radius:999px;font-size:16px;font-weight:700"><i class="ph-fill ph-hourglass-medium"></i>অপেক্ষা করুন</span><span style="font-size:13px;color:#6B5E73;font-weight:500">নিশ্চয়তা: উচ্চ · High</span></div>
+              <div style="font-size:16px;line-height:1.45">আগামী ৩–৪ সপ্তাহে দাম বাড়তে পারে</div>
+              <div style="display:flex;gap:8px;align-items:center;background:#FEF6E0;border-radius:12px;padding:8px 10px;font-size:16px;font-weight:600;color:#5C3F00"><i class="ph-fill ph-lightbulb"></i>৪০ মণ এখন বিক্রি, ৬০ মণ রাখুন</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ adviceSell }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 0 0 1px #BFDDC1">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center;background:#2E7D32;color:#fff;padding:5px 12px;border-radius:999px;font-size:16px;font-weight:700"><i class="ph-fill ph-check-circle"></i>এখন বিক্রি করুন</span><span style="font-size:13px;color:#6B5E73;font-weight:500">নিশ্চয়তা: উচ্চ · High</span></div>
+              <div style="font-size:16px;line-height:1.45">দাম এখন সর্বোচ্চের কাছাকাছি, সামনে কমতে পারে</div>
+              <div style="display:flex;gap:8px;align-items:center;background:#E6F2E7;border-radius:12px;padding:8px 10px;font-size:16px;font-weight:600;color:#1B5E20"><i class="ph-fill ph-lightbulb"></i>১০০ মণ এখন বিক্রি করুন</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ advicePart }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 0 0 1px #D9C6E2">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center;background:#5B2A6E;color:#fff;padding:5px 12px;border-radius:999px;font-size:16px;font-weight:700"><i class="ph-fill ph-chart-pie-slice"></i>আংশিক বিক্রি</span><span style="font-size:13px;color:#6B5E73;font-weight:500">নিশ্চয়তা: মাঝারি · Medium</span></div>
+              <div style="font-size:16px;line-height:1.45">দাম স্থির, কিছু বিক্রি করে বাকিটা রাখুন</div>
+              <div style="display:flex;gap:8px;align-items:center;background:#F0E8F4;border-radius:12px;padding:8px 10px;font-size:16px;font-weight:600;color:#3E1A4C"><i class="ph-fill ph-lightbulb"></i>৪০ মণ এখন বিক্রি, ৬০ মণ রাখুন</div>
+            </div>
+          </sc-if>
+          <div style="background:#fff;border-radius:18px;padding:12px 14px 8px;display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:600">৬ সপ্তাহের দাম</span><span style="display:flex;gap:10px;color:#6B5E73;font-size:12px"><span style="display:flex;gap:4px;align-items:center"><span style="width:14px;height:2px;background:#5B2A6E"></span>আগে</span><span style="display:flex;gap:4px;align-items:center"><span style="width:14px;border-top:2px dashed #2E7D32"></span>পূর্বাভাস</span></span></div>
+            <svg viewBox="0 0 300 112" width="300" height="104" style="display:block">
+              <line x1="0" y1="71.7" x2="300" y2="71.7" stroke="#EEE6F2"></line><line x1="0" y1="33" x2="300" y2="33" stroke="#EEE6F2"></line>
+              <polygon points="194,61.4 240,38.3 286,21.6 286,44.7 240,53.7" fill="#2E7D32" fill-opacity="0.12"></polygon>
+              <polyline points="10,89.7 56,84.6 102,78.1 148,71.7 194,61.4" fill="none" stroke="#5B2A6E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></polyline>
+              <polyline points="194,61.4 240,46 286,33.1" fill="none" stroke="#2E7D32" stroke-width="2.5" stroke-dasharray="5 4" stroke-linecap="round"></polyline>
+              <circle cx="194" cy="61.4" r="5" fill="#5B2A6E" stroke="#fff" stroke-width="2"></circle>
+              <text x="194" y="108" font-size="11" text-anchor="middle" fill="#5B2A6E" font-weight="600" font-family="Hind Siliguri">আজ</text>
+              <text x="10" y="108" font-size="11" fill="#8A7D92" font-family="Hind Siliguri">৪ সপ্তাহ আগে</text>
+              <text x="286" y="108" font-size="11" text-anchor="end" fill="#8A7D92" font-family="Hind Siliguri">+২</text>
+              <text x="298" y="29" font-size="10" text-anchor="end" fill="#8A7D92">1,500</text><text x="298" y="68" font-size="10" text-anchor="end" fill="#8A7D92">1,200</text>
+            </svg>
+          </div>
+          <div style="background:#fff;border-radius:18px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;gap:10px;align-items:center"><i class="ph-duotone ph-warehouse" style="font-size:26px;color:#5B2A6E"></i><div style="font-size:16px;font-weight:600">আমার মজুদ: ১০০ মণ</div></div>
+            <div style="display:flex;gap:4px;align-items:center;font-size:15px;font-weight:600;color:#5B2A6E;padding:6px 12px;border-radius:10px;box-shadow:0 0 0 1.5px #5B2A6E"><i class="ph ph-seal-check"></i>Grade</div>
+          </div>
+        </div>
+        <div style="padding:10px 16px 10px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;background:#FAF7FB">
+          <div style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600"><i class="ph-fill ph-camera" style="font-size:22px"></i>পেঁয়াজের ছবি তুলুন</div>
+          <div style="height:44px;border-radius:14px;color:#5B2A6E;display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:600;box-shadow:0 0 0 1.5px #D9C6E2"><i class="ph ph-storefront"></i>বিক্রির জন্য দিন</div>
+        </div>
+        <div style="height:64px;flex-shrink:0;background:#fff;border-top:1px solid #EEE6F2;display:flex">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#5B2A6E;font-size:12px;font-weight:600"><i class="ph-fill ph-house" style="font-size:24px"></i>হোম</div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px"><i class="ph ph-package" style="font-size:24px"></i>আমার মজুদ</div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px;position:relative"><i class="ph ph-handshake" style="font-size:24px"></i>অফার<span style="position:absolute;top:8px;left:52px;background:#C62828;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center">১</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px"><i class="ph ph-user-circle" style="font-size:24px"></i>প্রোফাইল</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="F02" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">F02</span><span style="font-size:15px;font-weight:600">Photo grade · camera</span></div>
+      <div data-screen-label="F02 Camera" style="width:360px;height:800px;background:#16101A;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35);display:flex;flex-direction:column;color:#fff;position:relative">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#221A27 0 10px,#1C1520 10px 20px)"></div>
+        <div style="position:absolute;left:50%;top:330px;transform:translate(-50%,-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#6E6176">live camera feed</div>
+        <div style="position:relative;height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="position:relative;display:flex;justify-content:space-between;align-items:center;padding:8px 16px">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;font-size:22px"><i class="ph ph-x"></i></div>
+          <div style="background:rgba(0,0,0,.55);padding:8px 16px;border-radius:999px;font-size:16px;font-weight:600">ছবি ১/৩</div>
+          <div style="height:44px;padding:0 12px;border-radius:22px;background:rgba(0,0,0,.45);display:flex;align-items:center;gap:4px;font-size:13px"><i class="ph-fill ph-lightning" style="font-size:20px;color:#F9A825"></i>ফ্ল্যাশ</div>
+        </div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px">
+          <div style="width:270px;height:270px;border-radius:50%;border:3px dashed rgba(255,255,255,.85);box-shadow:0 0 0 2000px rgba(0,0,0,.25)"></div>
+          <div style="background:rgba(0,0,0,.6);padding:12px 18px;border-radius:14px;font-size:17px;font-weight:500;text-align:center;line-height:1.45;max-width:280px">১০–১৫টি পেঁয়াজ একসাথে রেখে ছবি তুলুন<div style="font-size:13px;opacity:.75">Place 10–15 onions together</div></div>
+        </div>
+        <div style="position:relative;padding:20px 32px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.5)">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px"><div style="width:48px;height:48px;border-radius:12px;background:#3A2E40;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:22px"><i class="ph ph-images"></i></div>গ্যালারি</div>
+          <div style="width:80px;height:80px;border-radius:50%;border:4px solid #fff;display:flex;align-items:center;justify-content:center"><div style="width:64px;height:64px;border-radius:50%;background:#fff"></div></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px"><div style="width:48px;height:48px;border-radius:50%;background:#3A2E40;display:flex;align-items:center;justify-content:center;font-size:22px"><i class="ph ph-camera-rotate"></i></div>ঘোরান</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="F02b" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">F02</span><span style="font-size:15px;font-weight:600">After 3 photos · analysing (2s)</span></div>
+      <div data-screen-label="F02 Analysing" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:0 32px">
+          <div style="display:flex;gap:8px">
+            <div style="width:84px;height:84px;border-radius:14px;background:repeating-linear-gradient(45deg,#E9DFEE 0 6px,#F3ECF6 6px 12px);display:flex;align-items:flex-end;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#8A7D92;padding-bottom:6px;box-sizing:border-box">photo 1</div>
+            <div style="width:84px;height:84px;border-radius:14px;background:repeating-linear-gradient(45deg,#E9DFEE 0 6px,#F3ECF6 6px 12px);display:flex;align-items:flex-end;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#8A7D92;padding-bottom:6px;box-sizing:border-box">photo 2</div>
+            <div style="width:84px;height:84px;border-radius:14px;background:repeating-linear-gradient(45deg,#E9DFEE 0 6px,#F3ECF6 6px 12px);display:flex;align-items:flex-end;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#8A7D92;padding-bottom:6px;box-sizing:border-box">photo 3</div>
+          </div>
+          <div style="color:#5B2A6E">{{ bigSpinner }}</div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center"><div style="font-size:24px;font-weight:700">বিশ্লেষণ হচ্ছে…</div><div style="font-size:15px;color:#6B5E73">Analysing size, neck and sprouting</div></div>
+          <div style="width:220px;height:6px;border-radius:3px;background:#EEE6F2;overflow:hidden"><div style="width:65%;height:100%;background:#5B2A6E;border-radius:3px"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="F03" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">F03</span><span style="font-size:15px;font-weight:600">Grade result</span></div>
+      <div data-screen-label="F03 Grade result" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="height:48px;display:flex;align-items:center;gap:6px;padding:0 10px;font-size:18px;font-weight:700;flex-shrink:0"><i class="ph ph-arrow-left" style="padding:8px;font-size:22px"></i>গ্রেড ফলাফল</div>
+        <div style="flex:1;overflow:auto;padding:0 16px 12px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;gap:8px">
+            <div style="flex:1;height:64px;border-radius:12px;background:repeating-linear-gradient(45deg,#E9DFEE 0 6px,#F3ECF6 6px 12px);display:flex;align-items:flex-end;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#8A7D92;padding-bottom:4px;box-sizing:border-box">photo 1</div>
+            <div style="flex:1;height:64px;border-radius:12px;background:repeating-linear-gradient(45deg,#E9DFEE 0 6px,#F3ECF6 6px 12px);display:flex;align-items:flex-end;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#8A7D92;padding-bottom:4px;box-sizing:border-box">photo 2</div>
+            <div style="flex:1;height:64px;border-radius:12px;background:repeating-linear-gradient(45deg,#E9DFEE 0 6px,#F3ECF6 6px 12px);display:flex;align-items:flex-end;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#8A7D92;padding-bottom:4px;box-sizing:border-box">photo 3</div>
+          </div>
+          <div style="background:#fff;border-radius:20px;padding:16px;display:flex;gap:16px;align-items:center">
+            <div style="width:88px;height:88px;border-radius:22px;background:#2E7D32;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0"><div style="font-size:12px;font-weight:600;letter-spacing:.08em;opacity:.9">GRADE</div><div style="font-size:44px;font-weight:700;line-height:1">A</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;gap:6px;align-items:center;font-size:16px"><i class="ph-fill ph-check-circle" style="color:#2E7D32;font-size:20px"></i>বড় আকার</div>
+              <div style="display:flex;gap:6px;align-items:center;font-size:16px"><i class="ph-fill ph-check-circle" style="color:#2E7D32;font-size:20px"></i>শুকনো গলা</div>
+              <div style="display:flex;gap:6px;align-items:center;font-size:16px"><i class="ph-fill ph-check-circle" style="color:#2E7D32;font-size:20px"></i>অঙ্কুর নেই</div>
+              <div style="display:flex;gap:6px;align-items:center;font-size:16px"><i class="ph-fill ph-warning" style="color:#C77A00;font-size:20px"></i>২% দাগ</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:#6B5E73;margin-top:-6px;padding:0 4px;display:flex;justify-content:space-between"><span>Large · Dry neck · No sprouting · 2% spots</span><span style="font-weight:600">নিশ্চয়তা: উচ্চ</span></div>
+          <div style="background:#5B2A6E;color:#fff;border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
+            <div style="font-size:15px;opacity:.85">এই গ্রেডের প্রস্তাবিত দাম · Suggested</div>
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:34px;font-weight:700">৳1,300</span><span style="font-size:17px;opacity:.85">/ মণ</span></div>
+            <div style="font-size:14px;opacity:.85">সীমা ৳1,250–1,350 · Range</div>
+          </div>
+          <div style="background:#FBE9E9;border-radius:16px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start">
+            <i class="ph-fill ph-scales" style="font-size:22px;color:#C62828;margin-top:2px"></i>
+            <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;line-height:1.45;color:#7A1414;font-weight:500">ব্যাপারীর প্রস্তাব ৳1,000 — ন্যায্য দামের চেয়ে ৳300 কম</div><div style="font-size:13px;color:#8F3A3A">Trader offered ৳1,000 — ৳300 below fair</div></div>
+          </div>
+        </div>
+        <div style="padding:10px 16px 20px;display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+          <div style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600">বিক্রির জন্য দিন <span style="font-weight:400;opacity:.8;font-size:14px">· Post for sale</span></div>
+          <div style="height:44px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:16px;font-weight:600;color:#5B2A6E"><i class="ph ph-arrow-counter-clockwise"></i>আবার ছবি তুলুন</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCENE 3 -->
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:13px;font-weight:700;letter-spacing:0.12em;color:#5B2A6E">SCENE 3</span><span style="font-size:24px;font-weight:700">Direct Deal</span><span style="font-size:15px;color:#6B5E73">Supply and demand meet</span></div>
+  <div style="display:flex;gap:48px;align-items:flex-start">
+
+    <div id="F04" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">F04</span><span style="font-size:15px;font-weight:600">Post stock</span><span style="font-size:13px;color:#6B5E73">tap Post for toast</span></div>
+      <div data-screen-label="F04 Post stock" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column;position:relative">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="height:48px;display:flex;align-items:center;gap:6px;padding:0 10px;font-size:18px;font-weight:700;flex-shrink:0"><i class="ph ph-arrow-left" style="padding:8px;font-size:22px"></i>বিক্রির জন্য দিন</div>
+        <div style="flex:1;overflow:auto;padding:4px 16px 12px;display:flex;flex-direction:column;gap:10px">
+          <div style="background:#fff;border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center">
+            <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:600">পরিমাণ</div><div style="font-size:13px;color:#6B5E73">পরামর্শ অনুযায়ী</div></div>
+            <div style="display:flex;align-items:center;gap:4px">
+              <div onClick="{{ qtyDown }}" style="width:44px;height:44px;border-radius:12px;background:#F0E8F4;color:#5B2A6E;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer"><i class="ph-bold ph-minus"></i></div>
+              <div style="min-width:80px;text-align:center;font-size:20px;font-weight:700">{{ qtyBn }} মণ</div>
+              <div onClick="{{ qtyUp }}" style="width:44px;height:44px;border-radius:12px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer"><i class="ph-bold ph-plus"></i></div>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:16px;padding:4px 14px;display:flex;flex-direction:column">
+            <div style="display:flex;justify-content:space-between;align-items:center;min-height:52px;border-bottom:1px solid #F1EBF4"><span style="font-size:16px;font-weight:600">গ্রেড</span><span style="background:#2E7D32;color:#fff;font-size:15px;font-weight:700;padding:3px 12px;border-radius:8px;display:flex;gap:4px;align-items:center"><i class="ph-fill ph-seal-check"></i>A</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;min-height:52px;border-bottom:1px solid #F1EBF4"><span style="font-size:16px;font-weight:600">চাওয়া দাম</span><span style="display:flex;align-items:center;gap:6px;font-size:17px;font-weight:700;padding:6px 10px;border-radius:10px;box-shadow:0 0 0 1.5px #D9C6E2">৳1,300 <span style="font-size:14px;font-weight:400;color:#6B5E73">/ মণ</span><i class="ph ph-pencil-simple" style="color:#5B2A6E"></i></span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;min-height:52px;border-bottom:1px solid #F1EBF4"><span style="font-size:16px;font-weight:600">অবস্থান</span><span style="font-size:16px;color:#4A3D52;display:flex;gap:4px;align-items:center"><i class="ph ph-map-pin"></i>সাঁথিয়া, পাবনা</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;min-height:52px"><span style="font-size:16px;font-weight:600">কবে থেকে</span><span style="font-size:16px;color:#5B2A6E;font-weight:600;display:flex;gap:6px;align-items:center"><i class="ph ph-calendar-blank"></i>আজ</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:16px;font-weight:600;padding:0 4px">পিকআপ</div>
+            <div style="display:flex;background:#F0E8F4;border-radius:14px;padding:4px;gap:4px">
+              <div onClick="{{ pickHome }}" style="flex:1;min-height:48px;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;font-weight:600;cursor:pointer;background:{{ pHomeBg }};color:{{ pHomeFg }}"><i class="ph ph-house-line"></i>বাড়ি থেকে নেবে</div>
+              <div onClick="{{ pickMarket }}" style="flex:1;min-height:48px;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;font-weight:600;cursor:pointer;background:{{ pMktBg }};color:{{ pMktFg }}"><i class="ph ph-truck"></i>হাটে দেব</div>
+            </div>
+          </div>
+        </div>
+        <div style="flex-shrink:0;padding:12px 16px 20px;display:flex;flex-direction:column;gap:10px;background:#fff;border-top:1px solid #EEE6F2">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:15px;color:#6B5E73">মোট</span><span style="font-size:18px;font-weight:700">{{ qtyBn }} মণ × ৳1,300 = ৳{{ qtyTotal }}</span></div>
+          <div onClick="{{ postStock }}" style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600;cursor:pointer">পোস্ট করুন <span style="font-weight:400;opacity:.8;font-size:14px">· Post</span></div>
+        </div>
+        <sc-if value="{{ posted }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;left:16px;right:16px;top:92px;background:#22172A;color:#fff;border-radius:16px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;box-shadow:0 12px 30px -8px rgba(0,0,0,.4)">
+            <i class="ph-fill ph-eye" style="font-size:22px;color:#8BD08F;margin-top:1px"></i><div style="font-size:16px;line-height:1.45">আপনার পেঁয়াজ ৩ জন ক্রেতা ও ব্যাপারী দেখছেন</div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div id="B01" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">B01</span><span style="font-size:15px;font-weight:600">Post demand · buyer</span></div>
+      <div data-screen-label="B01 Post demand" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:4px 18px 12px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0"><div style="display:flex;flex-direction:column"><div style="font-size:20px;font-weight:700">নতুন চাহিদা</div><div style="font-size:13px;color:#6B5E73">নাদিয়া রহমান · কারওয়ান বাজার</div></div><div style="display:flex;background:#F0E8F4;border-radius:999px;padding:3px;font-size:12px;font-weight:600"><span style="padding:3px 9px;border-radius:999px;background:#fff;color:#5B2A6E">বাংলা</span><span style="padding:3px 9px;color:#6B5E73">EN</span></div></div>
+        <div style="flex:1;overflow:auto;padding:0 16px 12px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:15px;font-weight:600">পরিমাণ · Quantity</div>
+            <div style="display:flex;gap:8px"><div style="flex:1;height:50px;border-radius:12px;background:#fff;box-shadow:0 0 0 1.5px #D9C6E2;display:flex;align-items:center;padding:0 14px;font-size:18px;font-weight:700">5</div><div style="display:flex;background:#F0E8F4;border-radius:12px;padding:3px;font-size:14px;font-weight:600"><span style="padding:0 12px;display:flex;align-items:center;border-radius:9px;background:#5B2A6E;color:#fff">টন</span><span style="padding:0 12px;display:flex;align-items:center;color:#6B5E73">মণ</span></div></div>
+            <div style="font-size:13px;color:#6B5E73">≈ ১৩৪ মণ</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:15px;font-weight:600">গ্রেড · Grade</div>
+            <div style="display:flex;gap:8px"><sc-for list="{{ gradeChips }}" as="g" hint-placeholder-count="3"><div onClick="{{ g.pick }}" style="flex:1;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:4px;font-size:17px;font-weight:700;cursor:pointer;background:{{ g.bg }};color:{{ g.fg }};box-shadow:{{ g.ring }}">{{ g.label }}</div></sc-for></div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:15px;font-weight:600">লক্ষ্য দাম · Target price / মণ</div>
+            <div style="display:flex;gap:8px;align-items:center"><div style="flex:1;height:50px;border-radius:12px;background:#fff;box-shadow:0 0 0 1.5px #D9C6E2;display:flex;align-items:center;padding:0 14px;font-size:17px;font-weight:600">৳1,250</div><span style="color:#6B5E73">–</span><div style="flex:1;height:50px;border-radius:12px;background:#fff;box-shadow:0 0 0 1.5px #D9C6E2;display:flex;align-items:center;padding:0 14px;font-size:17px;font-weight:600">৳1,350</div></div></div>
+          <div style="display:flex;gap:8px">
+            <div style="flex:1.3;display:flex;flex-direction:column;gap:6px"><div style="font-size:15px;font-weight:600">কোথায়</div><div style="height:50px;border-radius:12px;background:#fff;box-shadow:0 0 0 1.5px #D9C6E2;display:flex;align-items:center;gap:6px;padding:0 12px;font-size:15px"><i class="ph ph-map-pin" style="color:#5B2A6E"></i>কারওয়ান বাজার, ঢাকা</div></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:6px"><div style="font-size:15px;font-weight:600">কবের মধ্যে</div><div style="height:50px;border-radius:12px;background:#fff;box-shadow:0 0 0 1.5px #D9C6E2;display:flex;align-items:center;gap:6px;padding:0 12px;font-size:15px"><i class="ph ph-calendar-blank" style="color:#5B2A6E"></i>২৩ অক্টো</div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:15px;font-weight:600">পেমেন্ট · Payment</div>
+            <div style="display:flex;gap:8px"><sc-for list="{{ payChips }}" as="p" hint-placeholder-count="3"><div onClick="{{ p.pick }}" style="height:40px;padding:0 14px;border-radius:999px;display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }};box-shadow:{{ p.ring }}">{{ p.label }}</div></sc-for></div></div>
+          <div style="background:#E6F2E7;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;color:#1B5E20"><i class="ph-fill ph-lightning" style="font-size:20px;margin-top:2px"></i><div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:15px;font-weight:600;line-height:1.45">পাবনায় ১৮০ মণ Grade A পেঁয়াজ পাওয়া যাচ্ছে</div><div style="font-size:13px">180 maunds Grade A available in Pabna</div></div></div>
+        </div>
+        <div style="padding:10px 16px 10px;flex-shrink:0"><div style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600">চাহিদা পোস্ট করুন</div></div>
+        <div style="height:64px;flex-shrink:0;background:#fff;border-top:1px solid #EEE6F2;display:flex">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#5B2A6E;font-size:12px;font-weight:600"><i class="ph-fill ph-plus-circle" style="font-size:24px"></i>চাহিদা</div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px"><i class="ph ph-receipt" style="font-size:24px"></i>অর্ডার</div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px"><i class="ph ph-user-circle" style="font-size:24px"></i>প্রোফাইল</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="M01" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">M01</span><span style="font-size:15px;font-weight:600">Nearby stock and orders</span><span style="font-size:13px;color:#6B5E73">tap lots, tabs, map</span></div>
+      <div data-screen-label="M01 Nearby stock" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:4px 18px 10px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0"><div style="display:flex;flex-direction:column"><div style="font-size:20px;font-weight:700">রহিম ব্যাপারী</div><div style="font-size:13px;color:#6B5E73;display:flex;gap:4px;align-items:center"><i class="ph-fill ph-map-pin"></i>সুজানগর, পাবনা</div></div><div onClick="{{ toggleMap }}" style="height:40px;padding:0 12px;border-radius:12px;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;cursor:pointer;background:{{ mapBtnBg }};color:{{ mapBtnFg }};box-shadow:0 0 0 1.5px #5B2A6E"><i class="ph ph-map-trifold"></i>ম্যাপ</div></div>
+        <div style="display:flex;padding:0 16px;gap:4px;flex-shrink:0;border-bottom:1px solid #EEE6F2">
+          <div onClick="{{ tabStock }}" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;cursor:pointer;color:{{ tStockFg }};box-shadow:{{ tStockLine }}">নিকটের মজুদ</div>
+          <div onClick="{{ tabOrders }}" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;font-weight:600;cursor:pointer;color:{{ tOrdFg }};box-shadow:{{ tOrdLine }}">ক্রেতার চাহিদা<span style="background:#C62828;color:#fff;font-size:10px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center">১</span></div>
+        </div>
+        <div style="flex:1;overflow:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+          <div style="background:#3E1A4C;color:#fff;border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;gap:6px;align-items:center;font-size:12px;font-weight:600;letter-spacing:.04em;opacity:.8"><i class="ph-fill ph-storefront"></i>খোলা অর্ডার · OPEN ORDER</div>
+            <div style="font-size:15px;line-height:1.45;font-weight:500">নাদিয়া রহমান, কারওয়ান বাজার — ৫ টন Grade A, ৳1,250–1,350, ৭ দিন</div>
+            <div style="align-self:flex-start;height:36px;padding:0 14px;border-radius:10px;background:#fff;color:#3E1A4C;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700">Fill this order<i class="ph-bold ph-arrow-right"></i></div>
+          </div>
+          <sc-if value="{{ mapOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="height:150px;border-radius:16px;background:#E8EFE4;position:relative;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px #D8E2D2">
+              <div style="position:absolute;left:-20px;top:70px;width:420px;height:18px;background:#C9DCEB;transform:rotate(-12deg)"></div>
+              <div style="position:absolute;left:150px;top:-10px;width:6px;height:180px;background:#fff;transform:rotate(18deg)"></div>
+              <div style="position:absolute;left:8px;bottom:6px;font-size:11px;color:#55704A;font-weight:600">সুজানগর</div><div style="position:absolute;right:8px;top:6px;font-size:11px;color:#55704A;font-weight:600">সাঁথিয়া</div>
+              <div style="position:absolute;left:70px;top:96px;width:16px;height:16px;border-radius:50%;background:#22172A;border:3px solid #fff"></div>
+              <sc-for list="{{ lots }}" as="l" hint-placeholder-count="4"><div style="position:absolute;left:{{ l.x }}px;top:{{ l.y }}px;display:flex;flex-direction:column;align-items:center"><div style="background:{{ l.pinBg }};color:#fff;font-size:11px;font-weight:700;padding:2px 6px;border-radius:6px;white-space:nowrap">{{ l.qtyBn }} মণ</div><div style="width:2px;height:6px;background:{{ l.pinBg }}"></div></div></sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ tabIsStock }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ lots }}" as="l" hint-placeholder-count="4">
+                <div onClick="{{ l.toggle }}" style="background:#fff;border-radius:14px;padding:10px 12px;display:flex;gap:12px;align-items:center;cursor:pointer;box-shadow:{{ l.ring }}">
+                  <div style="width:24px;height:24px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;background:{{ l.boxBg }};box-shadow:{{ l.boxRing }}"><i class="ph-bold ph-check"></i></div>
+                  <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:repeating-linear-gradient(45deg,#E9DFEE 0 5px,#F3ECF6 5px 10px)"></div>
+                  <div style="flex:1;display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:600">{{ l.name }}</div><div style="font-size:14px;color:#4A3D52">{{ l.qtyBn }} মণ · ৳{{ l.priceFmt }} · {{ l.km }} km</div></div>
+                  <span style="background:#2E7D32;color:#fff;font-size:13px;font-weight:700;padding:2px 8px;border-radius:6px">A</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ tabIsOrders }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between"><span style="font-size:16px;font-weight:700">নাদিয়া রহমান</span><span style="font-size:13px;color:#6B5E73">ঢাকা</span></div>
+              <div style="font-size:14px;color:#4A3D52;line-height:1.5">৫ টন (≈১৩৪ মণ) · Grade A · ৳1,250–1,350 / মণ · ৭ দিনের মধ্যে · bKash</div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="flex-shrink:0;padding:12px 16px 20px;background:#fff;border-top:1px solid #EEE6F2;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:6px;align-items:center;font-size:16px;font-weight:600;color:{{ coverFg }}"><i class="{{ coverIcon }}" style="font-size:20px"></i>{{ coverText }}</div>
+          <div style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600">একসাথে অফার দিন</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="M02" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">M02</span><span style="font-size:15px;font-weight:600">Combine and offer</span><span style="font-size:13px;color:#6B5E73">tap Send for confirmation</span></div>
+      <div data-screen-label="M02 Combine and offer" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column;position:relative">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="height:48px;display:flex;align-items:center;gap:6px;padding:0 10px;font-size:18px;font-weight:700;flex-shrink:0"><i class="ph ph-arrow-left" style="padding:8px;font-size:22px"></i>একসাথে অফার</div>
+        <div style="flex:1;overflow:auto;padding:0 16px 12px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#6B5E73;padding:0 2px">কৃষকদের অফার</div>
+            <div style="background:#fff;border-radius:14px;padding:2px 12px">
+              <sc-for list="{{ offerRows }}" as="o" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:8px;min-height:48px;border-bottom:1px solid #F1EBF4">
+                  <div style="flex:1;font-size:15px;font-weight:600">{{ o.name }}<div style="font-size:12px;color:#6B5E73;font-weight:400">{{ o.qtyBn }} মণ</div></div>
+                  <div style="font-size:14px;font-weight:600;padding:4px 8px;border-radius:8px;box-shadow:0 0 0 1.5px #D9C6E2">৳{{ o.priceFmt }}</div>
+                  <div style="width:72px;text-align:right;font-size:15px;font-weight:700">৳{{ o.subFmt }}</div>
+                </div>
+              </sc-for>
+              <div style="display:flex;justify-content:space-between;min-height:42px;align-items:center;font-size:14px;color:#6B5E73"><span>কৃষকদের মোট · ১৩৫ মণ</span><span style="font-weight:700;color:#22172A">৳1,75,400</span></div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;font-size:13px;color:#1B5E20;padding:0 2px"><i class="ph-fill ph-shield-check"></i>প্রত্যেক কৃষক তাঁর নিজের দাম দেখতে পান</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#6B5E73;padding:0 2px">ট্রাক ও পিকআপ</div>
+            <div style="background:#fff;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;gap:16px;font-size:14px"><span style="display:flex;gap:6px;align-items:center"><i class="ph ph-calendar-blank" style="color:#5B2A6E;font-size:18px"></i>কাল, সকাল ১০টা</span><span style="display:flex;gap:6px;align-items:center"><i class="ph ph-truck" style="color:#5B2A6E;font-size:18px"></i>৫ টন ট্রাক × ১</span></div>
+              <div style="display:flex;align-items:center;gap:4px;font-size:12px;color:#4A3D52">
+                <span style="width:10px;height:10px;border-radius:50%;background:#5B2A6E"></span>সুজানগর<span style="flex:1;border-top:2px dashed #D9C6E2"></span><span style="width:10px;height:10px;border-radius:50%;background:#5B2A6E"></span>সাঁথিয়া<span style="flex:1;border-top:2px dashed #D9C6E2"></span><i class="ph-fill ph-flag-checkered" style="font-size:14px"></i>ঢাকা
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#6B5E73;padding:0 2px">ক্রেতাকে কোট · নাদিয়া রহমান</div>
+            <div style="background:#5B2A6E;color:#fff;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:4px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:15px;opacity:.85">১৩৫ মণ · ঢাকায় পৌঁছানো</span><span style="font-size:22px;font-weight:700">৳1,420<span style="font-size:13px;font-weight:400;opacity:.85"> / মণ</span></span></div>
+              <div style="display:flex;justify-content:space-between;font-size:14px;opacity:.85"><span>মোট</span><span>৳1,91,700</span></div>
+            </div>
+            <div style="background:#FEF6E0;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#5C3F00"><span style="display:flex;gap:6px;align-items:center"><i class="ph ph-eye-slash"></i>শুধু আপনি দেখছেন · মার্জিন</span><span style="font-weight:700">৳120 / মণ</span></div>
+          </div>
+        </div>
+        <div style="padding:10px 16px 20px;flex-shrink:0;background:#fff;border-top:1px solid #EEE6F2"><div onClick="{{ sendOffers }}" style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600;cursor:pointer"><i class="ph-fill ph-paper-plane-tilt"></i>অফার পাঠান</div></div>
+        <sc-if value="{{ offersSent }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeSent }}" style="position:absolute;inset:0;background:rgba(34,23,42,.45);display:flex;align-items:flex-end;cursor:pointer">
+            <div style="width:100%;background:#fff;border-radius:24px 24px 0 0;padding:28px 24px 32px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+              <div style="width:64px;height:64px;border-radius:50%;background:#2E7D32;color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px"><i class="ph-bold ph-check"></i></div>
+              <div style="font-size:19px;font-weight:700;line-height:1.4">৪ জন কৃষক ও ১ জন ক্রেতাকে অফার পাঠানো হয়েছে</div>
+              <div style="font-size:14px;color:#6B5E73">Offers sent to 4 farmers and 1 buyer</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCENE 4 -->
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:13px;font-weight:700;letter-spacing:0.12em;color:#5B2A6E">SCENE 4</span><span style="font-size:24px;font-weight:700">Closing the deal</span><span style="font-size:15px;color:#6B5E73">Smartphone or basic phone</span></div>
+  <div style="display:flex;gap:48px;align-items:flex-start">
+
+    <div id="F05" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">F05</span><span style="font-size:15px;font-weight:600">Offer received</span></div>
+      <div data-screen-label="F05 Offer received" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="margin:6px 16px 0;background:#5B2A6E;color:#fff;border-radius:16px;padding:12px 14px;display:flex;gap:10px;align-items:center"><i class="ph-fill ph-bell-ringing" style="font-size:24px;color:#F9A825"></i><div style="display:flex;flex-direction:column"><span style="font-size:18px;font-weight:700">নতুন অফার!</span><span style="font-size:13px;opacity:.85">New offer · ২ মিনিট আগে</span></div></div>
+        <div style="flex:1;padding:16px;display:flex;flex-direction:column;gap:12px">
+          <div style="background:#fff;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div style="width:52px;height:52px;border-radius:50%;background:#F0E8F4;color:#5B2A6E;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700">র</div>
+              <div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:18px;font-weight:700">রহিম ব্যাপারী</div><div style="display:flex;gap:8px;align-items:center;font-size:13px;color:#4A3D52"><span>সুজানগর</span><span style="display:flex;gap:3px;align-items:center;color:#1B5E20;font-weight:600"><i class="ph-fill ph-seal-check"></i>যাচাইকৃত</span><span style="display:flex;gap:3px;align-items:center"><i class="ph-fill ph-star" style="color:#F9A825"></i>4.7 (৩২ ডিল)</span></div></div>
+            </div>
+            <div style="background:#FAF7FB;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:24px;font-weight:700;letter-spacing:-0.01em">৪০ মণ × ৳1,300</div>
+              <div style="font-size:28px;font-weight:700;color:#5B2A6E">= ৳52,000</div>
+              <div style="align-self:flex-start;display:flex;gap:6px;align-items:center;background:#E6F2E7;color:#1B5E20;font-size:15px;font-weight:600;padding:5px 12px;border-radius:999px"><i class="ph-fill ph-check-circle"></i>ন্যায্য দাম ✓ <span style="font-weight:400;font-size:13px">আজকের সীমার মধ্যে</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;gap:10px;align-items:center;font-size:16px"><i class="ph-duotone ph-truck" style="font-size:24px;color:#5B2A6E"></i><span>কাল সকাল ১০টা, বাড়ি থেকে</span></div>
+              <div style="display:flex;gap:10px;align-items:center;font-size:16px"><i class="ph-duotone ph-wallet" style="font-size:24px;color:#5B2A6E"></i><span>bKash, পিকআপের সময়</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:10px 16px 20px;display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+          <div style="height:56px;border-radius:14px;background:#2E7D32;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:19px;font-weight:700"><i class="ph-bold ph-check"></i>গ্রহণ করুন</div>
+          <div style="height:48px;border-radius:14px;box-shadow:0 0 0 1.5px #C9BDD0;color:#22172A;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600"><i class="ph ph-x"></i>না</div>
+          <div style="height:40px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:16px;font-weight:600;color:#5B2A6E"><i class="ph ph-chats-circle"></i>দাম নিয়ে কথা বলুন</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="P01" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">P01</span><span style="font-size:15px;font-weight:600">SMS on a basic phone</span><span style="font-size:13px;color:#6B5E73">offer → reply 1 → confirmation · weekly alert</span></div>
+      <div style="display:flex;gap:28px;align-items:flex-start">
+        <sc-for list="{{ smsPhones }}" as="ph" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+            <div data-screen-label="P01 SMS" style="width:230px;height:470px;background:#2A2A2E;border-radius:40px 40px 34px 34px;padding:22px 18px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;box-shadow:inset 0 2px 0 #4A4A50,0 24px 50px -20px rgba(0,0,0,.5)">
+              <div style="align-self:center;width:44px;height:5px;border-radius:3px;background:#151517"></div>
+              <div style="height:206px;background:#C9D8B9;border-radius:6px;box-shadow:inset 0 0 0 3px #111;padding:8px 9px;box-sizing:border-box;display:flex;flex-direction:column;gap:5px;font-family:'JetBrains Mono',monospace;color:#1E2A14;overflow:hidden">
+                <div style="display:flex;justify-content:space-between;font-size:9px;font-weight:600;border-bottom:1px solid #8FA07E;padding-bottom:3px"><span>{{ ph.head }}</span><span>▮▮▮ 10:02</span></div>
+                <div style="font-size:9.5px;line-height:1.38;white-space:pre-wrap">{{ ph.body }}</div>
+                <div style="margin-top:auto;display:flex;justify-content:space-between;font-size:9px;font-weight:600"><span>{{ ph.left }}</span><span>Back</span></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0 4px">
+                <div style="width:44px;height:16px;border-radius:8px;background:#3E3E44"></div>
+                <div style="width:46px;height:30px;border-radius:12px;background:#3E3E44;box-shadow:inset 0 0 0 2px #55555C"></div>
+                <div style="width:44px;height:16px;border-radius:8px;background:#3E3E44"></div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px">
+                <sc-for list="{{ keys }}" as="k" hint-placeholder-count="12"><div style="height:24px;border-radius:9px;background:#3A3A40;color:#E8E8EA;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ k }}</div></sc-for>
+              </div>
+            </div>
+            <div style="font-size:13px;color:#6B5E73;font-weight:500">{{ ph.cap }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="D01" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">D01</span><span style="font-size:15px;font-weight:600">Deal done</span><span style="font-size:13px;color:#6B5E73">role via Tweaks</span></div>
+      <div data-screen-label="D01 Deal done" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column;position:relative">
+        <div style="position:absolute;left:52px;top:96px;width:8px;height:14px;background:#5B2A6E;transform:rotate(20deg);border-radius:2px"></div>
+        <div style="position:absolute;left:290px;top:120px;width:8px;height:14px;background:#F9A825;transform:rotate(-30deg);border-radius:2px"></div>
+        <div style="position:absolute;left:96px;top:200px;width:6px;height:6px;background:#2E7D32;border-radius:50%"></div>
+        <div style="position:absolute;left:258px;top:220px;width:8px;height:12px;background:#2E7D32;transform:rotate(45deg);border-radius:2px"></div>
+        <div style="position:absolute;left:220px;top:84px;width:6px;height:6px;background:#5B2A6E;border-radius:50%"></div>
+        <div style="position:absolute;left:36px;top:170px;width:8px;height:12px;background:#F9A825;transform:rotate(-15deg);border-radius:2px"></div>
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:72px 24px 0;gap:14px;text-align:center">
+          <div style="width:104px;height:104px;border-radius:50%;background:#2E7D32;color:#fff;display:flex;align-items:center;justify-content:center;font-size:56px;box-shadow:0 0 0 12px #E6F2E7"><i class="ph-bold ph-check"></i></div>
+          <div style="font-size:30px;font-weight:700;margin-top:18px">বিক্রি সম্পন্ন!</div>
+          <sc-if value="{{ roleFarmer }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+              <div style="font-size:20px;font-weight:600"><span style="font-size:26px;font-weight:700;color:#2E7D32">৳52,000</span> bKash-এ জমা হয়েছে</div>
+              <div style="background:#E6F2E7;color:#1B5E20;border-radius:12px;padding:8px 14px;font-size:15px;font-weight:600;line-height:1.4">ব্যাপারীর প্রথম প্রস্তাবের চেয়ে ৳12,000 বেশি</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ roleMiddleman }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:10px;align-items:center"><div style="font-size:20px;font-weight:600">ট্রাক ভর্তি: ১৩৫ মণ পৌঁছেছে</div><div style="font-size:14px;color:#6B5E73">Truck full: 135 maunds delivered</div></div>
+          </sc-if>
+          <sc-if value="{{ roleBuyer }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:10px;align-items:center"><div style="font-size:20px;font-weight:600;line-height:1.4">৫ টন Grade A কারওয়ান বাজারে পৌঁছেছে</div><div style="font-size:14px;color:#6B5E73">5 tonnes Grade A delivered to Karwan Bazar</div></div>
+          </sc-if>
+          <div style="display:flex;align-items:flex-start;width:100%;margin-top:22px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;font-weight:500"><div style="width:28px;height:28px;border-radius:50%;background:#2E7D32;color:#fff;display:flex;align-items:center;justify-content:center"><i class="ph-bold ph-check"></i></div>অফার গৃহীত</div>
+            <div style="flex:.6;height:2px;background:#2E7D32;margin-top:14px"></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;font-weight:500"><div style="width:28px;height:28px;border-radius:50%;background:#2E7D32;color:#fff;display:flex;align-items:center;justify-content:center"><i class="ph-bold ph-check"></i></div>পিকআপ</div>
+            <div style="flex:.6;height:2px;background:#2E7D32;margin-top:14px"></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;font-weight:500"><div style="width:28px;height:28px;border-radius:50%;background:#2E7D32;color:#fff;display:flex;align-items:center;justify-content:center"><i class="ph-bold ph-check"></i></div>পেমেন্ট</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:center;margin-top:24px"><div style="font-size:15px;color:#4A3D52">{{ rateWho }}</div><div style="display:flex;gap:6px;font-size:32px;color:#F9A825"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div>
+        </div>
+        <div style="padding:10px 16px 20px;display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+          <div style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600">হোমে যান</div>
+          <div style="height:44px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:16px;font-weight:600;color:#5B2A6E"><i class="ph ph-receipt"></i>রসিদ দেখুন</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCENE 5 -->
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:13px;font-weight:700;letter-spacing:0.12em;color:#5B2A6E">SCENE 5</span><span style="font-size:24px;font-weight:700">Price alert</span><span style="font-size:15px;color:#6B5E73">Four weeks later</span></div>
+  <div style="display:flex;gap:48px;align-items:flex-start">
+
+    <div id="F06" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">F06</span><span style="font-size:15px;font-weight:600">Lock-screen notification</span></div>
+      <div data-screen-label="F06 Lock screen" style="width:360px;height:800px;background:#2A1633;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.5);display:flex;flex-direction:column;color:#fff">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600"><span>গ্রামীণফোন</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;padding-top:56px;gap:4px"><i class="ph-fill ph-lock-simple" style="font-size:18px;opacity:.8"></i><div style="font-size:84px;font-weight:300;letter-spacing:-0.03em;line-height:1.05">10:24</div><div style="font-size:17px;opacity:.85">শুক্রবার, ১৩ নভেম্বর</div></div>
+        <div style="margin:48px 12px 0;background:rgba(255,255,255,.94);color:#22172A;border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:8px;align-items:center;font-size:13px;color:#6B5E73"><div style="width:22px;height:22px;border-radius:6px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px"><i class="ph-fill ph-plant"></i></div><span style="font-weight:600;color:#22172A">PeyajFlow</span><span style="margin-left:auto">এখন</span></div>
+          <div style="font-size:16px;line-height:1.45">দাম এখন <b>৳1,650/মণ</b>। বাকি ৬০ মণ বিক্রির ভালো সময়।</div>
+        </div>
+        <div style="margin-top:auto;padding:0 40px 36px;display:flex;justify-content:space-between;align-items:center">
+          <div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:22px"><i class="ph-fill ph-flashlight"></i></div>
+          <div style="width:120px;height:5px;border-radius:3px;background:#fff;opacity:.8"></div>
+          <div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:22px"><i class="ph-fill ph-camera"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="F06b" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">F06</span><span style="font-size:15px;font-weight:600">Tap → Farmer home, Sell now</span></div>
+      <div data-screen-label="F06 Sell now" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>10:24</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:6px 18px 10px;display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0">
+          <div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:18px;font-weight:700">আসসালামু আলাইকুম, করিম ভাই</div><div style="display:flex;gap:4px;align-items:center;font-size:14px;color:#5B2A6E;background:#F0E8F4;padding:3px 10px;border-radius:999px;align-self:flex-start;font-weight:500"><i class="ph-fill ph-map-pin"></i>সাঁথিয়া, পাবনা</div></div>
+          <div style="display:flex;background:#F0E8F4;border-radius:999px;padding:3px;font-size:12px;font-weight:600"><span style="padding:3px 9px;border-radius:999px;background:#fff;color:#5B2A6E">বাংলা</span><span style="padding:3px 9px;color:#6B5E73">EN</span></div>
+        </div>
+        <div style="flex:1;overflow:auto;padding:4px 16px 12px;display:flex;flex-direction:column;gap:12px">
+          <div style="background:#5B2A6E;color:#fff;border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:15px;opacity:.85">আজকের ন্যায্য দাম · Today's fair price</div>
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:36px;font-weight:700">৳1,650</span><span style="font-size:17px;opacity:.85">/ মণ</span></div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px"><span style="display:flex;align-items:center;gap:3px;background:#E6F2E7;color:#1B5E20;padding:2px 8px;border-radius:999px;font-weight:600"><i class="ph-bold ph-trend-up"></i>+২৭%</span><span style="opacity:.85">৪ সপ্তাহ আগে ৳1,300</span></div>
+          </div>
+          <div style="background:#fff;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 0 0 1.5px #2E7D32">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center;background:#2E7D32;color:#fff;padding:6px 14px;border-radius:999px;font-size:17px;font-weight:700"><i class="ph-fill ph-check-circle"></i>এখন বিক্রি করুন</span><span style="font-size:13px;color:#6B5E73;font-weight:500">নিশ্চয়তা: উচ্চ · High</span></div>
+            <div style="font-size:16px;line-height:1.45">দাম পূর্বাভাস অনুযায়ী বেড়েছে। বাকি মজুদ বিক্রির ভালো সময়।</div>
+            <div style="background:#E6F2E7;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px;color:#1B5E20"><span style="font-size:14px">আপনার বাকি ৬০ মণ</span><span style="font-size:24px;font-weight:700">৬০ মণ × ৳1,650 = ৳99,000</span></div>
+          </div>
+          <div style="background:#fff;border-radius:18px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;gap:10px;align-items:center"><i class="ph-duotone ph-warehouse" style="font-size:26px;color:#5B2A6E"></i><div style="font-size:16px;font-weight:600">আমার মজুদ: ৬০ মণ</div></div>
+            <span style="font-size:13px;color:#6B5E73">৪০ মণ বিক্রি হয়েছে</span>
+          </div>
+        </div>
+        <div style="padding:10px 16px 10px;flex-shrink:0"><div style="height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600">বাকি ৬০ মণ পোস্ট করুন</div></div>
+        <div style="height:64px;flex-shrink:0;background:#fff;border-top:1px solid #EEE6F2;display:flex">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#5B2A6E;font-size:12px;font-weight:600"><i class="ph-fill ph-house" style="font-size:24px"></i>হোম</div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px"><i class="ph ph-package" style="font-size:24px"></i>আমার মজুদ</div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px"><i class="ph ph-handshake" style="font-size:24px"></i>অফার</div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px"><i class="ph ph-user-circle" style="font-size:24px"></i>প্রোফাইল</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="align-self:center;max-width:340px;display:flex;flex-direction:column;gap:12px;padding-left:8px">
+      <div style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#5B2A6E">STAGE LINE</div>
+      <div style="font-size:30px;font-weight:700;line-height:1.25;text-wrap:pretty">Karim sold 100 maunds for ৳1,51,000 instead of ৳1,00,000.</div>
+      <div style="font-size:15px;color:#6B5E73;line-height:1.5">40 × ৳1,300 = ৳52,000 · 60 × ৳1,650 = ৳99,000</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- OPTIONAL -->
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:13px;font-weight:700;letter-spacing:0.12em;color:#6B5E73">OPTIONAL</span><span style="font-size:24px;font-weight:700">Buyer tracking</span></div>
+  <div style="display:flex;gap:48px;align-items:flex-start">
+    <div id="B02" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:8px;align-items:center"><span style="background:#22172A;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px">B02</span><span style="font-size:15px;font-weight:600">Buyer orders</span></div>
+      <div data-screen-label="B02 Buyer orders" style="width:360px;height:800px;background:#FAF7FB;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35),0 0 0 1px rgba(62,26,76,.08);display:flex;flex-direction:column">
+        <div style="height:32px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;flex-shrink:0"><span>9:41</span><span style="display:flex;gap:5px"><i class="ph-fill ph-cell-signal-full"></i><i class="ph-fill ph-wifi-high"></i><i class="ph-fill ph-battery-full"></i></span></div>
+        <div style="padding:4px 18px 12px;flex-shrink:0"><div style="font-size:20px;font-weight:700">আমার অর্ডার</div><div style="font-size:13px;color:#6B5E73">My orders</div></div>
+        <div style="flex:1;padding:0 16px;display:flex;flex-direction:column;gap:12px">
+          <div style="background:#fff;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:18px;font-weight:700">৫ টন · Grade A</span><span style="font-size:13px;color:#6B5E73">#PF-24816</span></div>
+            <div style="display:flex;align-items:flex-start">
+              <sc-for list="{{ orderSteps }}" as="s" hint-placeholder-count="4">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;position:relative">
+                  <div style="width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;background:{{ s.bg }};box-shadow:{{ s.ring }};position:relative;z-index:1"><i class="{{ s.icon }}"></i></div>
+                  <div style="font-size:12px;line-height:1.3;font-weight:{{ s.weight }};color:{{ s.fg }}">{{ s.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:14px;color:#4A3D52;display:flex;gap:6px;align-items:center"><i class="ph ph-map-pin"></i>কারওয়ান বাজার, ঢাকা · ২৩ অক্টোবরের মধ্যে</div>
+          </div>
+          <div style="background:#fff;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 0 0 1.5px #5B2A6E">
+            <div style="font-size:12px;font-weight:700;letter-spacing:.08em;color:#5B2A6E">নতুন কোট · NEW QUOTE</div>
+            <div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;border-radius:50%;background:#F0E8F4;color:#5B2A6E;display:flex;align-items:center;justify-content:center;font-weight:700">র</div><div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:700">রহিম ব্যাপারী</div><div style="display:flex;gap:8px;font-size:13px;color:#4A3D52"><span style="display:flex;gap:3px;align-items:center;color:#1B5E20;font-weight:600"><i class="ph-fill ph-seal-check"></i>যাচাইকৃত</span><span style="display:flex;gap:3px;align-items:center"><i class="ph-fill ph-star" style="color:#F9A825"></i>4.7 (৩২ ডিল)</span></div></div></div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;background:#FAF7FB;border-radius:12px;padding:12px"><span style="font-size:15px">১৩৫ মণ · ঢাকায় পৌঁছানো</span><span style="font-size:20px;font-weight:700">৳1,420<span style="font-size:13px;font-weight:400;color:#6B5E73"> / মণ</span></span></div>
+            <div style="display:flex;gap:8px;align-items:center;font-size:14px;color:#4A3D52"><i class="ph-duotone ph-truck" style="font-size:20px;color:#5B2A6E"></i>৫ টন ট্রাক · পৌঁছাবে আনুমানিক কাল সন্ধ্যা ৭টা</div>
+          </div>
+        </div>
+        <div style="padding:10px 16px 10px;display:flex;gap:8px;flex-shrink:0">
+          <div style="flex:1;height:52px;border-radius:14px;box-shadow:0 0 0 1.5px #D9C6E2;color:#5B2A6E;display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;font-weight:600"><i class="ph ph-navigation-arrow"></i>ট্রাক ট্র্যাক</div>
+          <div style="flex:1.4;height:52px;border-radius:14px;background:#5B2A6E;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;font-size:16px;font-weight:600">কোট গ্রহণ করুন</div>
+        </div>
+        <div style="height:64px;flex-shrink:0;background:#fff;border-top:1px solid #EEE6F2;display:flex">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px"><i class="ph ph-plus-circle" style="font-size:24px"></i>চাহিদা</div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#5B2A6E;font-size:12px;font-weight:600"><i class="ph-fill ph-receipt" style="font-size:24px"></i>অর্ডার</div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#6B5E73;font-size:12px"><i class="ph ph-user-circle" style="font-size:24px"></i>প্রোফাইল</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;advice&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;wait&quot;,&quot;sell&quot;,&quot;part&quot;],&quot;default&quot;:&quot;wait&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;F01 Farmer home&quot;},&quot;otpState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;error&quot;,&quot;loading&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;S01 Login&quot;},&quot;dealRole&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;farmer&quot;,&quot;middleman&quot;,&quot;buyer&quot;],&quot;default&quot;:&quot;farmer&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;D01 Deal done&quot;}}">
+const BN = s => String(s).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+const INR = n => n.toLocaleString('en-IN');
+const LOTS = [
+  { id: 'karim', name: 'করিম মিয়া', qty: 40, price: 1300, km: 3, x: 200, y: 40 },
+  { id: 'rafiq', name: 'রফিক', qty: 35, price: 1280, km: 5, x: 110, y: 22 },
+  { id: 'selina', name: 'সেলিনা', qty: 30, price: 1320, km: 6, x: 250, y: 96 },
+  { id: 'habib', name: 'হাবিব', qty: 30, price: 1300, km: 8, x: 140, y: 108 },
+];
+const ROLES = [
+  { id: 'farmer', bn: 'কৃষক', en: 'Farmer', icon: 'ph-duotone ph-plant', line: 'ন্যায্য দামে পেঁয়াজ বিক্রি করুন' },
+  { id: 'middleman', bn: 'ব্যাপারী', en: 'Middleman', icon: 'ph-duotone ph-truck', line: 'মজুদ খুঁজুন, অর্ডার পূরণ করুন' },
+  { id: 'buyer', bn: 'ক্রেতা', en: 'Buyer', icon: 'ph-duotone ph-storefront', line: 'গ্রেড করা পেঁয়াজ সরাসরি কিনুন' },
+];
+const SMS = [
+  { head: 'PeyajFlow', left: 'Reply: 1', cap: 'SMS 1 · offer → farmer replies 1', body: 'PeyajFlow: Rahim Bepari offers\nTk 1,300/mon for 40 mon\n= Tk 52,000. Pickup tomorrow 10am.\nFair price today: Tk 1,250-1,350.\nReply 1 to ACCEPT, 2 to DECLINE.' },
+  { head: 'PeyajFlow', left: 'Options', cap: 'SMS 2 · confirmation', body: 'PeyajFlow: Deal confirmed.\nPickup tomorrow 10am.\nTk 52,000 will be sent to\nyour bKash on pickup.\nRef: PF-24816' },
+  { head: 'PeyajFlow', left: 'Options', cap: 'Optional · weekly price alert', body: 'PeyajFlow: Onion today\nTk 1,250-1,350/mon (Santhia).\nAdvice: WAIT, price may rise.\nMissed call 0961XXXXXXX to hear.' },
+];
+class Component extends DCLogic {
+  state = { role: 'farmer', qty: 40, pickup: 'home', posted: false, sel: { karim: true, rafiq: true, selina: true, habib: true }, tab: 'stock', mapOpen: false, grade: 'A', pay: { bKash: true, Nagad: false, Bank: false }, offersSent: false };
+  spin(size, color) {
+    return React.createElement('span', { style: { width: size, height: size, borderRadius: '50%', border: `3px solid ${color}`, borderTopColor: 'transparent', display: 'inline-block', animation: 'pfspin 0.8s linear infinite' } });
+  }
+  componentDidMount() {
+    if (!document.getElementById('pfspin')) { const s = document.createElement('style'); s.id = 'pfspin'; s.textContent = '@keyframes pfspin{to{transform:rotate(360deg)}}'; document.head.appendChild(s); }
+  }
+  renderVals() {
+    const st = this.state, P = this.props;
+    const advice = P.advice ?? 'wait', otp = P.otpState ?? 'filled', dealRole = P.dealRole ?? 'farmer';
+    const on = (bg, fg) => ({ bg, fg });
+    const otpDigits = otp === 'error' ? ['৪', '৮', '২', '১'] : ['৪', '৮', '২', '৬'];
+    const total = LOTS.filter(l => st.sel[l.id]).reduce((a, l) => a + l.qty, 0);
+    const covered = total >= 134;
+    const steps = ['অফার এসেছে', 'নিশ্চিত', 'পথে', 'পৌঁছেছে'];
+    return {
+      otpBoxes: otpDigits.map(d => ({ d, ring: otp === 'error' ? '0 0 0 2px #C62828' : '0 0 0 2px #5B2A6E' })),
+      otpError: otp === 'error', otpLoading: otp === 'loading', otpNotLoading: otp !== 'loading',
+      spinner: this.spin(18, '#fff'), bigSpinner: this.spin(44, '#5B2A6E'),
+      roles: ROLES.map(r => { const s = st.role === r.id; return { ...r, pick: () => this.setState({ role: r.id }), bg: s ? '#fff' : '#fff', ring: s ? '0 0 0 2.5px #5B2A6E' : '0 0 0 1px #E6DDEB', tickBg: s ? '#5B2A6E' : 'transparent', tickRing: s ? 'none' : 'inset 0 0 0 2px #D9C6E2' }; }),
+      adviceWait: advice === 'wait', adviceSell: advice === 'sell', advicePart: advice === 'part',
+      qtyBn: BN(st.qty), qtyTotal: INR(st.qty * 1300),
+      qtyUp: () => this.setState(s => ({ qty: Math.min(100, s.qty + 5) })),
+      qtyDown: () => this.setState(s => ({ qty: Math.max(5, s.qty - 5) })),
+      pickHome: () => this.setState({ pickup: 'home' }), pickMarket: () => this.setState({ pickup: 'market' }),
+      pHomeBg: st.pickup === 'home' ? '#fff' : 'transparent', pHomeFg: st.pickup === 'home' ? '#5B2A6E' : '#6B5E73',
+      pMktBg: st.pickup === 'market' ? '#fff' : 'transparent', pMktFg: st.pickup === 'market' ? '#5B2A6E' : '#6B5E73',
+      posted: st.posted, postStock: () => { this.setState({ posted: true }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ posted: false }), 3000); },
+      gradeChips: ['A', 'B', 'C'].map(g => { const s = st.grade === g; return { label: 'Grade ' + g, pick: () => this.setState({ grade: g }), bg: s ? '#5B2A6E' : '#fff', fg: s ? '#fff' : '#22172A', ring: s ? 'none' : '0 0 0 1.5px #D9C6E2' }; }),
+      payChips: ['bKash', 'Nagad', 'Bank'].map(p => { const s = st.pay[p]; return { label: (s ? '✓ ' : '') + p, pick: () => this.setState(x => ({ pay: { ...x.pay, [p]: !x.pay[p] } })), bg: s ? '#F0E8F4' : '#fff', fg: s ? '#5B2A6E' : '#22172A', ring: s ? '0 0 0 1.5px #5B2A6E' : '0 0 0 1.5px #D9C6E2' }; }),
+      lots: LOTS.map(l => { const s = st.sel[l.id]; return { ...l, qtyBn: BN(l.qty), priceFmt: INR(l.price), toggle: () => this.setState(x => ({ sel: { ...x.sel, [l.id]: !x.sel[l.id] } })), ring: s ? '0 0 0 2px #5B2A6E' : '0 0 0 1px #E6DDEB', boxBg: s ? '#5B2A6E' : '#fff', boxRing: s ? 'none' : 'inset 0 0 0 2px #C9BDD0', pinBg: s ? '#5B2A6E' : '#8A7D92' }; }),
+      tabStock: () => this.setState({ tab: 'stock' }), tabOrders: () => this.setState({ tab: 'orders' }),
+      tabIsStock: st.tab === 'stock', tabIsOrders: st.tab === 'orders',
+      tStockFg: st.tab === 'stock' ? '#5B2A6E' : '#6B5E73', tStockLine: st.tab === 'stock' ? 'inset 0 -3px 0 #5B2A6E' : 'none',
+      tOrdFg: st.tab === 'orders' ? '#5B2A6E' : '#6B5E73', tOrdLine: st.tab === 'orders' ? 'inset 0 -3px 0 #5B2A6E' : 'none',
+      mapOpen: st.mapOpen, toggleMap: () => this.setState(x => ({ mapOpen: !x.mapOpen })),
+      mapBtnBg: st.mapOpen ? '#5B2A6E' : '#fff', mapBtnFg: st.mapOpen ? '#fff' : '#5B2A6E',
+      coverText: covered ? `নির্বাচিত: ${BN(total)} মণ — অর্ডার পূরণ ✓` : `নির্বাচিত: ${BN(total)} মণ — আরও ${BN(134 - total)} মণ দরকার`,
+      coverFg: covered ? '#1B5E20' : '#7A5200', coverIcon: covered ? 'ph-fill ph-check-circle' : 'ph-fill ph-hourglass-medium',
+      offerRows: LOTS.map(l => ({ name: l.name, qtyBn: BN(l.qty), priceFmt: INR(l.price), subFmt: INR(l.qty * l.price) })),
+      offersSent: st.offersSent, sendOffers: () => this.setState({ offersSent: true }), closeSent: () => this.setState({ offersSent: false }),
+      smsPhones: SMS, keys: ['1', '2 abc', '3 def', '4 ghi', '5 jkl', '6 mno', '7 pqrs', '8 tuv', '9 wxyz', '*', '0', '#'],
+      roleFarmer: dealRole === 'farmer', roleMiddleman: dealRole === 'middleman', roleBuyer: dealRole === 'buyer',
+      rateWho: dealRole === 'farmer' ? 'রহিম ব্যাপারীকে রেটিং দিন' : dealRole === 'middleman' ? 'করিম মিয়াকে রেটিং দিন' : 'রহিম ব্যাপারীকে রেটিং দিন',
+      orderSteps: steps.map((label, i) => { const done = i < 2, cur = i === 2; return { label, icon: done ? 'ph-bold ph-check' : cur ? 'ph-fill ph-truck' : 'ph ph-circle', bg: done ? '#2E7D32' : cur ? '#5B2A6E' : '#fff', ring: done || cur ? 'none' : 'inset 0 0 0 2px #D9C6E2', fg: done || cur ? '#22172A' : '#6B5E73', weight: cur ? 700 : 500 }; }),
+    };
+  }
+}
+</script>
+</body>
+</html>
