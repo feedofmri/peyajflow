@@ -41,14 +41,17 @@ const FLOWS = {
     { id: 'buyer', bn: 'ক্রেতা · চাহিদা ও অর্ডার', en: 'Nadia posts demand and tracks her order', screens: ['B01', 'B02', 'D01b'] },
   ],
   basic: [
-    { id: 'sms-alert', bn: 'SMS-এ দাম ও পরামর্শ', en: 'Price, loss warning and Wait advice by SMS', screens: ['P5'] },
-    { id: 'voice', bn: 'AI ভয়েস কল', en: 'Rahim calls the helpline; the AI explains his options in Bangla', screens: ['V1', 'V2', 'V3'] },
-    { id: 'sms-deal', bn: 'SMS-এ অফার ও ডিল', en: 'A month later: offer arrives, Rahim replies ১, deal confirmed', screens: ['P1', 'P2', 'P3', 'P4'] },
+    { id: 'sms-alert', bn: 'SMS-এ দাম ও পরামর্শ', en: 'A weekly Bangla SMS: price, loss warning and advice. No internet needed', screens: ['BA1', 'BA2'] },
+    { id: 'ussd-decide', bn: 'USSD-এ সিদ্ধান্ত', en: `Rahim dials *7392# to compare Sell now, Look more and Wait`, screens: ['BU1', 'BU2', 'BU3', 'BU4', 'BU5', 'BU6'] },
+    { id: 'voice', bn: 'মিসড কল · ভয়েস পরামর্শ', en: 'A free missed call; PeyajFlow calls back and speaks the advice in Bangla', screens: ['BV1', 'BV2', 'BV3', 'BV4', 'BV5'] },
+    { id: 'ussd-sell', bn: 'USSD-এ বিক্রির জন্য দিন', en: 'A month later the price hits ৳1,950; Rahim posts 100 maunds by USSD', screens: ['BS1', 'BS2', 'BS3', 'BS4', 'BS5', 'BS6'] },
+    { id: 'sms-deal', bn: 'SMS-এ অফার ও ডিল', en: 'Offer by SMS, Rahim replies 1, deal confirmed, paid to bKash', screens: ['BD1', 'BD2', 'BD3', 'BD4', 'BD5'] },
   ],
+
 };
 const FLOW_BY_ID = {};
 Object.values(FLOWS).flat().forEach(f => { FLOW_BY_ID[f.id] = f; });
-const CAP = { S01: 'S01 · Login', S01b: 'S01 · OTP', S02: 'S02 · Role selection', F01: 'F01 · Farmer home', F02: 'F02 · Photo grade', F02b: 'F02 · Analysing', F03: 'F03 · Grade result', F07: 'F07 · Decision', F04: 'F04 · Post stock', B01: 'B01 · Post demand', M01: 'M01 · Nearby stock and orders', M02: 'M02 · Combine and offer', F05: 'F05 · Offer received', D01f: 'D01 · Deal done (farmer)', D01m: 'D01 · Deal done (middleman)', D01b: 'D01 · Deal done (buyer)', F06: 'F06 · Price alert', F06b: 'F06 · Sell now', B02: 'B02 · Buyer orders', P1: 'P01 · New message', P2: 'P01 · Offer SMS', P3: 'P01 · Reply ১', P4: 'P01 · Confirmation SMS', P5: 'P01 · Weekly price alert', V1: 'V01 · Calling helpline', V2: 'V01 · AI advice', V3: 'V01 · Reply ১' };
+const CAP = { S01: 'S01 · Login', S01b: 'S01 · OTP', S02: 'S02 · Role selection', F01: 'F01 · Farmer home', F02: 'F02 · Photo grade', F02b: 'F02 · Analysing', F03: 'F03 · Grade result', F07: 'F07 · Decision', F04: 'F04 · Post stock', B01: 'B01 · Post demand', M01: 'M01 · Nearby stock and orders', M02: 'M02 · Combine and offer', F05: 'F05 · Offer received', D01f: 'D01 · Deal done (farmer)', D01m: 'D01 · Deal done (middleman)', D01b: 'D01 · Deal done (buyer)', F06: 'F06 · Price alert', F06b: 'F06 · Sell now', B02: 'B02 · Buyer orders' };
 
 // The OTP screen variant the design exposed as a tweak. Override with ?otp=error|loading.
 const params = new URLSearchParams(location.search);
@@ -625,45 +628,127 @@ S.B02 = () => {
   ${nav('buyer', 1)}`);
 };
 
-// ─── Basic phone (SMS) screens — all SMS text is Bangla ──────────────────
-const KEYS = [['১', ''], ['২', 'কখগ'], ['৩', 'ঘঙচ'], ['৪', 'ছজঝ'], ['৫', 'টঠড'], ['৬', 'ঢণত'], ['৭', 'থদধন'], ['৮', 'পফব'], ['৯', 'ভমযর'], ['*', ''], ['০', '␣'], ['#', '']];
-const basicPhone = (label, title, body, softL, softR, pressed) => `<div data-screen-label="${label}" style="width:360px;height:800px;display:flex;align-items:center;justify-content:center">
-<div style="width:304px;height:676px;background:#2A2A2E;border-radius:46px 46px 38px 38px;padding:26px 22px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;box-shadow:inset 0 2px 0 #4A4A50,0 24px 50px -20px rgba(0,0,0,.5)">
-<div style="align-self:center;width:52px;height:6px;border-radius:3px;background:#151517"></div>
-<div data-next="fast" style="height:318px;background:#C9D8B9;border-radius:8px;box-shadow:inset 0 0 0 3px #111;padding:12px 14px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;font-family:'Hind Siliguri',sans-serif;color:#1E2A14;overflow:hidden">
-<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;border-bottom:1.5px solid #8FA07E;padding-bottom:4px"><span>${title}</span><span>▮▮▮ ১০:০২</span></div>
-<div style="flex:1;display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.45">${body}</div>
-<div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;border-top:1.5px solid #8FA07E;padding-top:4px"><span>${softL}</span><span>${softR}</span></div>
-</div>
-<div style="display:flex;justify-content:space-between;align-items:center;padding:0 4px"><div style="width:50px;height:18px;border-radius:9px;background:#3E3E44"></div><div data-next="fast" style="width:54px;height:34px;border-radius:14px;background:#3E3E44;box-shadow:inset 0 0 0 2px #55555C"></div><div style="width:50px;height:18px;border-radius:9px;background:#3E3E44"></div></div>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-family:'Hind Siliguri','Inter',sans-serif">${KEYS.map(([k, sub]) => `<div style="height:40px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:17px;font-weight:600;${k === pressed ? 'background:#F9A825;color:#22172A;box-shadow:0 0 0 3px rgba(249,168,37,.35)' : 'background:#3A3A40;color:#E8E8EA'}">${k}<span style="font-size:10px;font-weight:400;opacity:.7">${sub}</span></div>`).join('')}</div>
-</div></div>`;
+// ─── Basic phone screens ─────────────────────────────────────────────────
+// Modelled on a typical Bangladeshi feature phone: 240×300 colour screen,
+// two soft keys, D-pad, call/end keys and a 12-key pad. No touch, no internet.
+// Channels used are the ones these phones really have: Bangla SMS (~70 chars a
+// part), USSD menus (~90 Bangla chars a screen), and voice calls with keypad
+// replies. During a call nothing shows on screen, so speech is captioned above.
+const USSD = '*7392#'; // *PEYA# on the keypad
+const HOTLINE = '09612XXXXXX';
+const KEYPAD = [['1', '⌴'], ['2', 'abc'], ['3', 'def'], ['4', 'ghi'], ['5', 'jkl'], ['6', 'mno'], ['7', 'pqrs'], ['8', 'tuv'], ['9', 'wxyz'], ['*', '+'], ['0', '␣'], ['#', '⇧']];
 
-S.P1 = () => basicPhone('P01 New message', 'বার্তা',
-  '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center"><i class="ph-duotone ph-envelope-simple" style="font-size:56px"></i><div style="font-size:21px;font-weight:700">১টি নতুন বার্তা</div><div>PeyajFlow থেকে</div></div>',
-  'পড়ুন', 'পরে');
-S.P2 = () => basicPhone('P01 Offer SMS', 'PeyajFlow',
-  '<div>PeyajFlow: জলিল ব্যাপারী আপনার ১০০ মণ পেঁয়াজ ৳১,৯৫০/মণ দরে কিনতে চান। পরিবহন বাদে পাবেন <b>৳১,৮৫,০০০</b>। পিকআপ কাল সকাল ১০টা। গ্রহণ করতে ১, বাতিল করতে ২ লিখে পাঠান।</div>',
-  'উত্তর', 'পেছনে');
-S.P3 = () => basicPhone('P01 Reply', 'উত্তর · PeyajFlow',
-  '<div>বার্তা লিখুন:</div><div style="height:52px;border:2px solid #1E2A14;border-radius:4px;display:flex;align-items:center;padding:0 10px;font-size:26px;font-weight:700">১<span style="width:2px;height:28px;background:#1E2A14;margin-left:3px"></span></div><div style="font-size:14px">১ = গ্রহণ · ২ = বাতিল</div>',
-  'পাঠান', 'মুছুন', '১');
-S.P4 = () => basicPhone('P01 Confirmed SMS', 'PeyajFlow',
-  '<div>PeyajFlow: ডিল নিশ্চিত। পিকআপ কাল সকাল ১০টা। পিকআপের সময় <b>৳১,৮৫,০০০</b> আপনার bKash-এ পাঠানো হবে। খরচ বাদে লাভ ৳২০,০০০।</div><div>রেফ: PF-24816</div>',
-  'ঠিক আছে', 'পেছনে');
-S.P5 = () => basicPhone('P01 Price alert SMS', 'PeyajFlow',
-  '<div>PeyajFlow: আজ পেঁয়াজের দাম ৳১,১০০/মণ (সাঁথিয়া)। আপনার খরচ ৳১,৫০০ — এখন বেচলে ৳৪০,০০০ লোকসান।</div><div>পরামর্শ: <b>অপেক্ষা করুন</b>। ১ মাসে দাম ৳১,৯৫০ হতে পারে।</div><div>বিস্তারিত শুনতে 0961XXXXXXX নম্বরে কল দিন।</div>',
-  'উত্তর', 'পেছনে');
+const softkeys = (l = '', c = '', r = '') =>
+  `<div style="height:24px;flex-shrink:0;background:#E6E6EC;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:12px;font-weight:700;color:#1A1A1F"><span style="min-width:60px">${l}</span><span>${c}</span><span style="min-width:60px;text-align:right">${r}</span></div>`;
+const phoneStatus = (time, dark) =>
+  `<div style="height:18px;flex-shrink:0;background:${dark ? 'transparent' : '#000'};color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 6px;font-family:'Inter',sans-serif;font-size:10px;font-weight:600"><span style="display:flex;gap:4px;align-items:center"><i class="ph-fill ph-cell-signal-high"></i>GP</span><span>${time}</span><i class="ph-fill ph-battery-high" style="font-size:13px"></i></div>`;
+const header = (title, right = '') =>
+  `<div style="height:24px;flex-shrink:0;background:#1F4E9C;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:13px;font-weight:700"><span>${title}</span><span style="font-size:11px;font-weight:500;opacity:.85">${right}</span></div>`;
+const bodyBox = (inner, extra = '') =>
+  `<div style="flex:1;min-height:0;background:#fff;color:#111;padding:6px 8px;font-size:14px;line-height:1.4;overflow:hidden;position:relative;${extra}">${inner}</div>`;
 
-S.V1 = () => basicPhone('V01 Calling', 'কল',
-  '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center"><i class="ph-duotone ph-phone-call" style="font-size:52px"></i><div style="font-size:21px;font-weight:700">কল হচ্ছে…</div><div>PeyajFlow সহায়তা</div><div style="font-size:14px">0961XXXXXXX</div></div>',
-  'স্পিকার', 'কাটুন');
-S.V2 = () => basicPhone('V01 AI advice', 'কল · ০০:২৪',
-  '<div style="font-size:13px;font-weight:700;display:flex;gap:4px;align-items:center"><i class="ph-fill ph-speaker-high"></i>AI সহকারী বলছে:</div><div style="font-size:14px;line-height:1.45">“আসসালামু আলাইকুম রহিম ভাই। আজ সাঁথিয়ায় দাম ১,১০০ টাকা মণ — এখন বেচলে ৪০ হাজার টাকা লোকসান। এক মাস রাখলে ১ লাখ ৭০ হাজার পেতে পারেন।”</div><div style="font-size:13px;font-weight:700">রাখতে ১ · ক্রেতা খুঁজতে ২ · এজেন্ট ৩</div>',
-  'স্পিকার', 'কাটুন');
-S.V3 = () => basicPhone('V01 Reply', 'কল · ০০:৪১',
-  '<div style="font-size:13px;font-weight:700">আপনি ১ চেপেছেন</div><div style="font-size:14px;line-height:1.45">“ঠিক আছে। দাম ১,৯৫০ টাকা হলে SMS ও কল দিয়ে জানাব। পচন কমাতে শুকনো, বাতাস চলাচলের জায়গায় মাচায় রাখুন।”</div>',
-  'স্পিকার', 'কাটুন', '১');
+const PHONE_SCREENS = {
+  idle: o => `${phoneStatus(o.time, true)}
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding-top:22px;gap:2px;color:#fff">
+      <div style="font-family:'Inter',sans-serif;font-size:44px;font-weight:300;line-height:1">${o.time}</div>
+      <div style="font-size:13px;opacity:.9">${o.date}</div>
+      <div style="margin-top:auto;margin-bottom:10px;width:212px;background:#fff;color:#111;border-radius:6px;padding:8px 10px;display:flex;gap:8px;align-items:center;font-size:13px"><i class="ph-fill ph-envelope-simple" style="font-size:22px;color:#1F4E9C"></i><div style="display:flex;flex-direction:column;line-height:1.3"><b>১টি নতুন বার্তা</b><span style="font-size:12px;color:#555">PeyajFlow</span></div></div>
+    </div>
+    ${softkeys('পড়ুন', '', 'পরে')}`,
+  msg: o => `${phoneStatus(o.time)}${header(o.from, o.parts)}
+    ${bodyBox(`<div style="font-size:11px;color:#666;margin-bottom:3px">${o.when}</div>${o.text}<div style="position:absolute;right:2px;top:6px;bottom:6px;width:3px;border-radius:2px;background:#E3E3E8"><div style="height:45%;border-radius:2px;background:#9A9AA5"></div></div>`)}
+    ${softkeys(o.lsk || 'বিকল্প', '', 'পেছনে')}`,
+  dial: o => `${phoneStatus(o.time)}
+    ${bodyBox(`<div style="font-size:12px;color:#666">নম্বর ডায়াল</div><div style="position:absolute;right:10px;bottom:10px;font-family:'Inter',sans-serif;font-size:28px;font-weight:500;letter-spacing:.02em">${o.digits}</div>`)}
+    ${softkeys('সংরক্ষণ', '', 'মুছুন')}`,
+  wait: o => `${phoneStatus(o.time)}
+    ${bodyBox(`<div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center"><span style="width:26px;height:26px;border-radius:50%;border:3px solid #1F4E9C;border-top-color:transparent;display:inline-block;box-sizing:border-box;animation:pfspin .8s linear infinite"></span><div>USSD কোড চলছে…</div></div>`)}
+    ${softkeys('', '', 'বাতিল')}`,
+  ussd: o => `${phoneStatus(o.time)}
+    ${bodyBox(`<div style="white-space:pre-line">${o.text}</div>${o.input !== undefined ? `<div style="position:absolute;left:8px;right:8px;bottom:8px;height:28px;border:1.5px solid #1F4E9C;border-radius:3px;display:flex;align-items:center;padding:0 6px;font-family:'Inter',sans-serif;font-size:16px">${o.input}<span style="width:1.5px;height:18px;background:#111;margin-left:2px"></span></div>` : ''}`)}
+    ${o.input !== undefined ? softkeys('পাঠান', '', 'বাতিল') : softkeys('ঠিক আছে', '', '')}`,
+  call: o => `${phoneStatus(o.time)}
+    ${bodyBox(`<div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center"><div style="width:56px;height:56px;border-radius:50%;background:${o.color};color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:6px"><i class="ph-fill ${o.icon}"></i></div><div style="font-size:12px;color:#666">${o.state}</div><div style="font-size:17px;font-weight:700">${o.name}</div><div style="font-family:'Inter',sans-serif;font-size:13px;color:#444">${o.num}</div>${o.timer ? `<div style="font-family:'Inter',sans-serif;font-size:15px;font-weight:600;margin-top:4px">${o.timer}</div>` : ''}</div>`)}
+    ${softkeys(...o.keys)}`,
+  compose: o => `${phoneStatus(o.time)}${header('উত্তর: PeyajFlow')}
+    ${bodyBox(`<div style="font-family:'Inter',sans-serif;font-size:18px">${o.text}<span style="display:inline-block;width:1.5px;height:20px;background:#111;margin-left:2px;vertical-align:-3px"></span></div><div style="position:absolute;right:8px;bottom:6px;font-size:11px;color:#666;font-family:'Inter',sans-serif">123 · 159/1</div>`)}
+    ${softkeys('পাঠান', '', 'মুছুন')}`,
+  sent: o => `${phoneStatus(o.time)}
+    ${bodyBox(`<div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center"><i class="ph-fill ph-check-circle" style="font-size:40px;color:#2E7D32"></i><div>বার্তা পাঠানো হয়েছে</div></div>`)}
+    ${softkeys('', 'ঠিক আছে', '')}`,
+};
+
+const keyStyle = on => on
+  ? 'background:#F9A825;color:#22172A;box-shadow:0 0 0 3px rgba(249,168,37,.4)'
+  : 'background:#3A3B42;color:#EDEDF0';
+const featurePhone = (o) => {
+  const k = o.press, nx = id => (k === id ? ' data-next="fast"' : '');
+  const idle = o.screen.kind === 'idle';
+  return `<div data-screen-label="${o.label}" style="width:360px;height:800px;display:flex;flex-direction:column;align-items:center;font-family:'Hind Siliguri','Inter',sans-serif">
+  <div style="width:328px;height:150px;flex-shrink:0;display:flex;align-items:flex-end;padding-bottom:12px;box-sizing:border-box">
+    ${o.audio
+      ? `<div style="width:100%;background:#FEF6E0;border-radius:14px;padding:8px 12px;color:#3D2A00;box-shadow:0 0 0 1px #F3DFA6"><div style="display:flex;gap:6px;align-items:center;font-size:12px;font-weight:700;margin-bottom:4px"><i class="ph-fill ph-speaker-high" style="font-size:16px"></i>কলে শোনা যাচ্ছে · Heard on the call</div><div style="font-size:13px;line-height:1.42">“${o.audio}”</div></div>`
+      : `<div style="width:100%;font-family:'Inter',sans-serif;font-size:14px;line-height:1.45;color:#4A3D52;display:flex;gap:8px;align-items:flex-start"><i class="ph-fill ph-info" style="font-size:18px;color:#5B2A6E;flex-shrink:0;margin-top:1px"></i><span>${o.note}</span></div>`}
+  </div>
+  <div style="width:290px;height:626px;flex-shrink:0;background:linear-gradient(180deg,#2E3036,#1C1D21);border-radius:42px 42px 34px 34px;padding:14px 21px 16px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:inset 0 2px 0 #4A4C54,0 24px 50px -20px rgba(0,0,0,.55)">
+    <div style="width:48px;height:5px;border-radius:3px;background:#0E0F11;margin-bottom:2px"></div>
+    <div data-next="fast" style="width:248px;height:308px;flex-shrink:0;background:#000;border-radius:6px;padding:4px;box-sizing:border-box">
+      <div style="width:240px;height:300px;overflow:hidden;display:flex;flex-direction:column;${idle ? 'background:linear-gradient(160deg,#2C64B8,#0E2A57)' : 'background:#fff'}">${PHONE_SCREENS[o.screen.kind](o.screen)}</div>
+    </div>
+    <div style="width:248px;height:84px;flex-shrink:0;display:grid;grid-template-columns:62px 1fr 62px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+        <div${nx('lsk')} style="width:52px;height:14px;border-radius:7px;${keyStyle(k === 'lsk')}"></div>
+        <div${nx('call')} style="width:52px;height:28px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;${k === 'call' ? keyStyle(true) : 'background:#3A3B42;color:#4CC164'}"><i class="ph-fill ph-phone"></i></div>
+      </div>
+      <div style="display:flex;justify-content:center"><div style="width:78px;height:78px;border-radius:50%;background:#33343B;box-shadow:inset 0 0 0 2px #45474F;display:flex;align-items:center;justify-content:center;position:relative;color:#8A8B95;font-size:10px">
+        <i class="ph-fill ph-caret-up" style="position:absolute;top:5px"></i><i class="ph-fill ph-caret-down" style="position:absolute;bottom:5px"></i><i class="ph-fill ph-caret-left" style="position:absolute;left:6px"></i><i class="ph-fill ph-caret-right" style="position:absolute;right:6px"></i>
+        <div${nx('ok')} style="width:32px;height:32px;border-radius:9px;${keyStyle(k === 'ok')}"></div>
+      </div></div>
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-end">
+        <div${nx('rsk')} style="width:52px;height:14px;border-radius:7px;${keyStyle(k === 'rsk')}"></div>
+        <div${nx('end')} style="width:52px;height:28px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;${k === 'end' ? keyStyle(true) : 'background:#3A3B42;color:#E5484D'}"><i class="ph-fill ph-phone-disconnect"></i></div>
+      </div>
+    </div>
+    <div style="width:248px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-family:'Inter',sans-serif">${KEYPAD.map(([d, l]) =>
+      `<div${nx(d)} style="height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:5px;${keyStyle(k === d)}"><span style="font-size:16px;font-weight:600">${d}</span><span style="font-size:9px;opacity:.65">${l}</span></div>`).join('')}</div>
+  </div>
+</div>`;
+};
+
+const APR = { time: '10:02', date: 'মঙ্গল, ১৫ এপ্রিল', when: '১৫ এপ্রিল · 10:02' };
+const MAY = { time: '09:15', date: 'বৃহস্পতি, ১৫ মে', when: '১৫ মে · 09:15' };
+const BASIC = {
+  // Weekly price SMS
+  BA1: { label: 'Basic · New SMS', press: 'lsk', note: 'No internet needed. Phones sold in Bangladesh display Bangla, so the weekly alert arrives as an ordinary SMS.', screen: { kind: 'idle', ...APR } },
+  BA2: { label: 'Basic · Price SMS', note: 'Kept to 2 SMS parts (~120 Bangla characters). It points to the USSD menu for the full calculation.', screen: { kind: 'msg', time: APR.time, when: APR.when, from: 'PeyajFlow', parts: '২ অংশ', text: `আজ সাঁথিয়ায় পেঁয়াজ ৳১১০০/মণ। আপনার খরচ ৳১৫০০ — এখন বেচলে লোকসান। পরামর্শ: <b>১ মাস রাখুন</b>। হিসাব জানতে ডায়াল ${USSD}` } },
+  // USSD decision
+  BU1: { label: 'Basic · Dial USSD', press: 'call', note: `Rahim dials ${USSD}. USSD works on every phone without internet, the same way bKash’s *247# does.`, screen: { kind: 'dial', time: APR.time, digits: USSD } },
+  BU2: { label: 'Basic · USSD loading', note: 'The network opens a live USSD session with PeyajFlow.', screen: { kind: 'wait', time: APR.time } },
+  BU3: { label: 'Basic · USSD menu', press: 'lsk', note: 'A numbered menu. He types 2 on the keypad and presses Send.', screen: { kind: 'ussd', time: APR.time, input: '2', text: 'PeyajFlow\n১ আজকের দাম\n২ আমার সিদ্ধান্ত\n৩ বিক্রির জন্য দিন\n৪ অফার দেখুন\n৫ কলে শুনুন' } },
+  BU4: { label: 'Basic · Confirm stock', press: 'lsk', note: 'His stock and production cost were registered by a PeyajFlow field agent. He confirms with 1.', screen: { kind: 'ussd', time: APR.time, input: '1', text: 'আপনার তথ্য:\nমজুদ ১০০ মণ\nখরচ ৳১৫০০/মণ\n১ ঠিক আছে\n২ বদলান' } },
+  BU5: { label: 'Basic · USSD result', press: 'lsk', note: 'A USSD screen fits only ~90 Bangla characters, so the answer is short…', screen: { kind: 'ussd', time: APR.time, text: 'পরামর্শ: ১ মাস রাখুন\nলাভ হতে পারে ৳২০,০০০\nপুরো হিসাব SMS-এ পাঠানো হলো' } },
+  BU6: { label: 'Basic · Options SMS', note: '…and the full Sell now / Look more / Wait comparison follows as a 3-part SMS he can keep.', screen: { kind: 'msg', time: APR.time, when: APR.when, from: 'PeyajFlow', parts: '৩ অংশ', text: '১০০ মণ, খরচ ৳১,৫০,০০০:<br>এখন বেচলে ৳১,১০,০০০ (−৪০,০০০)<br>ঢাকায় ৳১,৩৫,০০০ (−১৫,০০০)<br>১ মাস রাখলে ৳১,৭০,০০০ (<b>+২০,০০০</b>)<br>শুকনো, বাতাস চলাচলের জায়গায় রাখুন।' } },
+  // Missed call → voice advice
+  BV1: { label: 'Basic · Dial hotline', press: 'call', note: 'For farmers who prefer listening to reading: he dials the PeyajFlow number.', screen: { kind: 'dial', time: APR.time, digits: HOTLINE } },
+  BV2: { label: 'Basic · Missed call', press: 'end', note: 'He hangs up after one ring. A missed call costs him nothing.', screen: { kind: 'call', time: APR.time, state: 'কল হচ্ছে…', name: 'PeyajFlow', num: HOTLINE, icon: 'ph-phone-outgoing', color: '#1F4E9C', keys: ['', '', 'শেষ'] } },
+  BV3: { label: 'Basic · Callback', press: 'call', note: 'PeyajFlow calls him back within a minute, at no cost to him.', screen: { kind: 'call', time: '10:03', state: 'ইনকামিং কল', name: 'PeyajFlow', num: HOTLINE, icon: 'ph-phone-incoming', color: '#2E7D32', keys: ['ধরুন', '', 'নীরব'] } },
+  BV4: { label: 'Basic · AI voice', audio: 'আসসালামু আলাইকুম রহিম ভাই। আজ সাঁথিয়ায় দাম এগারোশো টাকা মণ। এখন বেচলে চল্লিশ হাজার টাকা লোকসান। এক মাস রাখলে এক লাখ সত্তর হাজার পেতে পারেন। রাখতে ১, ক্রেতা খুঁজতে ২, মাঠকর্মীর জন্য ৩ চাপুন।', screen: { kind: 'call', time: '10:03', state: 'কলে আছেন', name: 'PeyajFlow', num: HOTLINE, timer: '00:24', icon: 'ph-phone', color: '#2E7D32', keys: ['বিকল্প', '', 'স্পিকার'] } },
+  BV5: { label: 'Basic · Press 1', press: '1', audio: 'আপনি ১ চেপেছেন। ঠিক আছে, মজুদ রাখুন। শুকনো, বাতাস চলাচলের জায়গায় রাখবেন। দাম বাড়লে আমরা কল ও SMS দিয়ে জানাব।', screen: { kind: 'call', time: '10:04', state: 'কলে আছেন', name: 'PeyajFlow', num: HOTLINE, timer: '00:41', icon: 'ph-phone', color: '#2E7D32', keys: ['বিকল্প', '', 'স্পিকার'] } },
+  // A month later: post for sale by USSD
+  BS1: { label: 'Basic · Sell alert', note: 'Four weeks later the price watch fires: the price has reached the forecast.', screen: { kind: 'msg', time: MAY.time, when: MAY.when, from: 'PeyajFlow', parts: '২ অংশ', text: `দাম এখন <b>৳১৯৫০/মণ</b>! আপনার ১০০ মণ বিক্রির ভালো সময়, লাভ হবে ~৳২০,০০০। বিক্রি করতে ডায়াল ${USSD}, তারপর ৩` } },
+  BS2: { label: 'Basic · Dial USSD', press: 'call', note: 'He opens the USSD menu again.', screen: { kind: 'dial', time: MAY.time, digits: USSD } },
+  BS3: { label: 'Basic · USSD menu', press: 'lsk', note: '3 = Post for sale.', screen: { kind: 'ussd', time: MAY.time, input: '3', text: 'PeyajFlow\n১ আজকের দাম\n২ আমার সিদ্ধান্ত\n৩ বিক্রির জন্য দিন\n৪ অফার দেখুন\n৫ কলে শুনুন' } },
+  BS4: { label: 'Basic · Quantity', press: 'lsk', note: 'He types the quantity on the keypad.', screen: { kind: 'ussd', time: MAY.time, input: '100', text: 'কত মণ বিক্রি করবেন?\n(আপনার মজুদ ১০০ মণ)' } },
+  BS5: { label: 'Basic · Confirm post', press: 'lsk', note: 'The price comes from today’s market, so he only has to confirm.', screen: { kind: 'ussd', time: MAY.time, input: '1', text: '১০০ মণ × ৳১৯৫০\nমোট ৳১,৯৫,০০০\nপিকআপ: বাড়ি থেকে\n১ নিশ্চিত  ২ বাতিল' } },
+  BS6: { label: 'Basic · Posted', press: 'lsk', note: 'Listed for buyers and traders in under a minute, without a smartphone.', screen: { kind: 'ussd', time: MAY.time, text: 'পোস্ট হয়েছে ✓\nক্রেতা পেলে SMS পাবেন।' } },
+  // Offer and deal by SMS
+  BD1: { label: 'Basic · Offer SMS', press: 'lsk', note: 'A trader’s offer arrives by SMS.', screen: { kind: 'msg', time: '14:20', when: '১৫ মে · 14:20', from: 'PeyajFlow', parts: '৩ অংশ', lsk: 'উত্তর', text: 'জলিল ব্যাপারী ১০০ মণ ৳১৯৫০/মণে কিনবেন। পরিবহন বাদে পাবেন <b>৳১,৮৫,০০০</b>। পিকআপ কাল সকাল ১০টা। রাজি হলে 1, না হলে 2 লিখে উত্তর দিন।' } },
+  BD2: { label: 'Basic · Reply 1', press: 'lsk', note: 'He replies “1” to the same number: an ordinary SMS reply. Digits type the same in Bangla or English mode.', screen: { kind: 'compose', time: '14:21', text: '1' } },
+  BD3: { label: 'Basic · Sent', note: 'Reply sent.', screen: { kind: 'sent', time: '14:21' } },
+  BD4: { label: 'Basic · Deal SMS', note: 'Confirmation with the pickup time and a reference number.', screen: { kind: 'msg', time: '14:22', when: '১৫ মে · 14:22', from: 'PeyajFlow', parts: '২ অংশ', text: 'ডিল নিশ্চিত! পিকআপ কাল সকাল ১০টা, বাড়ি থেকে। টাকা পিকআপের সময় bKash-এ। রেফ: PF24816' } },
+  BD5: { label: 'Basic · Paid SMS', note: 'Paid to his bKash at pickup: a ৳20,000 profit instead of April’s ৳40,000 loss.', screen: { kind: 'msg', time: '10:40', when: '১৬ মে · 10:40', from: 'PeyajFlow', parts: '২ অংশ', text: '৳১,৮৫,০০০ আপনার bKash-এ পাঠানো হয়েছে। খরচ বাদে লাভ <b>৳২০,০০০</b>। জলিল ব্যাপারীকে রেটিং দিতে 1–5 লিখে উত্তর দিন।' } },
+};
+Object.keys(BASIC).forEach(k => { S[k] = () => featurePhone(BASIC[k]); CAP[k] = BASIC[k].label; });
 
 // ─── Pages ───────────────────────────────────────────────────────────────
 function homeView() {
@@ -711,8 +796,8 @@ function viewerView() {
   const availW = Math.min(vw, 640) - 16, availH = vh - 72 - 96 - 8;
   const scale = Math.max(0.3, Math.min(1, availW / 360, availH / 800));
   const nextLabel = last ? (nextFlowOf(f.id) ? 'পরের ফ্লো' : 'শেষ · সব ফ্লো') : 'পরবর্তী';
-  const hint = cur === 'F02b' ? 'Analysing… moves on by itself'
-    : state.idx === 0 ? (state.mode === 'basic' ? 'Tap the phone screen or swipe to continue' : 'Tap the main button in the app, or swipe') : '';
+  const hint = cur === 'F02b' ? 'Analysing… moves on by itself' : cur === 'BU2' ? 'Connecting… moves on by itself'
+    : state.idx === 0 ? (state.mode === 'basic' ? 'Tap the highlighted key or the phone screen, or swipe' : 'Tap the main button in the app, or swipe') : '';
   const elapsed = (performance.now() - enteredAt) / 1000;
   // Pulse the button to tap for the first few seconds of each screen, without restarting on re-render.
   const pulse = elapsed < 5.2;
@@ -755,7 +840,9 @@ function render() {
     clearTimeout(timers.auto);
     clearTimeout(timers.adv);
     // The "Analysing…" loader moves on by itself, as the spec describes.
-    if (curScreen() === 'F02b') timers.auto = setTimeout(() => { if (curScreen() === 'F02b') go(1); }, 2000);
+    const AUTO = { F02b: 2000, BU2: 1500 };
+    const cs = curScreen();
+    if (AUTO[cs]) timers.auto = setTimeout(() => { if (curScreen() === cs) go(1); }, AUTO[cs]);
   }
   try { localStorage.setItem('pf-demo', JSON.stringify({ mode: state.mode, flow: state.flow, idx: state.idx })); } catch (e) {}
   app.innerHTML = `<div class="pf-root">${f ? viewerView() : homeView()}</div>`;
