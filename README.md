@@ -2,9 +2,12 @@
 
 ন্যায্য দামে পেঁয়াজ, সরাসরি · Fair price, direct.
 
-The judges' demo is a static mobile web page in [`web/`](web/). It's deployed to GitHub Pages on every push to `main` by `.github/workflows/pages.yml`.
+Two separate static sites, each hosted on its own:
 
-Live demo: https://feedofmri.github.io/peyajflow/
+- [`demo/`](demo/): the judges' phone demo (first QR code)
+- [`faq/`](faq/): the FAQ and sources page (second QR code)
+
+`scripts/package.sh` builds one zip per site in `dist/`, with `index.html` at the top level, ready to extract in cPanel's File Manager. A GitHub Pages copy is also deployed on every push to `main` (demo at `/peyajflow/`, FAQ at `/peyajflow/faq/`).
 
 ## Design source
 

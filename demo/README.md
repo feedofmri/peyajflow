@@ -9,20 +9,16 @@ This is the code version of `project/PeyajFlow Demo.dc.html` from the Claude Des
 - `vendor/phosphor/` holds the Phosphor icon fonts (v2.1.1: regular, fill, bold and duotone, woff2 only). They're stored here so the demo doesn't depend on a CDN.
 - Google Fonts are still loaded from the web.
 
-## FAQ page
-
-`faq/index.html` is the FAQ and sources page for the second QR code (`…/peyajflow/faq/`). It was generated from `PeyajFlow_FAQ_1.docx`; edit the HTML directly for small text changes.
-
 ## Run locally
 
 ```sh
-cd web && python3 -m http.server 8000
+cd demo && python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-## Publish for the QR code
+## Publish
 
-Host the `web/` folder on any static host, such as GitHub Pages, Netlify or Cloudflare Pages, and point the QR code at its URL.
+Run `scripts/package.sh` from the repo root to build `dist/peyajflow-demo.zip`, then extract it into the site's folder in cPanel. Any static host works.
 
 ## Story and numbers
 

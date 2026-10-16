@@ -1,4 +1,4 @@
-name: Deploy demo to GitHub Pages
+name: Deploy demo and FAQ to GitHub Pages
 
 on:
   push:
@@ -25,8 +25,15 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Assemble site (demo at the root, FAQ under /faq/)
+        run: |
+          mkdir _site
+          cp -r demo/. _site/
+          mkdir _site/faq
+          cp -r faq/. _site/faq/
+          find _site -name README.md -delete
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
