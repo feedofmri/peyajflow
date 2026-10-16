@@ -1,0 +1,35 @@
+html,body{margin:0;height:100%;touch-action:manipulation;background:var(--color-bg);overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+a{color:var(--color-accent-700)}a:hover{color:var(--color-accent-800)}
+input{font:inherit}
+button{font:inherit;border:0;margin:0;-webkit-appearance:none;appearance:none}
+button:disabled{cursor:default}
+
+@keyframes pfspin{to{transform:rotate(360deg)}}
+@keyframes pfpulse{0%{box-shadow:0 0 0 0 rgba(0,136,176,.55)}100%{box-shadow:0 0 0 14px rgba(0,136,176,0)}}
+[data-next]{cursor:pointer}
+/* The hint pulse runs once per screen visit; --pd shifts it so re-renders mid-screen don't restart it. */
+.pf-pulse [data-next]{animation:pfpulse 1.4s ease-out var(--pd,1s) 3}
+
+.pf-root{min-height:100dvh;font-family:var(--font-body);color:var(--color-text);background:var(--color-bg)}
+.pf-bn{font-family:'Hind Siliguri',var(--font-body)}
+
+/* Home: phone-type cards and flow rows */
+.pf-card{cursor:pointer;padding:var(--space-4) var(--space-3);border-radius:var(--radius-lg);display:flex;flex-direction:column;gap:var(--space-1);text-align:left}
+.pf-card.on{background:var(--color-accent);color:#fff;box-shadow:none}
+.pf-card.off{background:transparent;color:var(--color-text);box-shadow:inset 0 0 0 1.5px var(--color-divider)}
+.pf-card.off:hover{background:var(--color-accent-100)}
+.pf-flow{cursor:pointer;display:grid;grid-template-columns:52px minmax(0,1fr) 28px;gap:var(--space-3);align-items:center;padding:var(--space-3) var(--space-2);margin:0 calc(-1 * var(--space-2));border-radius:var(--radius-lg);background:transparent;color:inherit;text-align:left;width:calc(100% + 2 * var(--space-2))}
+.pf-flow:hover{background:var(--color-accent-100)}
+.pf-flow:active{background:var(--color-accent-200)}
+
+/* Viewer chrome */
+.pf-home{height:40px;padding:0 12px 0 8px;flex-shrink:0;border-radius:var(--radius-lg);display:flex;align-items:center;gap:4px;color:var(--color-accent-700);background:var(--color-accent-100);cursor:pointer;margin-left:-4px}
+.pf-home:hover{background:var(--color-accent-200)}
+.pf-home:active{background:var(--color-accent-300)}
+.pf-prev{height:52px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;gap:6px;font-size:17px;cursor:pointer;color:var(--color-accent-700);background:transparent;box-shadow:inset 0 0 0 1.5px var(--color-accent)}
+.pf-prev:not(:disabled):hover{background:var(--color-accent-100)}
+.pf-prev:not(:disabled):active{background:var(--color-accent-200)}
+.pf-prev:disabled{opacity:.4}
+.pf-next{height:52px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;gap:6px;font-size:17px;cursor:pointer;background:var(--color-accent);color:#fff}
+.pf-next:hover{background:var(--color-accent-600)}
+.pf-next:active{background:var(--color-accent-700)}
