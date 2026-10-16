@@ -9,6 +9,10 @@ This is the code version of `project/PeyajFlow Demo.dc.html` from the Claude Des
 - `vendor/phosphor/` holds the Phosphor icon fonts (v2.1.1: regular, fill, bold and duotone, woff2 only). They're stored here so the demo doesn't depend on a CDN.
 - Google Fonts are still loaded from the web.
 
+## FAQ page
+
+`faq/index.html` is the FAQ and sources page for the second QR code (`…/peyajflow/faq/`). It was generated from `PeyajFlow_FAQ_1.docx`; edit the HTML directly for small text changes.
+
 ## Run locally
 
 ```sh

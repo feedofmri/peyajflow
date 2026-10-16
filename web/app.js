@@ -785,6 +785,7 @@ function homeView() {
     </div>
   </div>
   <div style="font-size:16px;font-style:italic;color:var(--color-neutral-700);display:flex;gap:var(--space-2);align-items:center"><i class="ph-duotone ph-hand-swipe-left" style="font-size:22px"></i>Swipe or use the arrows to move between screens.</div>
+  <a href="faq/" style="align-self:flex-start;display:flex;gap:var(--space-2);align-items:center;font-size:17px;color:var(--color-accent-700);text-decoration:none"><i class="ph-duotone ph-question" style="font-size:22px"></i><span><span class="pf-bn">প্রশ্নোত্তর</span> · FAQ and sources</span><i class="ph-duotone ph-arrow-right" style="font-size:18px"></i></a>
 </div>`;
 }
 
