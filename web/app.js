@@ -798,24 +798,25 @@ function viewerView() {
   const pulse = elapsed < 5.2;
   const stageH = BASIC[cur] ? basicH(BASIC[cur]) : 800;
   // Compact chrome so the phone gets the space; the stage is scaled to fit in fitStage().
+  // All controls live in one thumb-reach bar at the bottom; the phone gets the rest of the height.
   return `<div style="height:100dvh;display:flex;flex-direction:column;overflow:hidden">
-  <div style="flex-shrink:0;padding:calc(4px + env(safe-area-inset-top)) 10px 0;box-sizing:border-box">
-    <div style="display:flex;align-items:center;gap:8px;height:36px">
-      <div style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:var(--color-neutral-700)"><span class="pf-bn" style="font-size:14px;font-weight:600;color:var(--color-text)">${f.bn}</span> · <i>${CAP[cur]}</i></div>
-      <div class="pf-bn" style="font-size:13px;font-weight:600;flex-shrink:0">${BN(state.idx + 1)}/${BN(n)}</div>
-    </div>
-    <div style="display:flex;gap:2px;height:2px">${f.screens.map((_, i) => `<div style="flex:1;border-radius:1px;background:${i <= state.idx ? 'var(--color-accent)' : 'var(--color-neutral-300)'}"></div>`).join('')}</div>
-  </div>
-  <div id="pf-swipe" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:pan-y;position:relative">
+  <div id="pf-swipe" style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:pan-y;position:relative;padding-top:calc(6px + env(safe-area-inset-top));box-sizing:border-box">
     <div id="pf-box" style="width:360px;height:${stageH}px;position:relative;flex-shrink:0">
       <div id="pf-stage" data-h="${stageH}"${pulse ? ' class="pf-pulse"' : ''} style="position:absolute;left:0;top:0;width:360px;height:${stageH}px;transform-origin:0 0;font-family:'Inter','Hind Siliguri',sans-serif;color:#22172A${pulse ? `;--pd:${(1 - elapsed).toFixed(2)}s` : ''}">${S[cur]()}</div>
     </div>
     ${hint ? `<div style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);max-width:92%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;font-style:italic;color:#fff;background:rgba(32,30,29,.62);padding:3px 10px;border-radius:999px;pointer-events:none">${hint}</div>` : ''}
   </div>
-  <div style="flex-shrink:0;display:grid;grid-template-columns:1fr auto 1.4fr;gap:8px;padding:4px 10px calc(6px + env(safe-area-inset-bottom));box-sizing:border-box">
-    <button type="button" data-action="prev" class="pf-prev"${state.idx === 0 ? ' disabled' : ''}><i class="ph-duotone ph-caret-left" style="font-size:16px"></i><span class="pf-bn" style="font-weight:600">আগে</span></button>
-    <button type="button" data-action="home" class="pf-home"><i class="ph-duotone ph-house" style="font-size:18px"></i><span class="pf-bn" style="font-size:14px;font-weight:600">হোম</span></button>
-    <button type="button" data-action="next" class="pf-next"><span class="pf-bn" style="font-weight:600">${nextLabel}</span><i class="ph-duotone ph-caret-right" style="font-size:16px"></i></button>
+  <div style="flex-shrink:0;padding:6px 10px calc(8px + env(safe-area-inset-bottom));box-sizing:border-box;border-top:1px solid var(--color-divider)">
+    <div style="display:flex;gap:2px;height:3px;margin-bottom:6px">${f.screens.map((_, i) => `<div style="flex:1;border-radius:2px;background:${i <= state.idx ? 'var(--color-accent)' : 'var(--color-neutral-300)'}"></div>`).join('')}</div>
+    <div style="display:flex;align-items:center;gap:6px;height:48px">
+      <button type="button" data-action="prev" class="pf-icon pf-prev"${state.idx === 0 ? ' disabled' : ''}><i class="ph-duotone ph-caret-left" style="font-size:20px"></i><span class="pf-bn">আগে</span></button>
+      <button type="button" data-action="home" class="pf-icon pf-home"><i class="ph-duotone ph-house" style="font-size:20px"></i><span class="pf-bn">হোম</span></button>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:0 4px;line-height:1.25">
+        <div class="pf-bn" style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${f.bn}</div>
+        <div style="font-size:11px;color:var(--color-neutral-700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span class="pf-bn" style="font-weight:600;font-style:normal">${BN(state.idx + 1)}/${BN(n)}</span> · <i>${CAP[cur]}</i></div>
+      </div>
+      <button type="button" data-action="next" class="pf-next"><span class="pf-bn" style="font-weight:600">${nextLabel}</span><i class="ph-duotone ph-caret-right" style="font-size:18px"></i></button>
+    </div>
   </div>
 </div>`;
 }
