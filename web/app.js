@@ -634,7 +634,9 @@ S.B02 = () => {
 // Channels used are the ones these phones really have: Bangla SMS (~70 chars a
 // part), USSD menus (~90 Bangla chars a screen), and voice calls with keypad
 // replies. During a call nothing shows on screen, so speech is captioned above.
-const BASIC_H = 756; // shorter stage than the smartphone's 800, so the phone itself can render larger
+// Stage heights: just the phone, or the phone plus the spoken-caption bubble on call screens.
+const PHONE_H = 640, CALL_H = 756;
+const basicH = o => (o.audio ? CALL_H : PHONE_H);
 const USSD = '*7392#'; // *PEYA# on the keypad
 const HOTLINE = '09612XXXXXX';
 const KEYPAD = [['1', '⌴'], ['2', 'abc'], ['3', 'def'], ['4', 'ghi'], ['5', 'jkl'], ['6', 'mno'], ['7', 'pqrs'], ['8', 'tuv'], ['9', 'wxyz'], ['*', '+'], ['0', '␣'], ['#', '⇧']];
@@ -685,12 +687,8 @@ const keyStyle = on => on
 const featurePhone = (o) => {
   const k = o.press, nx = id => (k === id ? ' data-next="fast"' : '');
   const idle = o.screen.kind === 'idle';
-  return `<div data-screen-label="${o.label}" style="width:360px;height:${BASIC_H}px;display:flex;flex-direction:column;align-items:center;font-family:'Hind Siliguri','Inter',sans-serif">
-  <div style="width:328px;height:126px;flex-shrink:0;display:flex;align-items:flex-end;padding-bottom:12px;box-sizing:border-box">
-    ${o.audio
-      ? `<div style="width:100%;background:#FEF6E0;border-radius:14px;padding:8px 12px;color:#3D2A00;box-shadow:0 0 0 1px #F3DFA6"><div style="display:flex;gap:6px;align-items:center;font-size:12px;font-weight:700;margin-bottom:4px"><i class="ph-fill ph-speaker-high" style="font-size:16px"></i>কলে শোনা যাচ্ছে · Heard on the call</div><div style="font-size:13px;line-height:1.42">“${o.audio}”</div></div>`
-      : `<div style="width:100%;font-family:'Inter',sans-serif;font-size:14px;line-height:1.45;color:#4A3D52;display:flex;gap:8px;align-items:flex-start"><i class="ph-fill ph-info" style="font-size:18px;color:#5B2A6E;flex-shrink:0;margin-top:1px"></i><span>${o.note}</span></div>`}
-  </div>
+  return `<div data-screen-label="${o.label}" style="width:360px;height:${basicH(o)}px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:6px;box-sizing:border-box;font-family:'Hind Siliguri','Inter',sans-serif">
+  ${o.audio ? `<div style="width:328px;flex:1;display:flex;align-items:flex-end;padding-bottom:10px;box-sizing:border-box"><div style="width:100%;background:#FEF6E0;border-radius:14px;padding:8px 12px;color:#3D2A00;box-shadow:0 0 0 1px #F3DFA6"><div style="display:flex;gap:6px;align-items:center;font-size:12px;font-weight:700;margin-bottom:4px"><i class="ph-fill ph-speaker-high" style="font-size:16px"></i>কলে শোনা যাচ্ছে · Heard on the call</div><div style="font-size:13px;line-height:1.42">“${o.audio}”</div></div></div>` : ''}
   <div style="width:290px;height:626px;flex-shrink:0;background:linear-gradient(180deg,#2E3036,#1C1D21);border-radius:42px 42px 34px 34px;padding:14px 21px 16px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:inset 0 2px 0 #4A4C54,0 24px 50px -20px rgba(0,0,0,.55)">
     <div style="width:48px;height:5px;border-radius:3px;background:#0E0F11;margin-bottom:2px"></div>
     <div data-next="fast" style="width:248px;height:308px;flex-shrink:0;background:#000;border-radius:6px;padding:4px;box-sizing:border-box">
@@ -720,34 +718,34 @@ const APR = { time: '10:02', date: 'মঙ্গল, ১৫ এপ্রিল',
 const MAY = { time: '09:15', date: 'বৃহস্পতি, ১৫ মে', when: '১৫ মে · 09:15' };
 const BASIC = {
   // Weekly price SMS
-  BA1: { label: 'Basic · New SMS', press: 'lsk', note: 'No internet needed. Phones sold in Bangladesh display Bangla, so the weekly alert arrives as an ordinary SMS.', screen: { kind: 'idle', ...APR } },
-  BA2: { label: 'Basic · Price SMS', note: 'Kept to 2 SMS parts (~120 Bangla characters). It points to the USSD menu for the full calculation.', screen: { kind: 'msg', time: APR.time, when: APR.when, from: 'PeyajFlow', parts: '২ অংশ', text: `আজ সাঁথিয়ায় পেঁয়াজ ৳১১০০/মণ। আপনার খরচ ৳১৫০০ — এখন বেচলে লোকসান। পরামর্শ: <b>১ মাস রাখুন</b>। হিসাব জানতে ডায়াল ${USSD}` } },
+  BA1: { label: 'Basic · New SMS', press: 'lsk', screen: { kind: 'idle', ...APR } },
+  BA2: { label: 'Basic · Price SMS', screen: { kind: 'msg', time: APR.time, when: APR.when, from: 'PeyajFlow', parts: '২ অংশ', text: `আজ সাঁথিয়ায় পেঁয়াজ ৳১১০০/মণ। আপনার খরচ ৳১৫০০ — এখন বেচলে লোকসান। পরামর্শ: <b>১ মাস রাখুন</b>। হিসাব জানতে ডায়াল ${USSD}` } },
   // USSD decision
-  BU1: { label: 'Basic · Dial USSD', press: 'call', note: `Rahim dials ${USSD}. USSD works on every phone without internet, the same way bKash’s *247# does.`, screen: { kind: 'dial', time: APR.time, digits: USSD } },
-  BU2: { label: 'Basic · USSD loading', note: 'The network opens a live USSD session with PeyajFlow.', screen: { kind: 'wait', time: APR.time } },
-  BU3: { label: 'Basic · USSD menu', press: 'lsk', note: 'A numbered menu. He types 2 on the keypad and presses Send.', screen: { kind: 'ussd', time: APR.time, input: '2', text: 'PeyajFlow\n১ আজকের দাম\n২ আমার সিদ্ধান্ত\n৩ বিক্রির জন্য দিন\n৪ অফার দেখুন\n৫ কলে শুনুন' } },
-  BU4: { label: 'Basic · Confirm stock', press: 'lsk', note: 'His stock and production cost were registered by a PeyajFlow field agent. He confirms with 1.', screen: { kind: 'ussd', time: APR.time, input: '1', text: 'আপনার তথ্য:\nমজুদ ১০০ মণ\nখরচ ৳১৫০০/মণ\n১ ঠিক আছে\n২ বদলান' } },
-  BU5: { label: 'Basic · USSD result', press: 'lsk', note: 'A USSD screen fits only ~90 Bangla characters, so the answer is short…', screen: { kind: 'ussd', time: APR.time, text: 'পরামর্শ: ১ মাস রাখুন\nলাভ হতে পারে ৳২০,০০০\nপুরো হিসাব SMS-এ পাঠানো হলো' } },
-  BU6: { label: 'Basic · Options SMS', note: '…and the full Sell now / Look more / Wait comparison follows as a 3-part SMS he can keep.', screen: { kind: 'msg', time: APR.time, when: APR.when, from: 'PeyajFlow', parts: '৩ অংশ', text: '১০০ মণ, খরচ ৳১,৫০,০০০:<br>এখন বেচলে ৳১,১০,০০০ (−৪০,০০০)<br>ঢাকায় ৳১,৩৫,০০০ (−১৫,০০০)<br>১ মাস রাখলে ৳১,৭০,০০০ (<b>+২০,০০০</b>)<br>শুকনো, বাতাস চলাচলের জায়গায় রাখুন।' } },
+  BU1: { label: 'Basic · Dial USSD', press: 'call', screen: { kind: 'dial', time: APR.time, digits: USSD } },
+  BU2: { label: 'Basic · USSD loading', screen: { kind: 'wait', time: APR.time } },
+  BU3: { label: 'Basic · USSD menu', press: 'lsk', screen: { kind: 'ussd', time: APR.time, input: '2', text: 'PeyajFlow\n১ আজকের দাম\n২ আমার সিদ্ধান্ত\n৩ বিক্রির জন্য দিন\n৪ অফার দেখুন\n৫ কলে শুনুন' } },
+  BU4: { label: 'Basic · Confirm stock', press: 'lsk', screen: { kind: 'ussd', time: APR.time, input: '1', text: 'আপনার তথ্য:\nমজুদ ১০০ মণ\nখরচ ৳১৫০০/মণ\n১ ঠিক আছে\n২ বদলান' } },
+  BU5: { label: 'Basic · USSD result', press: 'lsk', screen: { kind: 'ussd', time: APR.time, text: 'পরামর্শ: ১ মাস রাখুন\nলাভ হতে পারে ৳২০,০০০\nপুরো হিসাব SMS-এ পাঠানো হলো' } },
+  BU6: { label: 'Basic · Options SMS', screen: { kind: 'msg', time: APR.time, when: APR.when, from: 'PeyajFlow', parts: '৩ অংশ', text: '১০০ মণ, খরচ ৳১,৫০,০০০:<br>এখন বেচলে ৳১,১০,০০০ (−৪০,০০০)<br>ঢাকায় ৳১,৩৫,০০০ (−১৫,০০০)<br>১ মাস রাখলে ৳১,৭০,০০০ (<b>+২০,০০০</b>)<br>শুকনো, বাতাস চলাচলের জায়গায় রাখুন।' } },
   // Missed call → voice advice
-  BV1: { label: 'Basic · Dial hotline', press: 'call', note: 'For farmers who prefer listening to reading: he dials the PeyajFlow number.', screen: { kind: 'dial', time: APR.time, digits: HOTLINE } },
-  BV2: { label: 'Basic · Missed call', press: 'end', note: 'He hangs up after one ring. A missed call costs him nothing.', screen: { kind: 'call', time: APR.time, state: 'কল হচ্ছে…', name: 'PeyajFlow', num: HOTLINE, icon: 'ph-phone-outgoing', color: '#1F4E9C', keys: ['', '', 'শেষ'] } },
-  BV3: { label: 'Basic · Callback', press: 'call', note: 'PeyajFlow calls him back within a minute, at no cost to him.', screen: { kind: 'call', time: '10:03', state: 'ইনকামিং কল', name: 'PeyajFlow', num: HOTLINE, icon: 'ph-phone-incoming', color: '#2E7D32', keys: ['ধরুন', '', 'নীরব'] } },
+  BV1: { label: 'Basic · Dial hotline', press: 'call', screen: { kind: 'dial', time: APR.time, digits: HOTLINE } },
+  BV2: { label: 'Basic · Missed call', press: 'end', screen: { kind: 'call', time: APR.time, state: 'কল হচ্ছে…', name: 'PeyajFlow', num: HOTLINE, icon: 'ph-phone-outgoing', color: '#1F4E9C', keys: ['', '', 'শেষ'] } },
+  BV3: { label: 'Basic · Callback', press: 'call', screen: { kind: 'call', time: '10:03', state: 'ইনকামিং কল', name: 'PeyajFlow', num: HOTLINE, icon: 'ph-phone-incoming', color: '#2E7D32', keys: ['ধরুন', '', 'নীরব'] } },
   BV4: { label: 'Basic · AI voice', audio: 'আসসালামু আলাইকুম রহিম ভাই। আজ সাঁথিয়ায় দাম এগারোশো টাকা মণ। এখন বেচলে চল্লিশ হাজার টাকা লোকসান। এক মাস রাখলে এক লাখ সত্তর হাজার পেতে পারেন। রাখতে ১, ক্রেতা খুঁজতে ২, মাঠকর্মীর জন্য ৩ চাপুন।', screen: { kind: 'call', time: '10:03', state: 'কলে আছেন', name: 'PeyajFlow', num: HOTLINE, timer: '00:24', icon: 'ph-phone', color: '#2E7D32', keys: ['বিকল্প', '', 'স্পিকার'] } },
   BV5: { label: 'Basic · Press 1', press: '1', audio: 'আপনি ১ চেপেছেন। ঠিক আছে, মজুদ রাখুন। শুকনো, বাতাস চলাচলের জায়গায় রাখবেন। দাম বাড়লে আমরা কল ও SMS দিয়ে জানাব।', screen: { kind: 'call', time: '10:04', state: 'কলে আছেন', name: 'PeyajFlow', num: HOTLINE, timer: '00:41', icon: 'ph-phone', color: '#2E7D32', keys: ['বিকল্প', '', 'স্পিকার'] } },
   // A month later: post for sale by USSD
-  BS1: { label: 'Basic · Sell alert', note: 'Four weeks later the price watch fires: the price has reached the forecast.', screen: { kind: 'msg', time: MAY.time, when: MAY.when, from: 'PeyajFlow', parts: '২ অংশ', text: `দাম এখন <b>৳১৯৫০/মণ</b>! আপনার ১০০ মণ বিক্রির ভালো সময়, লাভ হবে ~৳২০,০০০। বিক্রি করতে ডায়াল ${USSD}, তারপর ৩` } },
-  BS2: { label: 'Basic · Dial USSD', press: 'call', note: 'He opens the USSD menu again.', screen: { kind: 'dial', time: MAY.time, digits: USSD } },
-  BS3: { label: 'Basic · USSD menu', press: 'lsk', note: '3 = Post for sale.', screen: { kind: 'ussd', time: MAY.time, input: '3', text: 'PeyajFlow\n১ আজকের দাম\n২ আমার সিদ্ধান্ত\n৩ বিক্রির জন্য দিন\n৪ অফার দেখুন\n৫ কলে শুনুন' } },
-  BS4: { label: 'Basic · Quantity', press: 'lsk', note: 'He types the quantity on the keypad.', screen: { kind: 'ussd', time: MAY.time, input: '100', text: 'কত মণ বিক্রি করবেন?\n(আপনার মজুদ ১০০ মণ)' } },
-  BS5: { label: 'Basic · Confirm post', press: 'lsk', note: 'The price comes from today’s market, so he only has to confirm.', screen: { kind: 'ussd', time: MAY.time, input: '1', text: '১০০ মণ × ৳১৯৫০\nমোট ৳১,৯৫,০০০\nপিকআপ: বাড়ি থেকে\n১ নিশ্চিত  ২ বাতিল' } },
-  BS6: { label: 'Basic · Posted', press: 'lsk', note: 'Listed for buyers and traders in under a minute, without a smartphone.', screen: { kind: 'ussd', time: MAY.time, text: 'পোস্ট হয়েছে ✓\nক্রেতা পেলে SMS পাবেন।' } },
+  BS1: { label: 'Basic · Sell alert', screen: { kind: 'msg', time: MAY.time, when: MAY.when, from: 'PeyajFlow', parts: '২ অংশ', text: `দাম এখন <b>৳১৯৫০/মণ</b>! আপনার ১০০ মণ বিক্রির ভালো সময়, লাভ হবে ~৳২০,০০০। বিক্রি করতে ডায়াল ${USSD}, তারপর ৩` } },
+  BS2: { label: 'Basic · Dial USSD', press: 'call', screen: { kind: 'dial', time: MAY.time, digits: USSD } },
+  BS3: { label: 'Basic · USSD menu', press: 'lsk', screen: { kind: 'ussd', time: MAY.time, input: '3', text: 'PeyajFlow\n১ আজকের দাম\n২ আমার সিদ্ধান্ত\n৩ বিক্রির জন্য দিন\n৪ অফার দেখুন\n৫ কলে শুনুন' } },
+  BS4: { label: 'Basic · Quantity', press: 'lsk', screen: { kind: 'ussd', time: MAY.time, input: '100', text: 'কত মণ বিক্রি করবেন?\n(আপনার মজুদ ১০০ মণ)' } },
+  BS5: { label: 'Basic · Confirm post', press: 'lsk', screen: { kind: 'ussd', time: MAY.time, input: '1', text: '১০০ মণ × ৳১৯৫০\nমোট ৳১,৯৫,০০০\nপিকআপ: বাড়ি থেকে\n১ নিশ্চিত  ২ বাতিল' } },
+  BS6: { label: 'Basic · Posted', press: 'lsk', screen: { kind: 'ussd', time: MAY.time, text: 'পোস্ট হয়েছে ✓\nক্রেতা পেলে SMS পাবেন।' } },
   // Offer and deal by SMS
-  BD1: { label: 'Basic · Offer SMS', press: 'lsk', note: 'A trader’s offer arrives by SMS.', screen: { kind: 'msg', time: '14:20', when: '১৫ মে · 14:20', from: 'PeyajFlow', parts: '৩ অংশ', lsk: 'উত্তর', text: 'জলিল ব্যাপারী ১০০ মণ ৳১৯৫০/মণে কিনবেন। পরিবহন বাদে পাবেন <b>৳১,৮৫,০০০</b>। পিকআপ কাল সকাল ১০টা। রাজি হলে 1, না হলে 2 লিখে উত্তর দিন।' } },
-  BD2: { label: 'Basic · Reply 1', press: 'lsk', note: 'He replies “1” to the same number: an ordinary SMS reply. Digits type the same in Bangla or English mode.', screen: { kind: 'compose', time: '14:21', text: '1' } },
-  BD3: { label: 'Basic · Sent', note: 'Reply sent.', screen: { kind: 'sent', time: '14:21' } },
-  BD4: { label: 'Basic · Deal SMS', note: 'Confirmation with the pickup time and a reference number.', screen: { kind: 'msg', time: '14:22', when: '১৫ মে · 14:22', from: 'PeyajFlow', parts: '২ অংশ', text: 'ডিল নিশ্চিত! পিকআপ কাল সকাল ১০টা, বাড়ি থেকে। টাকা পিকআপের সময় bKash-এ। রেফ: PF24816' } },
-  BD5: { label: 'Basic · Paid SMS', note: 'Paid to his bKash at pickup: a ৳20,000 profit instead of April’s ৳40,000 loss.', screen: { kind: 'msg', time: '10:40', when: '১৬ মে · 10:40', from: 'PeyajFlow', parts: '২ অংশ', text: '৳১,৮৫,০০০ আপনার bKash-এ পাঠানো হয়েছে। খরচ বাদে লাভ <b>৳২০,০০০</b>। জলিল ব্যাপারীকে রেটিং দিতে 1–5 লিখে উত্তর দিন।' } },
+  BD1: { label: 'Basic · Offer SMS', press: 'lsk', screen: { kind: 'msg', time: '14:20', when: '১৫ মে · 14:20', from: 'PeyajFlow', parts: '৩ অংশ', lsk: 'উত্তর', text: 'জলিল ব্যাপারী ১০০ মণ ৳১৯৫০/মণে কিনবেন। পরিবহন বাদে পাবেন <b>৳১,৮৫,০০০</b>। পিকআপ কাল সকাল ১০টা। রাজি হলে 1, না হলে 2 লিখে উত্তর দিন।' } },
+  BD2: { label: 'Basic · Reply 1', press: 'lsk', screen: { kind: 'compose', time: '14:21', text: '1' } },
+  BD3: { label: 'Basic · Sent', screen: { kind: 'sent', time: '14:21' } },
+  BD4: { label: 'Basic · Deal SMS', screen: { kind: 'msg', time: '14:22', when: '১৫ মে · 14:22', from: 'PeyajFlow', parts: '২ অংশ', text: 'ডিল নিশ্চিত! পিকআপ কাল সকাল ১০টা, বাড়ি থেকে। টাকা পিকআপের সময় bKash-এ। রেফ: PF24816' } },
+  BD5: { label: 'Basic · Paid SMS', screen: { kind: 'msg', time: '10:40', when: '১৬ মে · 10:40', from: 'PeyajFlow', parts: '২ অংশ', text: '৳১,৮৫,০০০ আপনার bKash-এ পাঠানো হয়েছে। খরচ বাদে লাভ <b>৳২০,০০০</b>। জলিল ব্যাপারীকে রেটিং দিতে 1–5 লিখে উত্তর দিন।' } },
 };
 Object.keys(BASIC).forEach(k => { S[k] = () => featurePhone(BASIC[k]); CAP[k] = BASIC[k].label; });
 
@@ -799,7 +797,7 @@ function viewerView() {
   const elapsed = (performance.now() - enteredAt) / 1000;
   // Pulse the button to tap for the first few seconds of each screen, without restarting on re-render.
   const pulse = elapsed < 5.2;
-  const stageH = BASIC[cur] ? BASIC_H : 800;
+  const stageH = BASIC[cur] ? basicH(BASIC[cur]) : 800;
   // Compact chrome so the phone gets the space; the stage is scaled to fit in fitStage().
   return `<div style="height:100dvh;display:flex;flex-direction:column;overflow:hidden">
   <div style="flex-shrink:0;padding:calc(4px + env(safe-area-inset-top)) 10px 0;box-sizing:border-box">
