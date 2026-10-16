@@ -73,7 +73,6 @@ try {
 
 const curFlow = () => FLOW_BY_ID[state.flow] || null;
 const curScreen = () => { const f = curFlow(); return f ? f.screens[Math.min(state.idx, f.screens.length - 1)] : null; };
-const nextFlowOf = id => { const l = FLOWS[state.mode]; return l[l.findIndex(f => f.id === id) + 1] || null; };
 
 let timers = { auto: 0, adv: 0, toast: 0 };
 let lastKey = null, enteredAt = 0;
@@ -86,9 +85,9 @@ function set(patch) {
 function go(d) {
   const f = curFlow(); if (!f) return;
   const n = state.idx + d;
+  // The end of a flow returns to the flow list.
   if (n >= f.screens.length) {
-    const nf = nextFlowOf(f.id);
-    set(nf ? { flow: nf.id, idx: 0 } : { flow: null, idx: 0 });
+    set({ flow: null, idx: 0 });
     window.scrollTo(0, 0);
     return;
   }
@@ -791,7 +790,7 @@ function homeView() {
 
 function viewerView() {
   const f = curFlow(), cur = curScreen(), n = f.screens.length, last = state.idx === n - 1;
-  const nextLabel = last ? (nextFlowOf(f.id) ? 'পরের ফ্লো' : 'শেষ · সব ফ্লো') : 'পরবর্তী';
+  const nextLabel = last ? 'শেষ · হোম' : 'পরবর্তী';
   const hint = cur === 'F02b' ? 'Analysing… moves on by itself' : cur === 'BU2' ? 'Connecting… moves on by itself'
     : state.idx === 0 ? (state.mode === 'basic' ? 'Tap the highlighted key or the screen, or swipe' : 'Tap the main button in the app, or swipe') : '';
   const elapsed = (performance.now() - enteredAt) / 1000;
@@ -802,7 +801,6 @@ function viewerView() {
   return `<div style="height:100dvh;display:flex;flex-direction:column;overflow:hidden">
   <div style="flex-shrink:0;padding:calc(4px + env(safe-area-inset-top)) 10px 0;box-sizing:border-box">
     <div style="display:flex;align-items:center;gap:8px;height:36px">
-      <button type="button" data-action="home" class="pf-home"><i class="ph-duotone ph-house" style="font-size:17px"></i><span class="pf-bn" style="font-size:13px;font-weight:600">হোম</span></button>
       <div style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:var(--color-neutral-700)"><span class="pf-bn" style="font-size:14px;font-weight:600;color:var(--color-text)">${f.bn}</span> · <i>${CAP[cur]}</i></div>
       <div class="pf-bn" style="font-size:13px;font-weight:600;flex-shrink:0">${BN(state.idx + 1)}/${BN(n)}</div>
     </div>
@@ -814,8 +812,9 @@ function viewerView() {
     </div>
     ${hint ? `<div style="position:absolute;left:50%;bottom:4px;transform:translateX(-50%);max-width:92%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;font-style:italic;color:#fff;background:rgba(32,30,29,.62);padding:3px 10px;border-radius:999px;pointer-events:none">${hint}</div>` : ''}
   </div>
-  <div style="flex-shrink:0;display:grid;grid-template-columns:1fr 1.6fr;gap:8px;padding:4px 10px calc(6px + env(safe-area-inset-bottom));box-sizing:border-box">
+  <div style="flex-shrink:0;display:grid;grid-template-columns:1fr auto 1.4fr;gap:8px;padding:4px 10px calc(6px + env(safe-area-inset-bottom));box-sizing:border-box">
     <button type="button" data-action="prev" class="pf-prev"${state.idx === 0 ? ' disabled' : ''}><i class="ph-duotone ph-caret-left" style="font-size:16px"></i><span class="pf-bn" style="font-weight:600">আগে</span></button>
+    <button type="button" data-action="home" class="pf-home"><i class="ph-duotone ph-house" style="font-size:18px"></i><span class="pf-bn" style="font-size:14px;font-weight:600">হোম</span></button>
     <button type="button" data-action="next" class="pf-next"><span class="pf-bn" style="font-weight:600">${nextLabel}</span><i class="ph-duotone ph-caret-right" style="font-size:16px"></i></button>
   </div>
 </div>`;
