@@ -4,12 +4,27 @@
 // ─── Data ────────────────────────────────────────────────────────────────
 const BN = s => String(s).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
 const INR = n => n.toLocaleString('en-IN');
+// The pitch deck's numbers for Rahim Uddin's 100 maunds (per maund unless noted).
+const ECON = { stock: 100, cost: 1500, local: 1100, alt: 1450, later: 1950, delivery: 100, storage: 150 };
+const OPTIONS = (() => {
+  const q = ECON.stock, base = q * ECON.cost;
+  const list = [
+    { id: 'local', icon: 'ph-storefront', bn: 'এখনই স্থানীয় বাজারে', en: 'Sell now · local trader', net: q * ECON.local, calc: `${BN(q)} মণ × ৳${INR(ECON.local)}` },
+    { id: 'alt', icon: 'ph-truck', bn: 'অন্য বাজারে (ঢাকা)', en: 'Look more · Dhaka buyer', net: q * (ECON.alt - ECON.delivery), calc: `${BN(q)} মণ × ৳${INR(ECON.alt)} − পরিবহন ৳${INR(q * ECON.delivery)}` },
+    { id: 'wait', icon: 'ph-warehouse', bn: '১ মাস রেখে বিক্রি', en: 'Wait · store for 1 month', net: q * (ECON.later - ECON.delivery - ECON.storage), calc: `${BN(q)} মণ × ৳${INR(ECON.later)} (পূর্বাভাস) − পরিবহন ৳${INR(q * ECON.delivery)} − সংরক্ষণ ৳${INR(q * ECON.storage)}` },
+  ];
+  list.forEach(o => { o.pl = o.net - base; });
+  return list;
+})();
+const OPT = Object.fromEntries(OPTIONS.map(o => [o.id, o]));
+const FARMER = 'রহিম উদ্দিন', TRADER = 'জলিল ব্যাপারী';
 const LOTS = [
-  { id: 'karim', name: 'করিম মিয়া', qty: 40, price: 1300, km: 3, x: 200, y: 40 },
-  { id: 'rafiq', name: 'রফিক', qty: 35, price: 1280, km: 5, x: 110, y: 22 },
-  { id: 'selina', name: 'সেলিনা', qty: 30, price: 1320, km: 6, x: 250, y: 96 },
-  { id: 'habib', name: 'হাবিব', qty: 30, price: 1300, km: 8, x: 140, y: 108 },
+  { id: 'rahim', name: FARMER, qty: 100, price: 1950, km: 3, x: 200, y: 40 },
+  { id: 'rafiq', name: 'রফিক', qty: 35, price: 1930, km: 5, x: 110, y: 22 },
+  { id: 'selina', name: 'সেলিনা', qty: 30, price: 1970, km: 6, x: 250, y: 96 },
+  { id: 'habib', name: 'হাবিব', qty: 30, price: 1950, km: 8, x: 140, y: 108 },
 ];
+const QUOTE = 2080; // middleman's delivered-to-Dhaka quote per maund
 const ORDER_NEED = 134; // 5 tonnes ≈ 134 maunds
 const ROLES = [
   { id: 'farmer', bn: 'কৃষক', en: 'Farmer', icon: 'ph-duotone ph-plant', line: 'ন্যায্য দামে পেঁয়াজ বিক্রি করুন' },
@@ -18,33 +33,32 @@ const ROLES = [
 ];
 const FLOWS = {
   smart: [
-    { id: 'full', bn: 'সম্পূর্ণ ডেমো', en: 'The whole story, in stage order', screens: ['S01', 'S01b', 'S02', 'F01', 'F02', 'F02b', 'F03', 'F04', 'B01', 'M01', 'M02', 'F05', 'D01f', 'F06', 'F06b'] },
+    { id: 'full', bn: 'সম্পূর্ণ ডেমো', en: 'The whole story: April harvest to a profitable sale', screens: ['S01', 'S01b', 'S02', 'F01', 'F02', 'F02b', 'F03', 'F07', 'F06', 'F06b', 'F04', 'B01', 'M01', 'M02', 'F05', 'D01f'] },
     { id: 'signin', bn: 'সাইন ইন ও ভূমিকা', en: 'Login with OTP and choose a role', screens: ['S01', 'S01b', 'S02'] },
-    { id: 'smart', bn: 'কৃষক · স্মার্ট প্রাইস', en: 'Karim checks the fair price and grades his onions', screens: ['F01', 'F02', 'F02b', 'F03'] },
-    { id: 'sell', bn: 'কৃষক · বিক্রি ও ডিল', en: 'Karim posts 40 maunds and accepts an offer', screens: ['F04', 'F05', 'D01f'] },
-    { id: 'middleman', bn: 'ব্যাপারী · অর্ডার পূরণ', en: 'Rahim combines four lots into one truck', screens: ['M01', 'M02', 'D01m'] },
+    { id: 'decide', bn: 'কৃষক · দাম ও সিদ্ধান্ত', en: 'Rahim checks the price, grades his onions and compares Sell now, Look more and Wait', screens: ['F01', 'F02', 'F02b', 'F03', 'F07'] },
+    { id: 'sell', bn: '৪ সপ্তাহ পর · লাভে বিক্রি', en: 'Price hits ৳1,950; Rahim sells 100 maunds at a ৳20,000 profit', screens: ['F06', 'F06b', 'F04', 'F05', 'D01f'] },
+    { id: 'middleman', bn: 'ব্যাপারী · অর্ডার পূরণ', en: 'Jalil combines lots into one truck for a Dhaka buyer', screens: ['M01', 'M02', 'D01m'] },
     { id: 'buyer', bn: 'ক্রেতা · চাহিদা ও অর্ডার', en: 'Nadia posts demand and tracks her order', screens: ['B01', 'B02', 'D01b'] },
-    { id: 'alert', bn: '৪ সপ্তাহ পর · দামের সতর্কতা', en: 'Price hits ৳1,650; Karim sells the rest', screens: ['F06', 'F06b'] },
   ],
   basic: [
-    { id: 'sms-deal', bn: 'SMS-এ অফার ও ডিল', en: 'Offer arrives, Karim replies ১, deal confirmed', screens: ['P1', 'P2', 'P3', 'P4'] },
-    { id: 'sms-alert', bn: 'সাপ্তাহিক দামের খবর', en: 'Weekly price and advice by SMS', screens: ['P5'] },
+    { id: 'sms-alert', bn: 'SMS-এ দাম ও পরামর্শ', en: 'Price, loss warning and Wait advice by SMS', screens: ['P5'] },
+    { id: 'voice', bn: 'AI ভয়েস কল', en: 'Rahim calls the helpline; the AI explains his options in Bangla', screens: ['V1', 'V2', 'V3'] },
+    { id: 'sms-deal', bn: 'SMS-এ অফার ও ডিল', en: 'A month later: offer arrives, Rahim replies ১, deal confirmed', screens: ['P1', 'P2', 'P3', 'P4'] },
   ],
 };
 const FLOW_BY_ID = {};
 Object.values(FLOWS).flat().forEach(f => { FLOW_BY_ID[f.id] = f; });
-const CAP = { S01: 'S01 · Login', S01b: 'S01 · OTP', S02: 'S02 · Role selection', F01: 'F01 · Farmer home', F02: 'F02 · Photo grade', F02b: 'F02 · Analysing', F03: 'F03 · Grade result', F04: 'F04 · Post stock', B01: 'B01 · Post demand', M01: 'M01 · Nearby stock and orders', M02: 'M02 · Combine and offer', F05: 'F05 · Offer received', D01f: 'D01 · Deal done (farmer)', D01m: 'D01 · Deal done (middleman)', D01b: 'D01 · Deal done (buyer)', F06: 'F06 · Price alert', F06b: 'F06 · Sell now', B02: 'B02 · Buyer orders', P1: 'P01 · New message', P2: 'P01 · Offer SMS', P3: 'P01 · Reply ১', P4: 'P01 · Confirmation SMS', P5: 'P01 · Weekly price alert' };
+const CAP = { S01: 'S01 · Login', S01b: 'S01 · OTP', S02: 'S02 · Role selection', F01: 'F01 · Farmer home', F02: 'F02 · Photo grade', F02b: 'F02 · Analysing', F03: 'F03 · Grade result', F07: 'F07 · Decision', F04: 'F04 · Post stock', B01: 'B01 · Post demand', M01: 'M01 · Nearby stock and orders', M02: 'M02 · Combine and offer', F05: 'F05 · Offer received', D01f: 'D01 · Deal done (farmer)', D01m: 'D01 · Deal done (middleman)', D01b: 'D01 · Deal done (buyer)', F06: 'F06 · Price alert', F06b: 'F06 · Sell now', B02: 'B02 · Buyer orders', P1: 'P01 · New message', P2: 'P01 · Offer SMS', P3: 'P01 · Reply ১', P4: 'P01 · Confirmation SMS', P5: 'P01 · Weekly price alert', V1: 'V01 · Calling helpline', V2: 'V01 · AI advice', V3: 'V01 · Reply ১' };
 
-// Variants the design exposed as tweaks. Override with ?advice=sell|part and ?otp=error|loading.
+// The OTP screen variant the design exposed as a tweak. Override with ?otp=error|loading.
 const params = new URLSearchParams(location.search);
-const ADVICE = ['wait', 'sell', 'part'].includes(params.get('advice')) ? params.get('advice') : 'wait';
 const OTP = ['filled', 'error', 'loading'].includes(params.get('otp')) ? params.get('otp') : 'filled';
 
 // ─── State ───────────────────────────────────────────────────────────────
 const state = {
   mode: 'smart', flow: null, idx: 0,
-  role: 'farmer', qty: 40, pickup: 'home', posted: false,
-  sel: { karim: true, rafiq: true, selina: true, habib: true },
+  role: 'farmer', qty: 100, choice: 'wait', pickup: 'home', posted: false,
+  sel: { rahim: true, rafiq: true, selina: false, habib: false },
   tab: 'stock', mapOpen: false, grade: 'A',
   pay: { bKash: true, Nagad: false, Bank: false }, offersSent: false,
 };
@@ -112,12 +126,12 @@ const nav = (role, active) =>
 
 const farmerGreeting = () =>
   `<div style="padding:6px 18px 10px;display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0">
-    <div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:18px;font-weight:700">আসসালামু আলাইকুম, করিম ভাই</div><div style="display:flex;gap:4px;align-items:center;font-size:14px;color:#5B2A6E;background:#F0E8F4;padding:3px 10px;border-radius:999px;align-self:flex-start;font-weight:500"><i class="ph-fill ph-map-pin"></i>সাঁথিয়া, পাবনা</div></div>
+    <div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:18px;font-weight:700">আসসালামু আলাইকুম, রহিম ভাই</div><div style="display:flex;gap:4px;align-items:center;font-size:14px;color:#5B2A6E;background:#F0E8F4;padding:3px 10px;border-radius:999px;align-self:flex-start;font-weight:500"><i class="ph-fill ph-map-pin"></i>সাঁথিয়া, পাবনা</div></div>
     ${lang(12, '3px 9px')}
   </div>`;
 
 const avatar = (size, fs) =>
-  `<div style="width:${size}px;height:${size}px;border-radius:50%;background:#F0E8F4;color:#5B2A6E;display:flex;align-items:center;justify-content:center;${fs ? `font-size:${fs}px;` : ''}font-weight:700">র</div>`;
+  `<div style="width:${size}px;height:${size}px;border-radius:50%;background:#F0E8F4;color:#5B2A6E;display:flex;align-items:center;justify-content:center;${fs ? `font-size:${fs}px;` : ''}font-weight:700">জ</div>`;
 const verified = '<span style="display:flex;gap:3px;align-items:center;color:#1B5E20;font-weight:600"><i class="ph-fill ph-seal-check"></i>যাচাইকৃত</span><span style="display:flex;gap:3px;align-items:center"><i class="ph-fill ph-star" style="color:#F9A825"></i>4.7 (৩২ ডিল)</span>';
 
 // ─── Smartphone screens ──────────────────────────────────────────────────
@@ -182,40 +196,36 @@ S.S02 = () => shell('S02 Role', `
   </div>
   <div style="padding:16px 20px 24px">${primary(`শুরু করুন ${sub('Start')}`)}</div>`);
 
-const ADVICE_CARDS = {
-  wait: { ring: '#F3DFA6', chipBg: '#F9A825', chipFg: '#3D2A00', icon: 'ph-hourglass-medium', label: 'অপেক্ষা করুন', conf: 'নিশ্চয়তা: উচ্চ · High', reason: 'আগামী ৩–৪ সপ্তাহে দাম বাড়তে পারে', tipBg: '#FEF6E0', tipFg: '#5C3F00', tip: '৪০ মণ এখন বিক্রি, ৬০ মণ রাখুন' },
-  sell: { ring: '#BFDDC1', chipBg: '#2E7D32', chipFg: '#fff', icon: 'ph-check-circle', label: 'এখন বিক্রি করুন', conf: 'নিশ্চয়তা: উচ্চ · High', reason: 'দাম এখন সর্বোচ্চের কাছাকাছি, সামনে কমতে পারে', tipBg: '#E6F2E7', tipFg: '#1B5E20', tip: '১০০ মণ এখন বিক্রি করুন' },
-  part: { ring: '#D9C6E2', chipBg: '#5B2A6E', chipFg: '#fff', icon: 'ph-chart-pie-slice', label: 'আংশিক বিক্রি', conf: 'নিশ্চয়তা: মাঝারি · Medium', reason: 'দাম স্থির, কিছু বিক্রি করে বাকিটা রাখুন', tipBg: '#F0E8F4', tipFg: '#3E1A4C', tip: '৪০ মণ এখন বিক্রি, ৬০ মণ রাখুন' },
-};
+const PL = n => (n < 0 ? '−' : '+') + '৳' + INR(Math.abs(n));
 
-S.F01 = () => {
-  const a = ADVICE_CARDS[ADVICE];
-  return shell('F01 Farmer home', `
+S.F01 = () => shell('F01 Farmer home', `
   ${status()}
   ${farmerGreeting()}
   <div style="flex:1;overflow:auto;padding:4px 16px 12px;display:flex;flex-direction:column;gap:12px">
     <div style="background:#5B2A6E;color:#fff;border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:6px">
-      <div style="font-size:15px;opacity:.85">আজকের ন্যায্য দাম · Today's fair price</div>
-      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:32px;font-weight:700;letter-spacing:-0.01em">৳1,250–1,350</span><span style="font-size:17px;opacity:.85">/ মণ</span></div>
-      <div style="display:flex;gap:10px;align-items:center;font-size:14px"><span style="display:flex;align-items:center;gap:3px;background:#E6F2E7;color:#1B5E20;padding:2px 8px;border-radius:999px;font-weight:600"><i class="ph-bold ph-trend-up"></i>বাড়ছে</span><span style="opacity:.85">গতকাল ৳1,220 · Yesterday</span></div>
+      <div style="font-size:15px;opacity:.85">আজকের স্থানীয় দাম · Today's local price</div>
+      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:34px;font-weight:700;letter-spacing:-0.01em">৳${INR(ECON.local)}</span><span style="font-size:17px;opacity:.85">/ মণ</span></div>
+      <div style="display:flex;gap:10px;align-items:center;font-size:14px"><span style="display:flex;align-items:center;gap:3px;background:#FBE9E9;color:#7A1414;padding:2px 8px;border-radius:999px;font-weight:600"><i class="ph-bold ph-trend-down"></i>কমছে</span><span style="opacity:.85">গতকাল ৳1,150 · Yesterday</span></div>
+      <div style="margin-top:4px;background:rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;font-size:14px;line-height:1.45;display:flex;gap:8px;align-items:flex-start"><i class="ph-fill ph-warning" style="font-size:18px;color:#F9A825;margin-top:1px"></i><span>আপনার খরচ ৳${INR(ECON.cost)}/মণ — এখন বেচলে <b>৳${INR(-OPT.local.pl)} লোকসান</b></span></div>
     </div>
-    <div style="background:#fff;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 0 0 1px ${a.ring}">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center;background:${a.chipBg};color:${a.chipFg};padding:5px 12px;border-radius:999px;font-size:16px;font-weight:700"><i class="ph-fill ${a.icon}"></i>${a.label}</span><span style="font-size:13px;color:#6B5E73;font-weight:500">${a.conf}</span></div>
-      <div style="font-size:16px;line-height:1.45">${a.reason}</div>
-      <div style="display:flex;gap:8px;align-items:center;background:${a.tipBg};border-radius:12px;padding:8px 10px;font-size:16px;font-weight:600;color:${a.tipFg}"><i class="ph-fill ph-lightbulb"></i>${a.tip}</div>
+    <div style="background:#fff;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 0 0 1px #F3DFA6">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center;background:#F9A825;color:#3D2A00;padding:5px 12px;border-radius:999px;font-size:16px;font-weight:700"><i class="ph-fill ph-hourglass-medium"></i>অপেক্ষা করুন</span><span style="font-size:13px;color:#6B5E73;font-weight:500">নিশ্চয়তা: উচ্চ · High</span></div>
+      <div style="font-size:16px;line-height:1.45">১ মাসে দাম ৳${INR(ECON.later)} হতে পারে · আমদানি কম, চাহিদা বাড়ছে</div>
+      <div style="display:flex;gap:8px;align-items:center;background:#FEF6E0;border-radius:12px;padding:8px 10px;font-size:16px;font-weight:600;color:#5C3F00"><i class="ph-fill ph-lightbulb"></i>রেখে দিলে ৳${INR(OPT.wait.net - OPT.local.net)} বেশি পাবেন</div>
     </div>
     <div style="background:#fff;border-radius:18px;padding:12px 14px 8px;display:flex;flex-direction:column;gap:6px">
-      <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:600">৬ সপ্তাহের দাম</span><span style="display:flex;gap:10px;color:#6B5E73;font-size:12px"><span style="display:flex;gap:4px;align-items:center"><span style="width:14px;height:2px;background:#5B2A6E"></span>আগে</span><span style="display:flex;gap:4px;align-items:center"><span style="width:14px;border-top:2px dashed #2E7D32"></span>পূর্বাভাস</span></span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:600">৮ সপ্তাহের দাম</span><span style="display:flex;gap:10px;color:#6B5E73;font-size:12px"><span style="display:flex;gap:4px;align-items:center"><span style="width:14px;height:2px;background:#5B2A6E"></span>আগে</span><span style="display:flex;gap:4px;align-items:center"><span style="width:14px;border-top:2px dashed #2E7D32"></span>পূর্বাভাস</span></span></div>
       <svg viewBox="0 0 300 112" width="300" height="104" style="display:block">
-        <line x1="0" y1="71.7" x2="300" y2="71.7" stroke="#EEE6F2"></line><line x1="0" y1="33" x2="300" y2="33" stroke="#EEE6F2"></line>
-        <polygon points="194,61.4 240,38.3 286,21.6 286,44.7 240,53.7" fill="#2E7D32" fill-opacity="0.12"></polygon>
-        <polyline points="10,89.7 56,84.6 102,78.1 148,71.7 194,61.4" fill="none" stroke="#5B2A6E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></polyline>
-        <polyline points="194,61.4 240,46 286,33.1" fill="none" stroke="#2E7D32" stroke-width="2.5" stroke-dasharray="5 4" stroke-linecap="round"></polyline>
-        <circle cx="194" cy="61.4" r="5" fill="#5B2A6E" stroke="#fff" stroke-width="2"></circle>
+        <line x1="0" y1="78" x2="300" y2="78" stroke="#EEE6F2"></line><line x1="0" y1="35" x2="300" y2="35" stroke="#EEE6F2"></line>
+        <polygon points="194,86.5 240,48 286,6 286,24 240,62" fill="#2E7D32" fill-opacity="0.12"></polygon>
+        <polyline points="10,56.8 56,65.3 102,73.8 148,82.3 194,86.5" fill="none" stroke="#5B2A6E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></polyline>
+        <polyline points="194,86.5 240,55 286,14.3" fill="none" stroke="#2E7D32" stroke-width="2.5" stroke-dasharray="5 4" stroke-linecap="round"></polyline>
+        <circle cx="194" cy="86.5" r="5" fill="#5B2A6E" stroke="#fff" stroke-width="2"></circle>
+        <circle cx="286" cy="14.3" r="4" fill="#2E7D32"></circle>
         <text x="194" y="108" font-size="11" text-anchor="middle" fill="#5B2A6E" font-weight="600" font-family="Hind Siliguri">আজ</text>
         <text x="10" y="108" font-size="11" fill="#8A7D92" font-family="Hind Siliguri">৪ সপ্তাহ আগে</text>
-        <text x="286" y="108" font-size="11" text-anchor="end" fill="#8A7D92" font-family="Hind Siliguri">+২</text>
-        <text x="298" y="29" font-size="10" text-anchor="end" fill="#8A7D92">1,500</text><text x="298" y="68" font-size="10" text-anchor="end" fill="#8A7D92">1,200</text>
+        <text x="286" y="108" font-size="11" text-anchor="end" fill="#8A7D92" font-family="Hind Siliguri">+৪ সপ্তাহ</text>
+        <text x="270" y="18" font-size="10" text-anchor="end" fill="#2E7D32" font-weight="600">1,950</text><text x="4" y="31" font-size="10" fill="#8A7D92">1,700</text><text x="4" y="74" font-size="10" fill="#8A7D92">1,200</text>
       </svg>
     </div>
     <div style="background:#fff;border-radius:18px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
@@ -225,10 +235,9 @@ S.F01 = () => {
   </div>
   <div style="padding:10px 16px 10px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;background:#FAF7FB">
     ${primary('<i class="ph-fill ph-camera" style="font-size:22px"></i>পেঁয়াজের ছবি তুলুন')}
-    <div style="height:44px;border-radius:14px;color:#5B2A6E;display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:600;box-shadow:0 0 0 1.5px #D9C6E2"><i class="ph ph-storefront"></i>বিক্রির জন্য দিন</div>
+    <div style="height:44px;border-radius:14px;color:#5B2A6E;display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:600;box-shadow:0 0 0 1.5px #D9C6E2"><i class="ph ph-scales"></i>সব বিকল্প তুলনা করুন</div>
   </div>
   ${nav('farmer', 0)}`);
-};
 
 S.F02 = () => `<div data-screen-label="F02 Camera" style="width:360px;height:800px;background:#16101A;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.35);display:flex;flex-direction:column;color:#fff;position:relative">
   <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#221A27 0 10px,#1C1520 10px 20px)"></div>
@@ -272,20 +281,53 @@ S.F03 = () => shell('F03 Grade result', `
     </div>
     <div style="font-size:13px;color:#6B5E73;margin-top:-6px;padding:0 4px;display:flex;justify-content:space-between"><span>Large · Dry neck · No sprouting · 2% spots</span><span style="font-weight:600">নিশ্চয়তা: উচ্চ</span></div>
     <div style="background:#5B2A6E;color:#fff;border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
-      <div style="font-size:15px;opacity:.85">এই গ্রেডের প্রস্তাবিত দাম · Suggested</div>
-      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:34px;font-weight:700">৳1,300</span><span style="font-size:17px;opacity:.85">/ মণ</span></div>
-      <div style="font-size:14px;opacity:.85">সীমা ৳1,250–1,350 · Range</div>
+      <div style="font-size:15px;opacity:.85">Grade A · ঢাকার বাজারে দাম · Dhaka price</div>
+      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:34px;font-weight:700">৳${INR(ECON.alt)}</span><span style="font-size:17px;opacity:.85">/ মণ</span></div>
+      <div style="font-size:14px;opacity:.85">কারওয়ান বাজার · পরিবহন ৳${INR(ECON.delivery)}/মণ</div>
     </div>
     <div style="background:#FBE9E9;border-radius:16px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start">
       <i class="ph-fill ph-scales" style="font-size:22px;color:#C62828;margin-top:2px"></i>
-      <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;line-height:1.45;color:#7A1414;font-weight:500">ব্যাপারীর প্রস্তাব ৳1,000 — ন্যায্য দামের চেয়ে ৳300 কম</div><div style="font-size:13px;color:#8F3A3A">Trader offered ৳1,000 — ৳300 below fair</div></div>
+      <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;line-height:1.45;color:#7A1414;font-weight:500">স্থানীয় ব্যাপারীর প্রস্তাব ৳${INR(ECON.local)} — ঢাকার দামের চেয়ে ৳${INR(ECON.alt - ECON.local)} কম</div><div style="font-size:13px;color:#8F3A3A">Local trader offers ৳${INR(ECON.local)} — ৳${INR(ECON.alt - ECON.local)} below Dhaka</div></div>
     </div>
   </div>
   <div style="padding:10px 16px 20px;display:flex;flex-direction:column;gap:6px;flex-shrink:0">
-    ${primary(`বিক্রির জন্য দিন ${sub('Post for sale')}`)}
+    ${primary(`সিদ্ধান্ত দেখুন ${sub('See my options')}`)}
     <div style="height:44px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:16px;font-weight:600;color:#5B2A6E"><i class="ph ph-arrow-counter-clockwise"></i>আবার ছবি তুলুন</div>
   </div>
   ${nav('farmer', 1)}`);
+
+S.F07 = () => {
+  const best = OPTIONS.reduce((a, o) => (o.net > a.net ? o : a));
+  const cta = { local: `স্থানীয় ব্যাপারীকে বিক্রি ${sub('Sell now')}`, alt: `ঢাকার ক্রেতা খুঁজুন ${sub('Look more')}`, wait: `মজুদ রাখুন ${sub('Wait')}` }[state.choice];
+  const risk = (icon, color, t) => `<div style="display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.45"><i class="ph-fill ${icon}" style="font-size:18px;color:${color};margin-top:1px"></i><span>${t}</span></div>`;
+  return shell('F07 Decision', `
+  ${status()}
+  ${backBar('কী করবেন? · Your options')}
+  <div style="flex:1;overflow:auto;padding:0 16px 12px;display:flex;flex-direction:column;gap:10px">
+    <div style="font-size:14px;color:#4A3D52;padding:0 2px">${BN(ECON.stock)} মণ · Grade A · উৎপাদন খরচ <b>৳${INR(ECON.stock * ECON.cost)}</b></div>
+    ${OPTIONS.map(o => {
+      const on = state.choice === o.id, rec = o === best, gain = o.pl >= 0;
+      return `<div data-action="choice:${o.id}" style="background:#fff;border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;cursor:pointer;position:relative;box-shadow:${on ? '0 0 0 2.5px ' + (rec ? '#2E7D32' : '#5B2A6E') : '0 0 0 1px #E6DDEB'}">
+        ${rec ? '<span style="position:absolute;top:-9px;right:12px;background:#2E7D32;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">সুপারিশ · Recommended</span>' : ''}
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <div style="display:flex;gap:10px;align-items:center;min-width:0"><i class="ph-duotone ${o.icon}" style="font-size:26px;color:#5B2A6E;flex-shrink:0"></i><div style="display:flex;flex-direction:column"><span style="font-size:16px;font-weight:700">${o.bn}</span><span style="font-size:12px;color:#6B5E73">${o.en}</span></div></div>
+          <span style="font-size:20px;font-weight:700;flex-shrink:0">৳${INR(o.net)}</span>
+        </div>
+        <div style="font-size:12px;color:#6B5E73;line-height:1.4">${o.calc}</div>
+        <span style="align-self:flex-start;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:${gain ? '#E6F2E7' : '#FBE9E9'};color:${gain ? '#1B5E20' : '#7A1414'}">${PL(o.pl)} ${gain ? 'লাভ' : 'লোকসান'}</span>
+      </div>`;
+    }).join('')}
+    <div style="background:#fff;border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+      <div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#6B5E73">ঝুঁকি · RISKS</div>
+      ${risk('ph-cloud-sun', '#C77A00', 'আবহাওয়া: আগামী ১৪ দিন বৃষ্টি কম — রাখার ঝুঁকি কম')}
+      ${risk('ph-drop', '#5B2A6E', 'পচন ও ওজন কমা: শুকনো, বাতাস চলাচলের মাচায় রাখুন')}
+      ${risk('ph-boat', '#2E7D32', 'আমদানি কম — সামনে দাম বাড়ার সম্ভাবনা')}
+    </div>
+    <div style="font-size:12px;color:#6B5E73;display:flex;gap:6px;align-items:center;padding:0 2px"><i class="ph-fill ph-brain"></i>বাজারদর, আবহাওয়া, আমদানি ও চাহিদা বিশ্লেষণ করে</div>
+  </div>
+  <div style="padding:10px 16px 12px;flex-shrink:0">${primary(cta, { bg: state.choice === best.id ? '#2E7D32' : '#5B2A6E' })}</div>
+  ${nav('farmer', 0)}`);
+};
 
 const row = (label, value, last) =>
   `<div style="display:flex;justify-content:space-between;align-items:center;min-height:52px${last ? '' : ';border-bottom:1px solid #F1EBF4'}"><span style="font-size:16px;font-weight:600">${label}</span>${value}</div>`;
@@ -297,7 +339,7 @@ S.F04 = () => {
   ${backBar('বিক্রির জন্য দিন')}
   <div style="flex:1;overflow:auto;padding:4px 16px 12px;display:flex;flex-direction:column;gap:10px">
     <div style="background:#fff;border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center">
-      <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:600">পরিমাণ</div><div style="font-size:13px;color:#6B5E73">পরামর্শ অনুযায়ী</div></div>
+      <div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:600">পরিমাণ</div><div style="font-size:13px;color:#6B5E73">সংরক্ষিত মজুদ</div></div>
       <div style="display:flex;align-items:center;gap:4px">
         <div data-action="qty:-5" style="width:44px;height:44px;border-radius:12px;background:#F0E8F4;color:#5B2A6E;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer"><i class="ph-bold ph-minus"></i></div>
         <div style="min-width:80px;text-align:center;font-size:20px;font-weight:700">${q} মণ</div>
@@ -306,7 +348,7 @@ S.F04 = () => {
     </div>
     <div style="background:#fff;border-radius:16px;padding:4px 14px;display:flex;flex-direction:column">
       ${row('গ্রেড', '<span style="background:#2E7D32;color:#fff;font-size:15px;font-weight:700;padding:3px 12px;border-radius:8px;display:flex;gap:4px;align-items:center"><i class="ph-fill ph-seal-check"></i>A</span>')}
-      ${row('চাওয়া দাম', '<span style="display:flex;align-items:center;gap:6px;font-size:17px;font-weight:700;padding:6px 10px;border-radius:10px;box-shadow:0 0 0 1.5px #D9C6E2">৳1,300 <span style="font-size:14px;font-weight:400;color:#6B5E73">/ মণ</span><i class="ph ph-pencil-simple" style="color:#5B2A6E"></i></span>')}
+      ${row('চাওয়া দাম', '<span style="display:flex;align-items:center;gap:6px;font-size:17px;font-weight:700;padding:6px 10px;border-radius:10px;box-shadow:0 0 0 1.5px #D9C6E2">৳${INR(ECON.later)} <span style="font-size:14px;font-weight:400;color:#6B5E73">/ মণ</span><i class="ph ph-pencil-simple" style="color:#5B2A6E"></i></span>')}
       ${row('অবস্থান', '<span style="font-size:16px;color:#4A3D52;display:flex;gap:4px;align-items:center"><i class="ph ph-map-pin"></i>সাঁথিয়া, পাবনা</span>')}
       ${row('কবে থেকে', '<span style="font-size:16px;color:#5B2A6E;font-weight:600;display:flex;gap:6px;align-items:center"><i class="ph ph-calendar-blank"></i>আজ</span>', true)}
     </div>
@@ -319,7 +361,7 @@ S.F04 = () => {
     </div>
   </div>
   <div style="flex-shrink:0;padding:12px 16px 20px;display:flex;flex-direction:column;gap:10px;background:#fff;border-top:1px solid #EEE6F2">
-    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:15px;color:#6B5E73">মোট</span><span style="font-size:18px;font-weight:700">${q} মণ × ৳1,300 = ৳${INR(state.qty * 1300)}</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:15px;color:#6B5E73">মোট</span><span style="font-size:18px;font-weight:700">${q} মণ × ৳${INR(ECON.later)} = ৳${INR(state.qty * ECON.later)}</span></div>
     ${primary(`পোস্ট করুন ${sub('Post')}`, { next: 'slow', action: 'post' })}
   </div>
   ${state.posted ? `<div style="position:absolute;left:16px;right:16px;top:92px;background:#22172A;color:#fff;border-radius:16px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;box-shadow:0 12px 30px -8px rgba(0,0,0,.4)">
@@ -341,14 +383,14 @@ S.B01 = () => shell('B01 Post demand', `
     <div style="display:flex;flex-direction:column;gap:6px">${label('গ্রেড · Grade')}
       <div style="display:flex;gap:8px">${['A', 'B', 'C'].map(g => { const s = state.grade === g; return `<div data-action="grade:${g}" style="flex:1;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:4px;font-size:17px;font-weight:700;cursor:pointer;background:${s ? '#5B2A6E' : '#fff'};color:${s ? '#fff' : '#22172A'};box-shadow:${s ? 'none' : '0 0 0 1.5px #D9C6E2'}">Grade ${g}</div>`; }).join('')}</div></div>
     <div style="display:flex;flex-direction:column;gap:6px">${label('লক্ষ্য দাম · Target price / মণ')}
-      <div style="display:flex;gap:8px;align-items:center">${field('৳1,250', 'flex:1;padding:0 14px;font-size:17px;font-weight:600')}<span style="color:#6B5E73">–</span>${field('৳1,350', 'flex:1;padding:0 14px;font-size:17px;font-weight:600')}</div></div>
+      <div style="display:flex;gap:8px;align-items:center">${field('৳1,950', 'flex:1;padding:0 14px;font-size:17px;font-weight:600')}<span style="color:#6B5E73">–</span>${field('৳2,100', 'flex:1;padding:0 14px;font-size:17px;font-weight:600')}</div></div>
     <div style="display:flex;gap:8px">
       <div style="flex:1.3;display:flex;flex-direction:column;gap:6px">${label('কোথায়')}${field('<i class="ph ph-map-pin" style="color:#5B2A6E"></i>কারওয়ান বাজার, ঢাকা', 'gap:6px;padding:0 12px;font-size:15px')}</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:6px">${label('কবের মধ্যে')}${field('<i class="ph ph-calendar-blank" style="color:#5B2A6E"></i>২৩ অক্টো', 'gap:6px;padding:0 12px;font-size:15px')}</div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px">${label('কবের মধ্যে')}${field('<i class="ph ph-calendar-blank" style="color:#5B2A6E"></i>২০ মে', 'gap:6px;padding:0 12px;font-size:15px')}</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:6px">${label('পেমেন্ট · Payment')}
       <div style="display:flex;gap:8px">${['bKash', 'Nagad', 'Bank'].map(p => { const s = state.pay[p]; return `<div data-action="pay:${p}" style="height:40px;padding:0 14px;border-radius:999px;display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;cursor:pointer;background:${s ? '#F0E8F4' : '#fff'};color:${s ? '#5B2A6E' : '#22172A'};box-shadow:${s ? '0 0 0 1.5px #5B2A6E' : '0 0 0 1.5px #D9C6E2'}">${s ? '✓ ' : ''}${p}</div>`; }).join('')}</div></div>
-    <div style="background:#E6F2E7;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;color:#1B5E20"><i class="ph-fill ph-lightning" style="font-size:20px;margin-top:2px"></i><div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:15px;font-weight:600;line-height:1.45">পাবনায় ১৮০ মণ Grade A পেঁয়াজ পাওয়া যাচ্ছে</div><div style="font-size:13px">180 maunds Grade A available in Pabna</div></div></div>
+    <div style="background:#E6F2E7;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;color:#1B5E20"><i class="ph-fill ph-lightning" style="font-size:20px;margin-top:2px"></i><div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:15px;font-weight:600;line-height:1.45">পাবনায় ১৯৫ মণ Grade A পেঁয়াজ পাওয়া যাচ্ছে</div><div style="font-size:13px">195 maunds Grade A available in Pabna</div></div></div>
   </div>
   <div style="padding:10px 16px 10px;flex-shrink:0">${primary('চাহিদা পোস্ট করুন')}</div>
   ${nav('buyer', 0)}`);
@@ -360,15 +402,15 @@ S.M01 = () => {
   const pinBg = l => state.sel[l.id] ? '#5B2A6E' : '#8A7D92';
   return shell('M01 Nearby stock', `
   ${status()}
-  <div style="padding:4px 18px 10px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0"><div style="display:flex;flex-direction:column"><div style="font-size:20px;font-weight:700">রহিম ব্যাপারী</div><div style="font-size:13px;color:#6B5E73;display:flex;gap:4px;align-items:center"><i class="ph-fill ph-map-pin"></i>সুজানগর, পাবনা</div></div><div data-action="map" style="height:40px;padding:0 12px;border-radius:12px;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;cursor:pointer;background:${state.mapOpen ? '#5B2A6E' : '#fff'};color:${state.mapOpen ? '#fff' : '#5B2A6E'};box-shadow:0 0 0 1.5px #5B2A6E"><i class="ph ph-map-trifold"></i>ম্যাপ</div></div>
+  <div style="padding:4px 18px 10px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0"><div style="display:flex;flex-direction:column"><div style="font-size:20px;font-weight:700">${TRADER}</div><div style="font-size:13px;color:#6B5E73;display:flex;gap:4px;align-items:center"><i class="ph-fill ph-map-pin"></i>সুজানগর, পাবনা</div></div><div data-action="map" style="height:40px;padding:0 12px;border-radius:12px;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;cursor:pointer;background:${state.mapOpen ? '#5B2A6E' : '#fff'};color:${state.mapOpen ? '#fff' : '#5B2A6E'};box-shadow:0 0 0 1.5px #5B2A6E"><i class="ph ph-map-trifold"></i>ম্যাপ</div></div>
   <div style="display:flex;padding:0 16px;gap:4px;flex-shrink:0;border-bottom:1px solid #EEE6F2">
     ${tab('stock', 'নিকটের মজুদ')}
-    ${tab('orders', 'ক্রেতার চাহিদা', '<span style="background:#C62828;color:#fff;font-size:10px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center">১</span>')}
+    ${tab('orders', 'ক্রেতার চাহিদা', '<span style="background:#C62828;color:#fff;font-size:10px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center">৩</span>')}
   </div>
   <div style="flex:1;overflow:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px">
     <div style="background:#3E1A4C;color:#fff;border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;gap:6px;align-items:center;font-size:12px;font-weight:600;letter-spacing:.04em;opacity:.8"><i class="ph-fill ph-storefront"></i>খোলা অর্ডার · OPEN ORDER</div>
-      <div style="font-size:15px;line-height:1.45;font-weight:500">নাদিয়া রহমান, কারওয়ান বাজার — ৫ টন Grade A, ৳1,250–1,350, ৭ দিন</div>
+      <div style="font-size:15px;line-height:1.45;font-weight:500">নাদিয়া রহমান, কারওয়ান বাজার — ৫ টন Grade A, ৳1,950–2,100, ৭ দিন</div>
       <div style="align-self:flex-start;height:36px;padding:0 14px;border-radius:10px;background:#fff;color:#3E1A4C;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700">Fill this order<i class="ph-bold ph-arrow-right"></i></div>
     </div>
     ${state.mapOpen ? `<div style="height:150px;border-radius:16px;background:#E8EFE4;position:relative;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px #D8E2D2">
@@ -385,10 +427,14 @@ S.M01 = () => {
         <div style="flex:1;display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:600">${l.name}</div><div style="font-size:14px;color:#4A3D52">${BN(l.qty)} মণ · ৳${INR(l.price)} · ${l.km} km</div></div>
         <span style="background:#2E7D32;color:#fff;font-size:13px;font-weight:700;padding:2px 8px;border-radius:6px">A</span>
       </div>`; }).join('')}
-    </div>` : `<div style="background:#fff;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between"><span style="font-size:16px;font-weight:700">নাদিয়া রহমান</span><span style="font-size:13px;color:#6B5E73">ঢাকা</span></div>
-      <div style="font-size:14px;color:#4A3D52;line-height:1.5">৫ টন (≈১৩৪ মণ) · Grade A · ৳1,250–1,350 / মণ · ৭ দিনের মধ্যে · bKash</div>
-    </div>`}
+    </div>` : `<div style="display:flex;flex-direction:column;gap:8px">${[
+      ['নাদিয়া রহমান', 'ঢাকা', '৫ টন (≈১৩৪ মণ) · Grade A · ৳1,950–2,100 / মণ · ৭ দিনের মধ্যে · bKash'],
+      ['মেহেদী ট্রেডার্স', 'চট্টগ্রাম', '৩ টন (≈৮০ মণ) · Grade A/B · ৳1,900–2,050 / মণ · ১০ দিনের মধ্যে'],
+      ['সুমন স্টোর', 'কুমিল্লা', '২০ মণ · Grade B · ৳1,850–1,950 / মণ · খুচরা বিক্রেতা'],
+    ].map(([n, c, d]) => `<div style="background:#fff;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between"><span style="font-size:16px;font-weight:700">${n}</span><span style="font-size:13px;color:#6B5E73">${c}</span></div>
+      <div style="font-size:14px;color:#4A3D52;line-height:1.5">${d}</div>
+    </div>`).join('')}</div>`}
   </div>
   <div style="flex-shrink:0;padding:12px 16px 20px;background:#fff;border-top:1px solid #EEE6F2;display:flex;flex-direction:column;gap:10px">
     <div style="display:flex;gap:6px;align-items:center;font-size:16px;font-weight:600;color:${covered ? '#1B5E20' : '#7A5200'}"><i class="${covered ? 'ph-fill ph-check-circle' : 'ph-fill ph-hourglass-medium'}" style="font-size:20px"></i>${covered ? `নির্বাচিত: ${BN(total)} মণ — অর্ডার পূরণ ✓` : `নির্বাচিত: ${BN(total)} মণ — আরও ${BN(ORDER_NEED - total)} মণ দরকার`}</div>
@@ -399,19 +445,22 @@ S.M01 = () => {
 
 const kicker = t => `<div style="font-size:13px;font-weight:700;letter-spacing:.06em;color:#6B5E73;padding:0 2px">${t}</div>`;
 
-S.M02 = () => shell('M02 Combine and offer', `
+S.M02 = () => {
+  const lots = LOTS.filter(l => state.sel[l.id]);
+  const q = lots.reduce((a, l) => a + l.qty, 0), paid = lots.reduce((a, l) => a + l.qty * l.price, 0);
+  return shell('M02 Combine and offer', `
   ${status()}
   ${backBar('একসাথে অফার')}
   <div style="flex:1;overflow:auto;padding:0 16px 12px;display:flex;flex-direction:column;gap:14px">
     <div style="display:flex;flex-direction:column;gap:6px">
       ${kicker('কৃষকদের অফার')}
       <div style="background:#fff;border-radius:14px;padding:2px 12px">
-        ${LOTS.map(l => `<div style="display:flex;align-items:center;gap:8px;min-height:48px;border-bottom:1px solid #F1EBF4">
+        ${lots.map(l => `<div style="display:flex;align-items:center;gap:8px;min-height:48px;border-bottom:1px solid #F1EBF4">
           <div style="flex:1;font-size:15px;font-weight:600">${l.name}<div style="font-size:12px;color:#6B5E73;font-weight:400">${BN(l.qty)} মণ</div></div>
           <div style="font-size:14px;font-weight:600;padding:4px 8px;border-radius:8px;box-shadow:0 0 0 1.5px #D9C6E2">৳${INR(l.price)}</div>
           <div style="width:72px;text-align:right;font-size:15px;font-weight:700">৳${INR(l.qty * l.price)}</div>
         </div>`).join('')}
-        <div style="display:flex;justify-content:space-between;min-height:42px;align-items:center;font-size:14px;color:#6B5E73"><span>কৃষকদের মোট · ১৩৫ মণ</span><span style="font-weight:700;color:#22172A">৳1,75,400</span></div>
+        <div style="display:flex;justify-content:space-between;min-height:42px;align-items:center;font-size:14px;color:#6B5E73"><span>কৃষকদের মোট · ${BN(q)} মণ</span><span style="font-weight:700;color:#22172A">৳${INR(paid)}</span></div>
       </div>
       <div style="display:flex;gap:6px;align-items:center;font-size:13px;color:#1B5E20;padding:0 2px"><i class="ph-fill ph-shield-check"></i>প্রত্যেক কৃষক তাঁর নিজের দাম দেখতে পান</div>
     </div>
@@ -427,21 +476,22 @@ S.M02 = () => shell('M02 Combine and offer', `
     <div style="display:flex;flex-direction:column;gap:6px">
       ${kicker('ক্রেতাকে কোট · নাদিয়া রহমান')}
       <div style="background:#5B2A6E;color:#fff;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:4px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:15px;opacity:.85">১৩৫ মণ · ঢাকায় পৌঁছানো</span><span style="font-size:22px;font-weight:700">৳1,420<span style="font-size:13px;font-weight:400;opacity:.85"> / মণ</span></span></div>
-        <div style="display:flex;justify-content:space-between;font-size:14px;opacity:.85"><span>মোট</span><span>৳1,91,700</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:15px;opacity:.85">${BN(q)} মণ · ঢাকায় পৌঁছানো</span><span style="font-size:22px;font-weight:700">৳${INR(QUOTE)}<span style="font-size:13px;font-weight:400;opacity:.85"> / মণ</span></span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;opacity:.85"><span>মোট</span><span>৳${INR(q * QUOTE)}</span></div>
       </div>
-      <div style="background:#FEF6E0;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#5C3F00"><span style="display:flex;gap:6px;align-items:center"><i class="ph ph-eye-slash"></i>শুধু আপনি দেখছেন · মার্জিন</span><span style="font-weight:700">৳120 / মণ</span></div>
+      <div style="background:#FEF6E0;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#5C3F00"><span style="display:flex;gap:6px;align-items:center"><i class="ph ph-eye-slash"></i>শুধু আপনি দেখছেন · মার্জিন</span><span style="font-weight:700">৳${INR(q ? Math.round(QUOTE - paid / q) : 0)} / মণ</span></div>
     </div>
   </div>
   <div style="padding:10px 16px 20px;flex-shrink:0;background:#fff;border-top:1px solid #EEE6F2">${primary('<i class="ph-fill ph-paper-plane-tilt"></i>অফার পাঠান', { next: 'slow', action: 'send' })}</div>
   ${state.offersSent ? `<div data-action="closeSent" style="position:absolute;inset:0;background:rgba(34,23,42,.45);display:flex;align-items:flex-end;cursor:pointer;z-index:2">
     <div style="width:100%;background:#fff;border-radius:24px 24px 0 0;padding:28px 24px 32px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
       <div style="width:64px;height:64px;border-radius:50%;background:#2E7D32;color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px"><i class="ph-bold ph-check"></i></div>
-      <div style="font-size:19px;font-weight:700;line-height:1.4">৪ জন কৃষক ও ১ জন ক্রেতাকে অফার পাঠানো হয়েছে</div>
-      <div style="font-size:14px;color:#6B5E73">Offers sent to 4 farmers and 1 buyer</div>
+      <div style="font-size:19px;font-weight:700;line-height:1.4">${BN(lots.length)} জন কৃষক ও ১ জন ক্রেতাকে অফার পাঠানো হয়েছে</div>
+      <div style="font-size:14px;color:#6B5E73">Offers sent to ${lots.length} farmers and 1 buyer</div>
     </div>
   </div>` : ''}
   ${nav('middleman', 0)}`, 'position:relative');
+};
 
 S.F05 = () => shell('F05 Offer received', `
   ${status()}
@@ -450,16 +500,16 @@ S.F05 = () => shell('F05 Offer received', `
     <div style="background:#fff;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:14px">
       <div style="display:flex;gap:12px;align-items:center">
         ${avatar(52, 20)}
-        <div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:18px;font-weight:700">রহিম ব্যাপারী</div><div style="display:flex;gap:8px;align-items:center;font-size:13px;color:#4A3D52"><span>সুজানগর</span>${verified}</div></div>
+        <div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:18px;font-weight:700">${TRADER}</div><div style="display:flex;gap:8px;align-items:center;font-size:13px;color:#4A3D52"><span>সুজানগর</span>${verified}</div></div>
       </div>
       <div style="background:#FAF7FB;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px">
-        <div style="font-size:24px;font-weight:700;letter-spacing:-0.01em">৪০ মণ × ৳1,300</div>
-        <div style="font-size:28px;font-weight:700;color:#5B2A6E">= ৳52,000</div>
-        <div style="align-self:flex-start;display:flex;gap:6px;align-items:center;background:#E6F2E7;color:#1B5E20;font-size:15px;font-weight:600;padding:5px 12px;border-radius:999px"><i class="ph-fill ph-check-circle"></i>ন্যায্য দাম ✓ <span style="font-weight:400;font-size:13px">আজকের সীমার মধ্যে</span></div>
+        <div style="font-size:24px;font-weight:700;letter-spacing:-0.01em">১০০ মণ × ৳${INR(ECON.later)}</div>
+        <div style="font-size:28px;font-weight:700;color:#5B2A6E">= ৳${INR(ECON.stock * ECON.later)}</div>
+        <div style="align-self:flex-start;display:flex;gap:6px;align-items:center;background:#E6F2E7;color:#1B5E20;font-size:15px;font-weight:600;padding:5px 12px;border-radius:999px"><i class="ph-fill ph-check-circle"></i>ন্যায্য দাম ✓ <span style="font-weight:400;font-size:13px">আজকের বাজার দরে</span></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;gap:10px;align-items:center;font-size:16px"><i class="ph-duotone ph-truck" style="font-size:24px;color:#5B2A6E"></i><span>কাল সকাল ১০টা, বাড়ি থেকে</span></div>
-        <div style="display:flex;gap:10px;align-items:center;font-size:16px"><i class="ph-duotone ph-wallet" style="font-size:24px;color:#5B2A6E"></i><span>bKash, পিকআপের সময়</span></div>
+        <div style="display:flex;gap:10px;align-items:center;font-size:16px"><i class="ph-duotone ph-truck" style="font-size:24px;color:#5B2A6E"></i><span>কাল সকাল ১০টা, বাড়ি থেকে · পরিবহন ৳${INR(ECON.stock * ECON.delivery)}</span></div>
+        <div style="display:flex;gap:10px;align-items:center;font-size:16px"><i class="ph-duotone ph-wallet" style="font-size:24px;color:#5B2A6E"></i><span>bKash-এ ৳${INR(ECON.stock * (ECON.later - ECON.delivery))}, পিকআপের সময়</span></div>
       </div>
     </div>
   </div>
@@ -479,38 +529,38 @@ const CONFETTI = [
   'left:36px;top:170px;width:8px;height:12px;background:#F9A825;transform:rotate(-15deg);border-radius:2px',
 ];
 const DEAL = {
-  farmer: { body: '<div style="font-size:20px;font-weight:600"><span style="font-size:26px;font-weight:700;color:#2E7D32">৳52,000</span> bKash-এ জমা হয়েছে</div><div style="background:#E6F2E7;color:#1B5E20;border-radius:12px;padding:8px 14px;font-size:15px;font-weight:600;line-height:1.4">ব্যাপারীর প্রথম প্রস্তাবের চেয়ে ৳12,000 বেশি</div>', rate: 'রহিম ব্যাপারীকে রেটিং দিন' },
-  middleman: { body: '<div style="font-size:20px;font-weight:600">ট্রাক ভর্তি: ১৩৫ মণ পৌঁছেছে</div><div style="font-size:14px;color:#6B5E73">Truck full: 135 maunds delivered</div>', rate: 'করিম মিয়াকে রেটিং দিন' },
-  buyer: { body: '<div style="font-size:20px;font-weight:600;line-height:1.4">৫ টন Grade A কারওয়ান বাজারে পৌঁছেছে</div><div style="font-size:14px;color:#6B5E73">5 tonnes Grade A delivered to Karwan Bazar</div>', rate: 'রহিম ব্যাপারীকে রেটিং দিন' },
+  farmer: () => ({ body: `<div style="font-size:20px;font-weight:600"><span style="font-size:26px;font-weight:700;color:#2E7D32">৳${INR(ECON.stock * (ECON.later - ECON.delivery))}</span> bKash-এ জমা হয়েছে</div><div style="background:#E6F2E7;color:#1B5E20;border-radius:12px;padding:8px 14px;font-size:15px;font-weight:600;line-height:1.4">খরচ বাদে লাভ ৳${INR(OPT.wait.pl)} · স্থানীয় বাজারের চেয়ে ৳${INR(OPT.wait.net - OPT.local.net)} বেশি</div>`, rate: `${TRADER}কে রেটিং দিন` }),
+  middleman: () => { const q = LOTS.filter(l => state.sel[l.id]).reduce((a, l) => a + l.qty, 0); return { body: `<div style="font-size:20px;font-weight:600">ট্রাক ভর্তি: ${BN(q)} মণ পৌঁছেছে</div><div style="font-size:14px;color:#6B5E73">Truck full: ${q} maunds delivered</div>`, rate: `${FARMER}কে রেটিং দিন` }; },
+  buyer: () => ({ body: '<div style="font-size:20px;font-weight:600;line-height:1.4">৫ টন Grade A কারওয়ান বাজারে পৌঁছেছে</div><div style="font-size:14px;color:#6B5E73">5 tonnes Grade A delivered to Karwan Bazar</div>', rate: `${TRADER}কে রেটিং দিন` }),
 };
 const dealStep = t => `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;font-weight:500"><div style="width:28px;height:28px;border-radius:50%;background:#2E7D32;color:#fff;display:flex;align-items:center;justify-content:center"><i class="ph-bold ph-check"></i></div>${t}</div>`;
 const dealLine = '<div style="flex:.6;height:2px;background:#2E7D32;margin-top:14px"></div>';
 
-const deal = role => () => shell('D01 Deal done', `
+const deal = role => () => { const d = DEAL[role](); return shell('D01 Deal done', `
   ${CONFETTI.map(c => `<div style="position:absolute;${c}"></div>`).join('')}
   ${status()}
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:72px 24px 0;gap:14px;text-align:center">
     <div style="width:104px;height:104px;border-radius:50%;background:#2E7D32;color:#fff;display:flex;align-items:center;justify-content:center;font-size:56px;box-shadow:0 0 0 12px #E6F2E7"><i class="ph-bold ph-check"></i></div>
-    <div style="font-size:30px;font-weight:700;margin-top:18px">বিক্রি সম্পন্ন!</div>
-    <div style="display:flex;flex-direction:column;gap:10px;align-items:center">${DEAL[role].body}</div>
+    <div style="font-size:30px;font-weight:700;margin-top:18px">${role === 'farmer' ? 'বিক্রি সম্পন্ন!' : 'ডিল সম্পন্ন!'}</div>
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:center">${d.body}</div>
     <div style="display:flex;align-items:flex-start;width:100%;margin-top:22px">${dealStep('অফার গৃহীত')}${dealLine}${dealStep('পিকআপ')}${dealLine}${dealStep('পেমেন্ট')}</div>
-    <div style="display:flex;flex-direction:column;gap:8px;align-items:center;margin-top:24px"><div style="font-size:15px;color:#4A3D52">${DEAL[role].rate}</div><div style="display:flex;gap:6px;font-size:32px;color:#F9A825">${'<i class="ph-fill ph-star"></i>'.repeat(5)}</div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:center;margin-top:24px"><div style="font-size:15px;color:#4A3D52">${d.rate}</div><div style="display:flex;gap:6px;font-size:32px;color:#F9A825">${'<i class="ph-fill ph-star"></i>'.repeat(5)}</div></div>
   </div>
   <div style="padding:10px 16px 20px;display:flex;flex-direction:column;gap:8px;flex-shrink:0">
     ${primary('হোমে যান')}
     <div style="height:44px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:16px;font-weight:600;color:#5B2A6E"><i class="ph ph-receipt"></i>রসিদ দেখুন</div>
   </div>
-  ${nav(role, 2)}`, 'position:relative');
+  ${nav(role, 2)}`, 'position:relative'); };
 S.D01f = deal('farmer');
 S.D01m = deal('middleman');
 S.D01b = deal('buyer');
 
 S.F06 = () => `<div data-screen-label="F06 Lock screen" style="width:360px;height:800px;background:#2A1633;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(62,26,76,.5);display:flex;flex-direction:column;color:#fff">
   ${status('গ্রামীণফোন', false)}
-  <div style="display:flex;flex-direction:column;align-items:center;padding-top:56px;gap:4px"><i class="ph-fill ph-lock-simple" style="font-size:18px;opacity:.8"></i><div style="font-size:84px;font-weight:300;letter-spacing:-0.03em;line-height:1.05">10:24</div><div style="font-size:17px;opacity:.85">শুক্রবার, ১৩ নভেম্বর</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;padding-top:56px;gap:4px"><i class="ph-fill ph-lock-simple" style="font-size:18px;opacity:.8"></i><div style="font-size:84px;font-weight:300;letter-spacing:-0.03em;line-height:1.05">10:24</div><div style="font-size:17px;opacity:.85">বৃহস্পতিবার, ১৫ মে</div></div>
   <div data-next="fast" style="margin:48px 12px 0;background:rgba(255,255,255,.94);color:#22172A;border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:8px">
     <div style="display:flex;gap:8px;align-items:center;font-size:13px;color:#6B5E73"><div style="width:22px;height:22px;border-radius:6px;background:#fff;box-shadow:0 0 0 1px #E6DDEB;display:flex;align-items:center;justify-content:center"><img src="assets/peyajflow-icon.png" alt="" style="width:14px;height:16px;object-fit:contain;display:block"></div><span style="font-weight:600;color:#22172A">PeyajFlow</span><span style="margin-left:auto">এখন</span></div>
-    <div style="font-size:16px;line-height:1.45">দাম এখন <b>৳1,650/মণ</b>। বাকি ৬০ মণ বিক্রির ভালো সময়।</div>
+    <div style="font-size:16px;line-height:1.45">দাম এখন <b>৳1,950/মণ</b>। আপনার ১০০ মণ বিক্রির ভালো সময় — লাভ হবে ৳20,000।</div>
   </div>
   <div style="margin-top:auto;padding:0 40px 36px;display:flex;justify-content:space-between;align-items:center">
     <div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:22px"><i class="ph-fill ph-flashlight"></i></div>
@@ -525,20 +575,24 @@ S.F06b = () => shell('F06 Sell now', `
   <div style="flex:1;overflow:auto;padding:4px 16px 12px;display:flex;flex-direction:column;gap:12px">
     <div style="background:#5B2A6E;color:#fff;border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:6px">
       <div style="font-size:15px;opacity:.85">আজকের ন্যায্য দাম · Today's fair price</div>
-      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:36px;font-weight:700">৳1,650</span><span style="font-size:17px;opacity:.85">/ মণ</span></div>
-      <div style="display:flex;gap:10px;align-items:center;font-size:14px"><span style="display:flex;align-items:center;gap:3px;background:#E6F2E7;color:#1B5E20;padding:2px 8px;border-radius:999px;font-weight:600"><i class="ph-bold ph-trend-up"></i>+২৭%</span><span style="opacity:.85">৪ সপ্তাহ আগে ৳1,300</span></div>
+      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:36px;font-weight:700">৳${INR(ECON.later)}</span><span style="font-size:17px;opacity:.85">/ মণ</span></div>
+      <div style="display:flex;gap:10px;align-items:center;font-size:14px"><span style="display:flex;align-items:center;gap:3px;background:#E6F2E7;color:#1B5E20;padding:2px 8px;border-radius:999px;font-weight:600"><i class="ph-bold ph-trend-up"></i>+৭৭%</span><span style="opacity:.85">৪ সপ্তাহ আগে ৳${INR(ECON.local)}</span></div>
     </div>
     <div style="background:#fff;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 0 0 1.5px #2E7D32">
       <div style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center;background:#2E7D32;color:#fff;padding:6px 14px;border-radius:999px;font-size:17px;font-weight:700"><i class="ph-fill ph-check-circle"></i>এখন বিক্রি করুন</span><span style="font-size:13px;color:#6B5E73;font-weight:500">নিশ্চয়তা: উচ্চ · High</span></div>
-      <div style="font-size:16px;line-height:1.45">দাম পূর্বাভাস অনুযায়ী বেড়েছে। বাকি মজুদ বিক্রির ভালো সময়।</div>
-      <div style="background:#E6F2E7;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px;color:#1B5E20"><span style="font-size:14px">আপনার বাকি ৬০ মণ</span><span style="font-size:24px;font-weight:700">৬০ মণ × ৳1,650 = ৳99,000</span></div>
+      <div style="font-size:16px;line-height:1.45">দাম পূর্বাভাস অনুযায়ী বেড়েছে। মজুদ বিক্রির ভালো সময়।</div>
+      <div style="background:#E6F2E7;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px;color:#1B5E20">
+        <span style="font-size:17px;font-weight:700">১০০ মণ × ৳${INR(ECON.later)} = ৳${INR(ECON.stock * ECON.later)}</span>
+        <span style="font-size:14px">− পরিবহন ৳${INR(ECON.stock * ECON.delivery)} − সংরক্ষণ ৳${INR(ECON.stock * ECON.storage)}</span>
+        <span style="font-size:15px;font-weight:700">আপনি পাবেন ৳${INR(OPT.wait.net)} · লাভ ৳${INR(OPT.wait.pl)}</span>
+      </div>
     </div>
     <div style="background:#fff;border-radius:18px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between">
-      <div style="display:flex;gap:10px;align-items:center"><i class="ph-duotone ph-warehouse" style="font-size:26px;color:#5B2A6E"></i><div style="font-size:16px;font-weight:600">আমার মজুদ: ৬০ মণ</div></div>
-      <span style="font-size:13px;color:#6B5E73">৪০ মণ বিক্রি হয়েছে</span>
+      <div style="display:flex;gap:10px;align-items:center"><i class="ph-duotone ph-warehouse" style="font-size:26px;color:#5B2A6E"></i><div style="font-size:16px;font-weight:600">আমার মজুদ: ১০০ মণ</div></div>
+      <span style="font-size:13px;color:#6B5E73">৪ সপ্তাহ সংরক্ষণে</span>
     </div>
   </div>
-  <div style="padding:10px 16px 10px;flex-shrink:0">${primary('বাকি ৬০ মণ পোস্ট করুন')}</div>
+  <div style="padding:10px 16px 10px;flex-shrink:0">${primary('১০০ মণ বিক্রির জন্য দিন')}</div>
   ${nav('farmer', 0)}`);
 
 S.B02 = () => {
@@ -555,12 +609,12 @@ S.B02 = () => {
           <div style="font-size:12px;line-height:1.3;font-weight:${cur ? 700 : 500};color:${done || cur ? '#22172A' : '#6B5E73'}">${t}</div>
         </div>`; }).join('')}
       </div>
-      <div style="font-size:14px;color:#4A3D52;display:flex;gap:6px;align-items:center"><i class="ph ph-map-pin"></i>কারওয়ান বাজার, ঢাকা · ২৩ অক্টোবরের মধ্যে</div>
+      <div style="font-size:14px;color:#4A3D52;display:flex;gap:6px;align-items:center"><i class="ph ph-map-pin"></i>কারওয়ান বাজার, ঢাকা · ২০ মে-র মধ্যে</div>
     </div>
     <div style="background:#fff;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 0 0 1.5px #5B2A6E">
       <div style="font-size:12px;font-weight:700;letter-spacing:.08em;color:#5B2A6E">নতুন কোট · NEW QUOTE</div>
-      <div style="display:flex;gap:12px;align-items:center">${avatar(44)}<div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:700">রহিম ব্যাপারী</div><div style="display:flex;gap:8px;font-size:13px;color:#4A3D52">${verified}</div></div></div>
-      <div style="display:flex;justify-content:space-between;align-items:baseline;background:#FAF7FB;border-radius:12px;padding:12px"><span style="font-size:15px">১৩৫ মণ · ঢাকায় পৌঁছানো</span><span style="font-size:20px;font-weight:700">৳1,420<span style="font-size:13px;font-weight:400;color:#6B5E73"> / মণ</span></span></div>
+      <div style="display:flex;gap:12px;align-items:center">${avatar(44)}<div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:16px;font-weight:700">${TRADER}</div><div style="display:flex;gap:8px;font-size:13px;color:#4A3D52">${verified}</div></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;background:#FAF7FB;border-radius:12px;padding:12px"><span style="font-size:15px">১৩৫ মণ · ঢাকায় পৌঁছানো</span><span style="font-size:20px;font-weight:700">৳${INR(QUOTE)}<span style="font-size:13px;font-weight:400;color:#6B5E73"> / মণ</span></span></div>
       <div style="display:flex;gap:8px;align-items:center;font-size:14px;color:#4A3D52"><i class="ph-duotone ph-truck" style="font-size:20px;color:#5B2A6E"></i>৫ টন ট্রাক · পৌঁছাবে আনুমানিক কাল সন্ধ্যা ৭টা</div>
     </div>
   </div>
@@ -589,17 +643,27 @@ S.P1 = () => basicPhone('P01 New message', 'বার্তা',
   '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center"><i class="ph-duotone ph-envelope-simple" style="font-size:56px"></i><div style="font-size:21px;font-weight:700">১টি নতুন বার্তা</div><div>PeyajFlow থেকে</div></div>',
   'পড়ুন', 'পরে');
 S.P2 = () => basicPhone('P01 Offer SMS', 'PeyajFlow',
-  '<div>PeyajFlow: রহিম ব্যাপারী ৪০ মণ পেঁয়াজ ৳১,৩০০/মণ দরে কিনতে চান = <b>৳৫২,০০০</b>। পিকআপ কাল সকাল ১০টা। আজকের ন্যায্য দাম ৳১,২৫০–১,৩৫০। গ্রহণ করতে ১, বাতিল করতে ২ লিখে পাঠান।</div>',
+  '<div>PeyajFlow: জলিল ব্যাপারী আপনার ১০০ মণ পেঁয়াজ ৳১,৯৫০/মণ দরে কিনতে চান। পরিবহন বাদে পাবেন <b>৳১,৮৫,০০০</b>। পিকআপ কাল সকাল ১০টা। গ্রহণ করতে ১, বাতিল করতে ২ লিখে পাঠান।</div>',
   'উত্তর', 'পেছনে');
 S.P3 = () => basicPhone('P01 Reply', 'উত্তর · PeyajFlow',
   '<div>বার্তা লিখুন:</div><div style="height:52px;border:2px solid #1E2A14;border-radius:4px;display:flex;align-items:center;padding:0 10px;font-size:26px;font-weight:700">১<span style="width:2px;height:28px;background:#1E2A14;margin-left:3px"></span></div><div style="font-size:14px">১ = গ্রহণ · ২ = বাতিল</div>',
   'পাঠান', 'মুছুন', '১');
 S.P4 = () => basicPhone('P01 Confirmed SMS', 'PeyajFlow',
-  '<div>PeyajFlow: ডিল নিশ্চিত। পিকআপ কাল সকাল ১০টা। পিকআপের সময় <b>৳৫২,০০০</b> আপনার bKash-এ পাঠানো হবে।</div><div>রেফ: PF-24816</div>',
+  '<div>PeyajFlow: ডিল নিশ্চিত। পিকআপ কাল সকাল ১০টা। পিকআপের সময় <b>৳১,৮৫,০০০</b> আপনার bKash-এ পাঠানো হবে। খরচ বাদে লাভ ৳২০,০০০।</div><div>রেফ: PF-24816</div>',
   'ঠিক আছে', 'পেছনে');
 S.P5 = () => basicPhone('P01 Price alert SMS', 'PeyajFlow',
-  '<div>PeyajFlow: আজ পেঁয়াজের দাম ৳১,২৫০–১,৩৫০/মণ (সাঁথিয়া)।</div><div>পরামর্শ: <b>অপেক্ষা করুন</b>, দাম বাড়তে পারে।</div><div>শুনতে 0961XXXXXXX নম্বরে মিসড কল দিন।</div>',
+  '<div>PeyajFlow: আজ পেঁয়াজের দাম ৳১,১০০/মণ (সাঁথিয়া)। আপনার খরচ ৳১,৫০০ — এখন বেচলে ৳৪০,০০০ লোকসান।</div><div>পরামর্শ: <b>অপেক্ষা করুন</b>। ১ মাসে দাম ৳১,৯৫০ হতে পারে।</div><div>বিস্তারিত শুনতে 0961XXXXXXX নম্বরে কল দিন।</div>',
   'উত্তর', 'পেছনে');
+
+S.V1 = () => basicPhone('V01 Calling', 'কল',
+  '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center"><i class="ph-duotone ph-phone-call" style="font-size:52px"></i><div style="font-size:21px;font-weight:700">কল হচ্ছে…</div><div>PeyajFlow সহায়তা</div><div style="font-size:14px">0961XXXXXXX</div></div>',
+  'স্পিকার', 'কাটুন');
+S.V2 = () => basicPhone('V01 AI advice', 'কল · ০০:২৪',
+  '<div style="font-size:13px;font-weight:700;display:flex;gap:4px;align-items:center"><i class="ph-fill ph-speaker-high"></i>AI সহকারী বলছে:</div><div style="font-size:14px;line-height:1.45">“আসসালামু আলাইকুম রহিম ভাই। আজ সাঁথিয়ায় দাম ১,১০০ টাকা মণ — এখন বেচলে ৪০ হাজার টাকা লোকসান। এক মাস রাখলে ১ লাখ ৭০ হাজার পেতে পারেন।”</div><div style="font-size:13px;font-weight:700">রাখতে ১ · ক্রেতা খুঁজতে ২ · এজেন্ট ৩</div>',
+  'স্পিকার', 'কাটুন');
+S.V3 = () => basicPhone('V01 Reply', 'কল · ০০:৪১',
+  '<div style="font-size:13px;font-weight:700">আপনি ১ চেপেছেন</div><div style="font-size:14px;line-height:1.45">“ঠিক আছে। দাম ১,৯৫০ টাকা হলে SMS ও কল দিয়ে জানাব। পচন কমাতে শুকনো, বাতাস চলাচলের জায়গায় মাচায় রাখুন।”</div>',
+  'স্পিকার', 'কাটুন', '১');
 
 // ─── Pages ───────────────────────────────────────────────────────────────
 function homeView() {
@@ -705,6 +769,7 @@ const ACTIONS = {
   prev: () => go(-1),
   next: () => go(1),
   role: r => set({ role: r }),
+  choice: c => set({ choice: c }),
   qty: d => set(s => ({ qty: Math.min(100, Math.max(5, s.qty + Number(d))) })),
   pickup: p => set({ pickup: p }),
   post: () => {

@@ -20,11 +20,8 @@ cd web && python3 -m http.server 8000
 
 Host the `web/` folder on any static host, such as GitHub Pages, Netlify or Cloudflare Pages, and point the QR code at its URL.
 
-## Design tweaks
+## Story and numbers
 
-The design tool's tweak panels are URL parameters here:
+The flows follow the pitch deck's numbers for Rahim Uddin's 100 maunds: a production cost of ৳1,500/maund, ৳1,100 locally today, ৳1,450 in Dhaka minus ৳10,000 delivery, or ৳1,950 after a month minus delivery and ৳15,000 storage. They're set in `ECON` at the top of `app.js`.
 
-- `?advice=wait|sell|part`: the advice card on F01 (default `wait`)
-- `?otp=filled|error|loading`: the OTP screen state (default `filled`)
-
-The last flow opened is remembered in `localStorage` under the key `pf-demo`.
+`?otp=filled|error|loading` switches the OTP screen state. The last flow opened is remembered in `localStorage` under the key `pf-demo`.
